@@ -1,0 +1,4 @@
+localhost
+db_clinica
+root
+nest2015
