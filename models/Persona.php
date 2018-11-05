@@ -85,7 +85,7 @@ class Persona extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'IdPersona' => 'Id Persona',
+            'IdPersona' => 'Paciente',
             'Nombres' => 'Nombres',
             'Apellidos' => 'Apellidos',
             'FechaNacimiento' => 'Fecha Nacimiento',
@@ -109,6 +109,9 @@ class Persona extends \yii\db\ActiveRecord
             'Parentesco' => 'Parentesco',
             'DuiResponsable' => 'Dui Responsable',
             'IdPais' => 'Id Pais',
+            'estado.NombreEstado' => 'Estado',
+            'fullName' => Yii::t('app', 'Full Name'),
+            'fullName' => 'Paciente'
         ];
     }
 
@@ -223,4 +226,11 @@ class Persona extends \yii\db\ActiveRecord
     {
         return $this->hasMany(Test::className(), ['IdPersona' => 'IdPersona']);
     }
+
+    public function getFullName()
+    {
+            return $this->Nombres.' '.$this->Apellidos;
+    }
+
+
 }

@@ -42,7 +42,7 @@ $this->params['breadcrumbs'][] = $this->title;
       <div class="ibox-title">
         <h3><?= Html::encode($this->title) ?></h3>
         <p align="right">
-           <?= Html::a('Ingresar Persona', ['create'], ['class' => 'btn btn-primary']) ?>
+           <?= Html::a('Ingresar Persona', ['crear'], ['class' => 'btn btn-primary']) ?>
         </p>
       </div>
           <div class="ibox-content">
@@ -70,7 +70,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 // 'Dui',
                                 // 'TelefonoResponsable',
                                 // 'IdEstado',
-                                // 'Categoria',
+                                'Categoria',
                                 // 'NombresResponsable',
                                 // 'ApellidosResponsable',
                                 // 'Parentesco',

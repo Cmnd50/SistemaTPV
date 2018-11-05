@@ -80,6 +80,25 @@ class PersonaController extends Controller
         ]);
     }
 
+
+        public function actionCrear()
+    {
+        $model = new Persona();
+
+        if ($model->load(Yii::$app->request->post())) {
+          if ($model->save()) {
+            Yii::$app->session->setFlash('success', "User created successfully.");
+            } else {
+              Yii::$app->session->setFlash('error', "User created successfully.");
+            }
+            return $this->redirect(['view', 'id' => $model->IdPersona]);
+        }
+
+        return $this->render('crear', [
+            'model' => $model,
+        ]);
+    }
+
     /**
      * Updates an existing Persona model.
      * If update is successful, the browser will be redirected to the 'view' page.
