@@ -4,15 +4,15 @@ namespace app\controllers;
 
 use Yii;
 use app\models\Persona;
-use app\models\ConsultapacienteSearch;
+use app\models\EnfermeriaprocedimientoSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * ConsultapacienteController implements the CRUD actions for Persona model.
+ * EnfermeriaprocedimientoController implements the CRUD actions for Persona model.
  */
-class ConsultapacienteController extends Controller
+class EnfermeriaprocedimientoController extends Controller
 {
     /**
      * {@inheritdoc}
@@ -35,7 +35,7 @@ class ConsultapacienteController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new ConsultapacienteSearch();
+        $searchModel = new EnfermeriaprocedimientoSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -53,6 +53,13 @@ class ConsultapacienteController extends Controller
     public function actionView($id)
     {
         return $this->render('view', [
+            'model' => $this->findModel($id),
+        ]);
+    }
+
+    public function actionMedical($id)
+    {
+        return $this->render('medical', [
             'model' => $this->findModel($id),
         ]);
     }
@@ -97,7 +104,7 @@ class ConsultapacienteController extends Controller
             } else {
               Yii::$app->session->setFlash('warning', "User created successfully.");
             }
-            return $this->redirect(['index', 'id' => $model->IdPersona]);
+            return $this->redirect(['view', 'id' => $model->IdPersona]);
         }
 
         return $this->render('update', [

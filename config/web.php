@@ -56,6 +56,7 @@ $config = [
                             '<controller:(post|comment)>s' => '<controller>/index',
                    ),
                    ],
+                   
     ],
     'params' => $params,
 ];

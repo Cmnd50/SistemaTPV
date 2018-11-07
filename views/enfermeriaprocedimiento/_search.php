@@ -20,7 +20,8 @@ use kartik\select2\Select2;
     ]); ?>
 
 <?php echo $form->field($model, 'IdPersona')->widget(Select2::classname(), [
-        'data' => ArrayHelper::map(Persona::find()->all(), 'IdPersona', 'fullName'),
+        'data' => ArrayHelper::map(Persona::find()->where([
+                '=','IdEstado', 4])->all(), 'IdPersona', 'fullName'),
         'language' => 'es',
         'options' => ['placeholder' => ' Selecione ...'],
         'pluginOptions' => [

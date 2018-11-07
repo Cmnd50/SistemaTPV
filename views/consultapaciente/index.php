@@ -50,7 +50,7 @@ $this->params['breadcrumbs'][] = $this->title;
       <div class="ibox-title">
         <h3><?= Html::encode($this->title) ?></h3>
         <p align="right">
-           <!-- <?= Html::a('Ingresar Persona', ['create'], ['class' => 'btn btn-primary']) ?> -->
+       
         </p>
       </div>
           <div class="ibox-content">
@@ -104,7 +104,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         ],
                           [
                             'format' => 'raw',
-                              'options' => ['style' => 'width:50px;'],
+                              'options' => ['style' => 'width:100px;'],
                               'value' => function ($model) {
                                   if ($model->IdEstado == 1) {
                                       return  Html::a('<span class="btn-xs btn-warning"><i class="fa fa-edit"></i></span>', ['update', 'id' => $model->IdPersona]);
