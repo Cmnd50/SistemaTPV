@@ -614,7 +614,7 @@ $(".btn-mdl").click(function(){
 
     var myData  = {"id":id};
     $.ajax({
-        url   : "enfermeria_cargar_consulta.php",
+        url   : "../../web/enfermeriaconsulta/cargarconsulta.php",
         type  :  "POST",
         data  :   myData,
         dataType : "JSON",
@@ -636,7 +636,7 @@ $(".btn-mdls").click(function(){
     var id = $(this).attr("id").replace("btn","");
     var myData  = {"id":id};
     $.ajax({
-        url   : "enfermeria_cargar_consultasignosvitales.php",
+        url   : "../../web/enfermeriaconsulta/cargarsignosvitales.php",
         type  :  "POST",
         data  :   myData,
         dataType : "JSON",
