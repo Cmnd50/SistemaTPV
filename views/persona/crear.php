@@ -52,7 +52,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             <li class=""><a data-toggle="tab" href="#tab-3">DATOS MEDICOS</a></li>
                             <li class=""><a data-toggle="tab" href="#tab-4">SOCIOECONOMICO</a></li>
                             <li class=""><a data-toggle="tab" href="#tab-5">HISTORIAL CLINICO</a></li>
-                            <li class=""><a data-toggle="tab" href="#tab-6">ESQUEMA DE VACUNACION</a></li>
+                            <li class=""><a data-toggle="tab" href="#tab-6">VACUNACION</a></li>
                             <li class="pull-right">
                                 <button type="submit" class="btn btn-primary" name="guardarPaciente">Guardar</button>
 
@@ -81,14 +81,14 @@ $this->params['breadcrumbs'][] = $this->title;
 
                                       <div class="form-group">
                                       <label for="txtFechaNacimiento" class="col-sm-1 control-label">Nacimiento</label>
-                                      <div class="col-sm-2">
+                                      <div class="col-sm-5">
                                         <div class="input-group">
                                           <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
                                           <input type="text" class="form-control" data-inputmask="'alias': 'yyyy/mm/dd'" data-mask name="txtFechaNacimiento" id="txtFechaNacimiento" required="">
                                         </div>
                                       </div>
                                       <label for="txtGenero" class="col-sm-1 control-label">Genero</label>
-                                      <div class="col-sm-2">
+                                      <div class="col-sm-5">
                                         <div class="input-group">
                                           <div class="input-group-addon"><i class="fa fa-genderless"></i></div>
                                           <select class="form-control select2" style="width: 100%;" name="txtGenero" id="txtGenero" required="required">
@@ -98,8 +98,10 @@ $this->params['breadcrumbs'][] = $this->title;
                                           </select>
                                         </div>
                                       </div>
+                                      </div>
+                                      <div class="form-group">
                                       <label for="txtIdEstadoCivil" class="col-sm-1 control-label">Estado Civil</label>
-                                      <div class="col-sm-2">
+                                      <div class="col-sm-5">
                                         <div class="input-group">
                                           <div class="input-group-addon"><i class="fa fa-circle-o"></i></div>
                                             <select class="form-control select2" style="width: 100%;" id="txtIdEstadoCivil" name="txtIdEstadoCivil" required="">
@@ -114,7 +116,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                       </div>
 
                                       <label for="txtDui" class="col-sm-1 control-label">Dui</label>
-                                      <div class="col-sm-2">
+                                      <div class="col-sm-5">
                                         <div class="input-group">
                                           <div class="input-group-addon"><i class="fa fa-credit-card"></i></div>
                                           <input type="text" class="form-control" data-mask="99999999-9" name="txtDui" id="txtDui"  >
@@ -124,7 +126,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
                                     <div class="form-group">
                                         <label for="txtIdPais" class="col-sm-1 control-label">Pais</label>
-                                        <div class="col-sm-2">
+                                        <div class="col-sm-5">
                                           <div class="input-group">
                                             <div class="input-group-addon"><i class="fa fa-flag"></i></div>
                                             <select class="form-control select2" style="width: 100%;" id="txtIdPais" name="txtIdPais" required="">
@@ -139,7 +141,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                           </div>
                                         </div>
                                         <label for="txtDepartamento" class="col-sm-1 control-label">Departamento</label>
-                                        <div class="col-sm-2">
+                                        <div class="col-sm-5">
                                           <div class="input-group">
                                             <div class="input-group-addon"><i class="fa fa-flag"></i></div>
                                             <select class="form-control select2" style="width: 100%;" id="txtDepartamento" name="txtDepartamento" required="" >
@@ -152,8 +154,10 @@ $this->params['breadcrumbs'][] = $this->title;
                                             </select>
                                           </div>
                                         </div>
+                                        </div>
+                                         <div class="form-group">
                                         <label for="txtMunicipio" class="col-sm-1 control-label">Municipio</label>
-                                        <div class="col-sm-2">
+                                        <div class="col-sm-5">
                                           <div class="input-group">
                                             <div class="input-group-addon"><i class="fa fa-flag"></i></div>
                                             <select class="form-control select2" style="width: 100%;" id="txtMunicipio" name="txtMunicipio" required=""></select>
@@ -161,7 +165,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                         </div>
 
                                         <label for="txtCanton" class="col-sm-1 control-label">Cantón</label>
-                                        <div class="col-sm-2">
+                                        <div class="col-sm-5">
                                           <div class="input-group">
                                             <div class="input-group-addon"><i class="fa fa-flag"></i></div>
                                             <select class="form-control select2" style="width: 100%;" name="txtCanton" id="txtCanton"></select>

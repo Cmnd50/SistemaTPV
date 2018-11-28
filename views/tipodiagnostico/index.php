@@ -7,7 +7,7 @@ use yii\grid\GridView;
 /* @var $searchModel app\models\TipodiagnosticoSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Tipodiagnosticos';
+$this->title = 'Tipo Diagnosticos';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 </br>
@@ -17,7 +17,7 @@ $this->params['breadcrumbs'][] = $this->title;
       <div class="ibox-title">
         <h3><?= Html::encode($this->title) ?></h3>
         <p align="right">
-           <?= Html::a('Ingresar Tipodiagnostico', ['create'], ['class' => 'btn btn-primary']) ?>
+           <?= Html::a('Ingresar Tipo Diagnostico', ['create'], ['class' => 'btn btn-primary']) ?>
         </p>
       </div>
           <div class="ibox-content">
@@ -27,8 +27,8 @@ $this->params['breadcrumbs'][] = $this->title;
                       'dataProvider' => $dataProvider,
 'columns' => [
                         ['class' => 'yii\grid\SerialColumn'],
-                          'IdTipoDiagnostico',
-'NombreDiagnostico',
+                          // 'IdTipoDiagnostico',
+                              'NombreDiagnostico',
                               ['class' => 'yii\grid\ActionColumn',
                                'options' => ['style' => 'width:100px;'],
                                'template' => " {view} {update} {delete} "

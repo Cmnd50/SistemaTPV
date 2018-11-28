@@ -6,8 +6,8 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model app\models\Estadocivil */
 
-$this->title = $model->IdEstadoCivil;
-$this->params['breadcrumbs'][] = ['label' => 'Estadocivils', 'url' => ['index']];
+$this->title = $model->Nombre;
+$this->params['breadcrumbs'][] = ['label' => 'Estado Civil', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 </br>
@@ -72,7 +72,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <?= DetailView::widget([
                     'model' => $model,
                     'attributes' => [
-                        'IdEstadoCivil',
+                        // 'IdEstadoCivil',
             'Nombre',
                     ],
                 ]) ?>

@@ -27,12 +27,26 @@ $this->params['breadcrumbs'][] = $this->title;
                       'dataProvider' => $dataProvider,
 'columns' => [
                         ['class' => 'yii\grid\SerialColumn'],
-                          'IdMenuUsuario',
-'IdMenuDetalle',
-'MenuUsuarioActivo',
-'IdUsuario',
-'IdMenu',
-// 'TipoPermiso',
+                                   [
+                                      'attribute'=>'IdUsuario',
+                                      'value'=>'usuario.InicioSesion',
+                                    ],
+
+                                    [
+                                      'attribute'=>'IdMenuDetalle',
+                                      'value'=>'menuDetalle.DescripcionMenuDetalle',
+                                    ],
+
+                                    [
+                                      'attribute'=>'IdMenu',
+                                      'value'=>'menu.DescripcionMenu',
+                                    ],
+
+                                    [
+                                    'format' => 'boolean',
+                                    'attribute' => 'MenuUsuarioActivo',
+                                    'filter' => [0=>'No',1=>'Si'],
+                                    ],
                               ['class' => 'yii\grid\ActionColumn',
                                'options' => ['style' => 'width:100px;'],
                                'template' => " {view} {update} {delete} "

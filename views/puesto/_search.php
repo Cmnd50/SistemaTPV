@@ -15,9 +15,9 @@ use yii\widgets\ActiveForm;
         'method' => 'get',
     ]); ?>
 
-    <?= $form->field($model, 'idPuesto') ?>
+   <!--  <?= $form->field($model, 'idPuesto') ?>
 
-    <?= $form->field($model, 'Descripcion') ?>
+    <?= $form->field($model, 'Descripcion') ?> -->
 
     <div class="form-group">
         <?= Html::submitButton('Buscar', ['class' => 'btn btn-info']) ?>

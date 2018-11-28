@@ -33,7 +33,7 @@ use yii\bootstrap\Modal;
 /* @var $searchModel app\models\EstadocivilSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Estadocivils';
+$this->title = 'Estado Civil';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 </br>
@@ -44,7 +44,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
         <h3><?= Html::encode($this->title) ?></h3>
         <p align="right">
-           <?= Html::a('Ingresar Estadocivil', ['create'], ['class' => 'btn btn-primary']) ?>
+           <?= Html::a('Ingresar Estado Civil', ['create'], ['class' => 'btn btn-primary']) ?>
         </p>
       </div>
           <div class="ibox-content">
@@ -54,7 +54,7 @@ $this->params['breadcrumbs'][] = $this->title;
                       'dataProvider' => $dataProvider,
                       'columns' => [
                         ['class' => 'yii\grid\SerialColumn'],
-                          'IdEstadoCivil',
+                          // 'IdEstadoCivil',
                           'Nombre',
                               ['class' => 'yii\grid\ActionColumn',
                                'options' => ['style' => 'width:100px;'],

@@ -2,6 +2,9 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use app\models\Factor;
+use yii\helpers\ArrayHelper;
+use kartik\select2\Select2;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Pregunta */
@@ -15,15 +18,26 @@ use yii\widgets\ActiveForm;
   <?php $form = ActiveForm::begin(); ?>
   <form class="form-horizontal">
   <div class="form-group">
-        <?= $form->field($model, 'IdFactor')->textInput() ?>
+   
 
-    <?= $form->field($model, 'Nombre')->textInput(['maxlength' => true]) ?>
+       <?php
+       echo $form->field($model, 'IdFactor')->widget(Select2::classname(), [
+           'data' => ArrayHelper::map(Factor::find()->all(), 'IdFactor', 'Nombre'),
+           'language' => 'es',
+           'options' => ['placeholder' => ' Selecione ...'],
+           'pluginOptions' => [
+               'allowClear' => true
+           ],
+       ]);
+       ?>
 
-    <?= $form->field($model, 'Descripcion')->textInput(['maxlength' => true]) ?>
+        <?= $form->field($model, 'Nombre')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'Ponderacion')->textInput() ?>
+        <?= $form->field($model, 'Descripcion')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'Activo')->checkbox() ?>
+        <?= $form->field($model, 'Ponderacion')->textInput() ?>
+
+        <?= $form->field($model, 'Activo')->checkbox() ?>
 
    </div>
     <div class="form-group" align="right">

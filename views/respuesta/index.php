@@ -27,12 +27,15 @@ $this->params['breadcrumbs'][] = $this->title;
                       'dataProvider' => $dataProvider,
 'columns' => [
                         ['class' => 'yii\grid\SerialColumn'],
-                          'IdRespuesta',
-'IdPregunta',
-'Nombre',
-'Descripcion',
-'Ponderacion',
-// 'Activo:boolean',
+                          // 'IdRespuesta',
+                          [
+                            'attribute'=>'IdPregunta',
+                            'value'=>'pregunta.Nombre',
+                          ],
+                          'Nombre',
+                          // 'Descripcion',
+                          // 'Ponderacion',
+                          'Activo:boolean',
                               ['class' => 'yii\grid\ActionColumn',
                                'options' => ['style' => 'width:100px;'],
                                'template' => " {view} {update} {delete} "

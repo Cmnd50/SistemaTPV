@@ -48,8 +48,8 @@ class Pregunta extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'IdPregunta' => 'Id Pregunta',
-            'IdFactor' => 'Id Factor',
+            'IdPregunta' => 'Pregunta',
+            'IdFactor' => 'Factor',
             'Nombre' => 'Nombre',
             'Descripcion' => 'Descripcion',
             'Ponderacion' => 'Ponderacion',

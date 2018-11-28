@@ -28,10 +28,10 @@ $this->params['breadcrumbs'][] = $this->title;
 'columns' => [
                         ['class' => 'yii\grid\SerialColumn'],
                           'IdFactor',
-'Nombre',
-'Descripcion',
-'Ponderacion',
-'Activo:boolean',
+                        'Nombre',
+                        'Descripcion',
+                        'Ponderacion',
+                        'Activo:boolean',
                               ['class' => 'yii\grid\ActionColumn',
                                'options' => ['style' => 'width:100px;'],
                                'template' => " {view} {update} {delete} "

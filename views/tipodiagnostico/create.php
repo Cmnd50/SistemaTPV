@@ -6,8 +6,8 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\Tipodiagnostico */
 
-$this->title = 'Crear Tipodiagnostico';
-$this->params['breadcrumbs'][] = ['label' => 'Tipodiagnosticos', 'url' => ['index']];
+$this->title = 'Crear Tipo Diagnostico';
+$this->params['breadcrumbs'][] = ['label' => 'Tipo Diagnosticos', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 </br>
