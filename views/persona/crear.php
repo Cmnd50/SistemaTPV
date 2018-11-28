@@ -47,14 +47,14 @@ $this->params['breadcrumbs'][] = $this->title;
                     <div class="form-horizontal" role="form">
                     <div class="tabs-container">
                         <ul class="nav nav-tabs">
-                            <li class="active"><a data-toggle="tab" href="#tab-1"> DATOS GENERALES</a></li>
+                            <li class="active"><a data-toggle="tab" href="#tab-1"> DATO GENERAL</a></li>
                             <li class=""><a data-toggle="tab" href="#tab-2">RESPONSABLE</a></li>
-                            <li class=""><a data-toggle="tab" href="#tab-3">DATOS MEDICOS</a></li>
+                            <li class=""><a data-toggle="tab" href="#tab-3">DATO MEDICO</a></li>
                             <li class=""><a data-toggle="tab" href="#tab-4">SOCIOECONOMICO</a></li>
                             <li class=""><a data-toggle="tab" href="#tab-5">HISTORIAL CLINICO</a></li>
                             <li class=""><a data-toggle="tab" href="#tab-6">VACUNACION</a></li>
                             <li class="pull-right">
-                                <button type="submit" class="btn btn-primary" name="guardarPaciente">Guardar</button>
+                                <button type="submit" class="btn btn-primary dim" name="guardarPaciente"><i class="fa fa-check"></i></button>
 
                             </li>
                         </ul>
