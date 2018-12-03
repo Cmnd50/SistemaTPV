@@ -1,7 +1,7 @@
 
  <?php
 
-include '../../include/dbconnect.php';
+require_once '../../include/dbconnect.php';
 session_start();
 
     $user = $_SESSION['IdUsuario'];
@@ -17,5 +17,5 @@ session_start();
 
     $insertexpediente2 = "UPDATE persona SET IdEstado=5  WHERE IdPersona='$persona'";
     $resultadoinsertmovimiento2 = $mysqli->query($insertexpediente2);
-    header('Location: ../../web/enfermeriaconsulta/view?id='.$persona);
+    header('Location: ../../web/enfermeriaconsulta/medical?id='.$persona);
 

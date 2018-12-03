@@ -40,7 +40,7 @@ class Estado extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'IdEstado' => 'Id Estado',
+            'IdEstado' => 'Estado',
             'NombreEstado' => 'Nombre Estado',
         ];
     }

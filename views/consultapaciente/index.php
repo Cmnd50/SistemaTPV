@@ -54,71 +54,68 @@ $this->params['breadcrumbs'][] = $this->title;
         </p>
       </div>
           <div class="ibox-content">
-              <table class="table table-hover">
+            <table class="table table-hover">
                         
+            <?php echo $this->render('_search', ['model' => $searchModel]); ?>
+              <?= GridView::widget([
+                'dataProvider' => $dataProvider,
+                'columns' => [
+                  ['class' => 'yii\grid\SerialColumn',
+                    'options' => ['style' => 'width:50px;'],
+                  ],
+                    [
+                      'attribute' => 'IdPersona',
+                      'value' => function ($model) {
+                          return $model->getFullName();
+                      },
+                   ],
+                   [
+                      'attribute' => 'Categoria',
+                       'options' => ['style' => 'width:100px;'],
+                      
+                   ],
+                  [
+                      'attribute' => 'Estado',
+                      'format' => 'raw',
+                      'options' => ['style' => 'width:80px;'],
+                      'value' => function ($model) {
+                          if ($model->IdEstado == 1) {
+                              return '<spam class="label label-info">'.$model->estado->NombreEstado.' <i class="fa fa-heartbeat"></i></spam>';
+                          }
+                          elseif ($model->IdEstado == 2) {
+                              return '<spam class="label label-primary">'.$model->estado->NombreEstado.' <i class="fa fa-heartbeat"></i></spam>';
+                          } 
+                          elseif ($model->IdEstado == 3) {
+                              return '<spam class="label label-success">'.$model->estado->NombreEstado.' <i class="fa fa-heartbeat"></i></spam>';
+                          }  
+                          elseif ($model->IdEstado == 4) {
+                              return '<spam class="label label-warning">'.$model->estado->NombreEstado.' <i class="fa fa-heartbeat"></i></spam>';
+                          }  
+                          elseif ($model->IdEstado == 5) {
+                              return '<spam class="label label-danger">'.$model->estado->NombreEstado.' <i class="fa fa-heartbeat"></i></spam>';
+                          }   
 
-
-                  <?php echo $this->render('_search', ['model' => $searchModel]); ?>
-                    <?= GridView::widget([
-                      'dataProvider' => $dataProvider,
-                      'columns' => [
-                        ['class' => 'yii\grid\SerialColumn',
-                          'options' => ['style' => 'width:50px;'],
-                        ],
-                          [
-                            'attribute' => 'IdPersona',
-                            'value' => function ($model) {
-                                return $model->getFullName();
-                            },
-                         ],
-                         [
-                            'attribute' => 'Categoria',
-                             'options' => ['style' => 'width:100px;'],
-                            
-                         ],
-                        [
-                            'attribute' => 'Estado',
-                            'format' => 'raw',
-                            'options' => ['style' => 'width:80px;'],
-                            'value' => function ($model) {
-                                if ($model->IdEstado == 1) {
-                                    return '<spam class="label label-info">'.$model->estado->NombreEstado.' <i class="fa fa-heartbeat"></i></spam>';
-                                }
-                                elseif ($model->IdEstado == 2) {
-                                    return '<spam class="label label-primary">'.$model->estado->NombreEstado.' <i class="fa fa-heartbeat"></i></spam>';
-                                } 
-                                elseif ($model->IdEstado == 3) {
-                                    return '<spam class="label label-success">'.$model->estado->NombreEstado.' <i class="fa fa-heartbeat"></i></spam>';
-                                }  
-                                elseif ($model->IdEstado == 4) {
-                                    return '<spam class="label label-warning">'.$model->estado->NombreEstado.' <i class="fa fa-heartbeat"></i></spam>';
-                                }  
-                                elseif ($model->IdEstado == 5) {
-                                    return '<spam class="label label-danger">'.$model->estado->NombreEstado.' <i class="fa fa-heartbeat"></i></spam>';
-                                }   
-
-                                else {
-                                    return '<spam class="label label-info">'.$model->estado->NombreEstado.' <i class="fa fa-heartbeat"></i></spam>';
-                                }
-                            },
-                        ],
-                          [
-                            'format' => 'raw',
-                              'options' => ['style' => 'width:100px;'],
-                              'value' => function ($model) {
-                                  if ($model->IdEstado == 1) {
-                                      return  Html::a('<span class="btn-xs btn-warning"><i class="fa fa-edit"></i></span>', ['update', 'id' => $model->IdPersona]);
-                                    
-                                  }
-                                  else {
-                                      return '';
-                                  }
-                              },
-                          ],
-                          ],
-                      ]); ?>
-                                  </table>
-          </div>
-      </div>
+                          else {
+                              return '<spam class="label label-info">'.$model->estado->NombreEstado.' <i class="fa fa-heartbeat"></i></spam>';
+                          }
+                      },
+                  ],
+                    [
+                      'format' => 'raw',
+                        'options' => ['style' => 'width:100px;'],
+                        'value' => function ($model) {
+                            if ($model->IdEstado == 1) {
+                                return  Html::a('<span class="btn-xs btn-warning"><i class="fa fa-edit"></i></span>', ['update', 'id' => $model->IdPersona]);
+                            }
+                            else {
+                                return '';
+                            }
+                        },
+                    ],
+                    ],
+                ]); ?>
+        </table>
+        </div>
     </div>
+  </div>
 </div>

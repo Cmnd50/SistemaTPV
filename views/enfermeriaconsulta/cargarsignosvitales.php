@@ -1,6 +1,6 @@
 <?php
 
-include '../include/dbconnect.php';
+require_once '../../include/dbconnect.php';
 session_start();
 
     $idconsulta = $_POST["id"];

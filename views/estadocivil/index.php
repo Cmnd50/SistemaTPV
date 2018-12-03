@@ -55,7 +55,7 @@ $this->params['breadcrumbs'][] = $this->title;
                       'columns' => [
                         ['class' => 'yii\grid\SerialColumn'],
                           // 'IdEstadoCivil',
-                          'Nombre',
+                              'Nombre',
                               ['class' => 'yii\grid\ActionColumn',
                                'options' => ['style' => 'width:100px;'],
                                'template' => " {view} {update} {delete} "
