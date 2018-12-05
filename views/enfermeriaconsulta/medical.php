@@ -81,6 +81,9 @@
    background: transparent !important;
    }
 </style>
+<link rel="stylesheet" href="../template/parsley/parsley.css">
+<script src="../template/parsley/parsley.min.js"></script>
+<script src="../template/i18n/es.js"></script>
 <section class="content">
    <div class="row">
       <div class="col-xs-12">
@@ -213,6 +216,7 @@
                            <small>Ingrese los datos requeridos.</small>
                         </div>
                         <div class="modal-body">
+                        <form class="form-horizontal" action="../../views/enfermeriaconsulta/guardarindicador.php"  role="form" method="POST" id="demo-form1" data-parsley-validate="">
                            <div class="tabs-container">
                               <ul class="nav nav-tabs">
                                  <li class="active"><a data-toggle="tab" href="#tab-1"> FICHA DE CONSULTA</a></li>
@@ -428,13 +432,13 @@
                                        </div>
                                     </div>
                                  </div>
-                              </form>
                            </div>
                         </div>
                         <div class="modal-footer">
                            <button type="button" class="btn btn-danger" id="btn-cerrarmodal" data-dismiss="modal" >Cerrar</button>
                            <button type="submit" class="btn btn-primary" name="guardarIndicador" >Guardar Cambios</button>
                         </div>
+                        </form>
                      </div>
                   </div>
                </div>
@@ -748,5 +752,14 @@
            }
        });
    });
+
+    $('#demo-form1').parsley().on('field:validated', function() {
+    var ok = $('.parsley-error').length === 0;
+    $('.bs-callout-info').toggleClass('hidden', !ok);
+    $('.bs-callout-warning').toggleClass('hidden', ok);
+      })
+      .on('form:submit', function() {
+        return true;
+      });
    });
 </script>

@@ -1,14 +1,7 @@
-<html>
-<head>
-	<script src="../web/plugins/jQuery/jQuery-2.2.0.min.js"></script>
 
-
-
-</head>
-<body>
  <?php
 
-include '../include/dbconnect.php';
+require_once '../../include/dbconnect.php';
 session_start();
 
     //$user = $_SESSION['IdUsuario'];
@@ -47,19 +40,8 @@ session_start();
 
 		// echo $insertexpediente;
 		//  echo $insertexpediente2;
+    header('Location: ../../web/enfermeriaconsulta/index);  //  
 
 
 ?>
 
-        <form id="frm" action="enfermeria_expediente_clinico.php" method="post" class="hidden">
-          <input type="hidden" id="IdPersona" name="IdPersona" value="<?php echo $idpersona ?>" />
-        </form>
-
-        <script type="text/javascript">
-		    $(document).ready(function(){
-		            $("#frm").submit();
-		    });
-
-				</script>
-        </body>
-</html>
