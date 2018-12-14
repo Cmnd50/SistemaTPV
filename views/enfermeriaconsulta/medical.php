@@ -8,7 +8,7 @@
    /* @var $this yii\web\View */
    /* @var $model app\models\Persona */
    
-   $id = $model->IdPersona;
+     $id = $model->IdPersona;
      $queryexpedientes = "SELECT * FROM persona WHERE IdPersona  = '$id'";
      $resultadoexpedientes = $mysqli->query($queryexpedientes);
      while ($test = $resultadoexpedientes->fetch_assoc())
@@ -168,12 +168,11 @@
                         <?php
                            echo"<thead>";
                                echo"<tr>";
-                               echo"<th>ID</th>";
                                echo"<th>Fecha de Consulta</th>";
                                echo"<th>Nombre de Paciente</th>";
                                echo"<th>Nombre de Medico</th>";
                                echo"<th>Nombre de Especialidad</th>";
-                               echo"<th>Accion</th>";
+                               echo"<th style = 'width:150px'>Accion</th>";
                                echo"</tr>";
                            echo"</thead>";
                            echo"<tbody>";
@@ -182,19 +181,18 @@
                            
                               $idSignosVitales = $row['IdConsulta'];
                               echo"<tr>";
-                              echo"<td>".$row['IdConsulta']."</td>";
                               echo"<td>".$row['FechaConsulta']."</td>";
                               echo"<td>".$row['Paciente']."</td>";
                               echo"<td>".$row['Medico']."</td>";
                               echo"<td>".$row['Especialidad']."</td>";
                               if($row['Estado'] == 1){
                               echo "<td>".
-                                     "<span id='btn".$idSignosVitales."' class='btn  btn-success btn-mdl'>Agregar Signos Vitales</span>".
+                                     "<span id='btn".$idSignosVitales."' style='width:140px' class='btn  btn-success btn-mdl'> + Signo Vital</span>".
                                      "</td>";
                               }
                               else{
                               echo "<td>".
-                                     "<span id='btn". $idSignosVitales  ."' class='btn btn-warning btn-mdls'>Ver Signos Vitales</span>".
+                                     "<span id='btn". $idSignosVitales  ."' style='width:140px' class='btn btn-warning btn-mdls'>Ver Signo Vital</span>".
                                      "</td>";
                               }
                            
@@ -213,7 +211,7 @@
                            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
                            <i class="fa fa-stethoscope modal-icon"></i>
                            <h4 class="modal-title">SIGNOS VITALES</h4>
-                           <small>Ingrese los datos requeridos.</small>
+                           <small>INGRESE LOS DATOS REQUERIDOS</small>
                         </div>
                         <div class="modal-body">
                         <form class="form-horizontal" action="../../views/enfermeriaconsulta/guardarindicador.php"  role="form" method="POST" id="demo-form1" data-parsley-validate="">
@@ -450,7 +448,7 @@
                            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
                            <i class="fa fa-stethoscope modal-icon"></i>
                            <h4 class="modal-title">SIGNOS VITALES</h4>
-                           <small>Vista previa de consulta</small>
+                           <small>FICHA DE CONSULTA</small>
                         </div>
                         <div class="modal-body">
                            <div class="tabs-container">

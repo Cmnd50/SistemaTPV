@@ -221,35 +221,6 @@ $this->title = 'Sistema TPV';
             </div>
         </div>
     </div>
-    <div class="row">
-        <div class="col-lg-6">
-        <div class="ibox float-e-margins">
-            <div class="ibox-title">
-                <h5>Bar Chart Example <small>With custom colors.</small></h5>
-            </div>
-            <div class="ibox-content">
-                    <div class="flot-chart">
-                        <div class="flot-chart-content" id="flot-bar-chart"></div>
-                    </div>
-            </div>
-        </div>
-    </div>
-    <div class="col-lg-6">
-        <div class="ibox float-e-margins">
-            <div class="ibox-title">
-                <h5>Line Chart Example</h5>
-            </div>
-            <div class="ibox-content">
-                <div class="flot-chart">
-                    <div class="flot-chart-content" id="flot-line-chart"></div>
-                </div>
-            </div>
-        </div>
-    </div>
-    </div>
-
-
-
 </div>
 
 <script src="../template/js/bootstrap.min.js"></script>

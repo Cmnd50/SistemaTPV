@@ -6,7 +6,6 @@ session_start();
 
     $user = $_SESSION['IdUsuario'];
     $persona = $_POST['txtPaciente'];
-    $usuario = $_POST['cboUsuario'];
     $modulo = $_POST['cboModulo'];
     $motivo = $_POST['cboMotivo'];
 
@@ -15,6 +14,7 @@ session_start();
                        . "VALUES ('$persona',now(),'$motivo','$user','$modulo',1)";
     $resultadoinsertmovimiento = $mysqli->query($insertexpediente);
 
-    echo $insertexpediente;
+    header('Location: ../../web/enfermeriaprocedimiento/medical?id='.$persona);
+
     
 ?>

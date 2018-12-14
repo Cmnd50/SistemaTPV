@@ -1,13 +1,13 @@
 <?php
 
-include '../include/dbconnect.php';
+require_once '../../include/dbconnect.php';
 session_start();
 
     $idconsulta = $_POST["id"];
 
 
     $queryexpedientesu = "SELECT ep.IdEnfermeriaProcedimiento As 'ID', CONCAT(p.Nombres,' ',p.Apellidos) As 'Paciente', CONCAT(u.Nombres,' ',u.Apellidos) As 'Medico', m.NombreModulo As 'Especialidad', ep.FechaProcedimiento As 'FechaConsulta', 
-mp.Nombre As 'Motivo'
+mp.Nombre As 'Motivo', ep.Observaciones As 'Observaciones'
 FROM enfermeriaprocedimiento ep
 INNER JOIN persona p ON p.IdPersona = ep.IdPersona
 INNER JOIN usuario u ON u.IdUsuario = ep.IdUsuario
@@ -25,7 +25,8 @@ WHERE ep.IdEnfermeriaProcedimiento = $idconsulta";
                       $datos["Especialidad"] = $test['Especialidad'];
                       $datos["FechaConsulta"] = $test['FechaConsulta'];
                       $datos["Motivo"] = $test['Motivo'];
-                      $datos["ID"] = $test['ID'];
+                      $datos["ID"] = $test['ID'];      
+                      $datos["Observaciones"] = $test['Observaciones'];
                   }
 
     header("Content-Type","application/json");
