@@ -3,16 +3,16 @@
 namespace app\controllers;
 
 use Yii;
-use app\models\Persona;
-use app\models\ConsultapacienteSearch;
+use app\models\Geografia;
+use app\models\GeografiaSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * ConsultapacienteController implements the CRUD actions for Persona model.
+ * GeografiaController implements the CRUD actions for Geografia model.
  */
-class ConsultapacienteController extends Controller
+class GeografiaController extends Controller
 {
     /**
      * {@inheritdoc}
@@ -30,12 +30,12 @@ class ConsultapacienteController extends Controller
     }
 
     /**
-     * Lists all Persona models.
+     * Lists all Geografia models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new ConsultapacienteSearch();
+        $searchModel = new GeografiaSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -45,8 +45,8 @@ class ConsultapacienteController extends Controller
     }
 
     /**
-     * Displays a single Persona model.
-     * @param integer $id
+     * Displays a single Geografia model.
+     * @param string $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
@@ -58,13 +58,13 @@ class ConsultapacienteController extends Controller
     }
 
     /**
-     * Creates a new Persona model.
+     * Creates a new Geografia model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new Persona();
+        $model = new Geografia();
 
         if ($model->load(Yii::$app->request->post())) {
           if ($model->save()) {
@@ -72,7 +72,7 @@ class ConsultapacienteController extends Controller
             } else {
               Yii::$app->session->setFlash('error', "User created successfully.");
             }
-            return $this->redirect(['view', 'id' => $model->IdPersona]);
+            return $this->redirect(['view', 'id' => $model->IdGeografia]);
         }
 
         return $this->render('create', [
@@ -81,9 +81,9 @@ class ConsultapacienteController extends Controller
     }
 
     /**
-     * Updates an existing Persona model.
+     * Updates an existing Geografia model.
      * If update is successful, the browser will be redirected to the 'view' page.
-     * @param integer $id
+     * @param string $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
@@ -97,7 +97,7 @@ class ConsultapacienteController extends Controller
             } else {
               Yii::$app->session->setFlash('warning', "User created successfully.");
             }
-            return $this->redirect(['index', 'id' => $model->IdPersona]);
+            return $this->redirect(['view', 'id' => $model->IdGeografia]);
         }
 
         return $this->render('update', [
@@ -106,9 +106,9 @@ class ConsultapacienteController extends Controller
     }
 
     /**
-     * Deletes an existing Persona model.
+     * Deletes an existing Geografia model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param integer $id
+     * @param string $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
@@ -120,15 +120,15 @@ class ConsultapacienteController extends Controller
     }
 
     /**
-     * Finds the Persona model based on its primary key value.
+     * Finds the Geografia model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param integer $id
-     * @return Persona the loaded model
+     * @param string $id
+     * @return Geografia the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Persona::findOne($id)) !== null) {
+        if (($model = Geografia::findOne($id)) !== null) {
             return $model;
         }
 

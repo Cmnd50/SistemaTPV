@@ -25,14 +25,18 @@
 
 
 
+
 use yii\helpers\Html;
 use yii\grid\GridView;
+use app\models\Persona;
 
 /* @var $this yii\web\View */
-/* @var $searchModel app\models\EnfermedadSearch */
+/* @var $searchModel app\models\ConsultamedicoSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Enfermedads';
+
+
+$this->title = 'Medico - Consultas';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 </br>
@@ -41,25 +45,29 @@ $this->params['breadcrumbs'][] = $this->title;
       <div class="ibox float-e-margins">
       <div class="ibox-title">
         <h3><?= Html::encode($this->title) ?></h3>
-        <p align="right">
-           <?= Html::a('Ingresar Enfermedad', ['create'], ['class' => 'btn btn-primary']) ?>
-        </p>
       </div>
           <div class="ibox-content">
               <table class="table table-hover">
-                  <?php echo $this->render('_search', ['model' => $searchModel]); ?>
-                                    <?= GridView::widget([
+                  <?= GridView::widget([
                       'dataProvider' => $dataProvider,
-'columns' => [
+                 'columns' => [
                         ['class' => 'yii\grid\SerialColumn'],
-                          'IdEnfermedad',
-'Codigo',
-'Numero',
-'Nombre',
-'IdTipoDiagnostico',
+                        [
+                            'attribute' => 'IdPersona',
+                            'value' => function ($model) {
+                                return $model->persona->getFullName();
+                            },
+                         ],
+                        [
+                            'attribute' => 'IdModulo',
+                            'value' => function ($model) {
+                                return $model->modulo->NombreModulo;
+                            },
+                         ],
+
                               ['class' => 'yii\grid\ActionColumn',
-                               'options' => ['style' => 'width:100px;'],
-                               'template' => " {view} {update} {delete} "
+                               'options' => ['style' => 'width:50px;'],
+                               'template' => "{medical}"
                               ],
                           ],
                       ]); ?>

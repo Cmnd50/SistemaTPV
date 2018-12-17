@@ -3,10 +3,10 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\Persona */
+/* @var $model app\models\Pais */
 
-$this->title = $model->IdPersona;
-$this->params['breadcrumbs'][] = ['label' => 'Personas', 'url' => ['index']];
+$this->title = $model->IdPais;
+$this->params['breadcrumbs'][] = ['label' => 'Pais', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 </br>
@@ -63,7 +63,7 @@ $this->params['breadcrumbs'][] = $this->title;
       <div class="ibox-title">
         <h3><?= Html::encode($this->title) ?></h3>
         <p align="right">
-             <?= Html::a('Actualizar', ['update', 'id' => $model->IdPersona], ['class' => 'btn btn-warning']) ?>
+             <?= Html::a('Actualizar', ['update', 'id' => $model->IdPais], ['class' => 'btn btn-warning']) ?>
         </p>
       </div>
           <div class="ibox-content">
@@ -71,30 +71,8 @@ $this->params['breadcrumbs'][] = $this->title;
                 <?= DetailView::widget([
                     'model' => $model,
                     'attributes' => [
-                        'IdPersona',
-            'Nombres',
-            'Apellidos',
-            'FechaNacimiento',
-            'Direccion',
-            'Correo',
-            'IdGeografia',
-            'Genero',
-            'IdEstadoCivil',
-            'IdParentesco',
-            'Telefono',
-            'Celular',
-            'Alergias',
-            'Medicamentos',
-            'Enfermedad',
-            'Dui',
-            'TelefonoResponsable',
-            'IdEstado',
-            'Categoria',
-            'NombresResponsable',
-            'ApellidosResponsable',
-            'Parentesco',
-            'DuiResponsable',
-            'IdPais',
+                        'IdPais',
+            'NombrePais',
                     ],
                 ]) ?>
             </table>

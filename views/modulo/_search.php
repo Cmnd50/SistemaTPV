@@ -4,26 +4,24 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\EnfermedadSearch */
+/* @var $model app\models\ModuloSearch */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="enfermedad-search">
+<div class="modulo-search">
 
     <?php $form = ActiveForm::begin([
         'action' => ['index'],
         'method' => 'get',
     ]); ?>
 
-    <?= $form->field($model, 'IdEnfermedad') ?>
+    <?= $form->field($model, 'IdModulo') ?>
 
-    <?= $form->field($model, 'Codigo') ?>
+    <?= $form->field($model, 'NombreModulo') ?>
 
-    <?= $form->field($model, 'Numero') ?>
+    <?= $form->field($model, 'Descripcion') ?>
 
-    <?= $form->field($model, 'Nombre') ?>
-
-    <?= $form->field($model, 'IdTipoDiagnostico') ?>
+    <?= $form->field($model, 'Activo')->checkbox() ?>
 
     <div class="form-group">
         <?= Html::submitButton('Buscar', ['class' => 'btn btn-info']) ?>

@@ -194,4 +194,9 @@ class Usuario extends \yii\db\ActiveRecord
     {
         return $this->hasMany(Usuarioperfil::className(), ['IdUsuario' => 'IdUsuario']);
     }
+
+        public function getFullName()
+    {
+            return $this->Nombres.' '.$this->Apellidos;
+    }
 }

@@ -22,8 +22,8 @@
         $direccion = $test['Direccion'];
         $genero = $test['Genero'];
         $estadocivil = $test['IdEstadoCivil'];
-          $nombreResponsable = $test['NombresResponsable'];
-          $apellidoResponsable = $test['ApellidosResponsable'];
+        $nombreResponsable = $test['NombresResponsable'];
+        $apellidoResponsable = $test['ApellidosResponsable'];
         $parentesco = $test['IdParentesco'];
         $telefono = $test['Telefono'];
         $celular = $test['Celular'];

@@ -3,16 +3,16 @@
 namespace app\controllers;
 
 use Yii;
-use app\models\Enfermedad;
-use app\models\EnfermedadSearch;
+use app\models\Pais;
+use app\models\PaisSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * EnfermedadController implements the CRUD actions for Enfermedad model.
+ * PaisController implements the CRUD actions for Pais model.
  */
-class EnfermedadController extends Controller
+class PaisController extends Controller
 {
     /**
      * {@inheritdoc}
@@ -30,12 +30,12 @@ class EnfermedadController extends Controller
     }
 
     /**
-     * Lists all Enfermedad models.
+     * Lists all Pais models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new EnfermedadSearch();
+        $searchModel = new PaisSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -45,7 +45,7 @@ class EnfermedadController extends Controller
     }
 
     /**
-     * Displays a single Enfermedad model.
+     * Displays a single Pais model.
      * @param integer $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
@@ -58,13 +58,13 @@ class EnfermedadController extends Controller
     }
 
     /**
-     * Creates a new Enfermedad model.
+     * Creates a new Pais model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new Enfermedad();
+        $model = new Pais();
 
         if ($model->load(Yii::$app->request->post())) {
           if ($model->save()) {
@@ -72,7 +72,7 @@ class EnfermedadController extends Controller
             } else {
               Yii::$app->session->setFlash('error', "User created successfully.");
             }
-            return $this->redirect(['view', 'id' => $model->IdEnfermedad]);
+            return $this->redirect(['view', 'id' => $model->IdPais]);
         }
 
         return $this->render('create', [
@@ -81,7 +81,7 @@ class EnfermedadController extends Controller
     }
 
     /**
-     * Updates an existing Enfermedad model.
+     * Updates an existing Pais model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -97,7 +97,7 @@ class EnfermedadController extends Controller
             } else {
               Yii::$app->session->setFlash('warning', "User created successfully.");
             }
-            return $this->redirect(['view', 'id' => $model->IdEnfermedad]);
+            return $this->redirect(['view', 'id' => $model->IdPais]);
         }
 
         return $this->render('update', [
@@ -106,7 +106,7 @@ class EnfermedadController extends Controller
     }
 
     /**
-     * Deletes an existing Enfermedad model.
+     * Deletes an existing Pais model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -120,15 +120,15 @@ class EnfermedadController extends Controller
     }
 
     /**
-     * Finds the Enfermedad model based on its primary key value.
+     * Finds the Pais model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Enfermedad the loaded model
+     * @return Pais the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Enfermedad::findOne($id)) !== null) {
+        if (($model = Pais::findOne($id)) !== null) {
             return $model;
         }
 

@@ -40,8 +40,7 @@ session_start();
 
 		// echo $insertexpediente;
 		//  echo $insertexpediente2;
-    header('Location: ../../web/enfermeriaconsulta/index);  //  
+    header('Location: ../../web/enfermeriaconsulta/index'); 
 
 
-?>
 

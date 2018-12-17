@@ -4,7 +4,7 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\Enfermedad */
+/* @var $model app\models\Geografia */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 <div class="ibox float-e-margins">
@@ -15,13 +15,15 @@ use yii\widgets\ActiveForm;
   <?php $form = ActiveForm::begin(); ?>
   <form class="form-horizontal">
   <div class="form-group">
-        <?= $form->field($model, 'Codigo')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'Numero')->textInput() ?>
+        <?= $form->field($model, 'IdGeografia')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'Nombre')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'IdTipoDiagnostico')->textInput() ?>
+    <?= $form->field($model, 'IdPadre')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'Nivel')->textInput() ?>
+
+    <?= $form->field($model, 'Jerarquia')->textInput(['maxlength' => true]) ?>
 
    </div>
     <div class="form-group" align="right">
