@@ -91,14 +91,21 @@
    
    
     // CONSULTA PARA CARGAR EXPEDIENTE DEL PACIENTE
-    $queryexpedientes = "SELECT * FROM persona WHERE IdPersona  = '$idpersonaid'";
+    $queryexpedientes = "SELECT PER.IdPersona as 'IdPersona', PER.Nombres as 'Nombres', PER.APellidos as 'Apellidos', PER.FechaNacimiento, Direccion, PER.Dui, PER.IdGeografia, GEO.Nombre as 'NombreDepartamento', PER.Genero, EC.Nombre as 'IdEstadoCivil', Correo, IdParentesco, Telefono, Celular, Alergias, Medicamentos, Enfermedad, TelefonoResponsable, NombresResponsable, 
+             ApellidosResponsable, Parentesco, DuiResponsable, PA.NombrePais as 'Pais'
+      FROM persona PER
+      INNER JOIN geografia GEO on PER.IdGeografia = GEO.IdGeografia
+      LEFT JOIN estadocivil EC on PER.IdEstadoCivil = EC.IdEstadoCivil
+      LEFT JOIN pais PA on PER.IdPais = PA.IdPais WHERE IdPersona  = '$idpersonaid'";
     $resultadoexpedientes = $mysqli->query($queryexpedientes);
     while ($test = $resultadoexpedientes->fetch_assoc()) {
       $nombres = $test['Nombres'];
       $apellidos = $test['Apellidos'];
       $dui = $test['Dui'];
+      $duiresponsable = $test['DuiResponsable'];
       $fnacimiento = $test['FechaNacimiento'];
       $geografia = $test['IdGeografia'];
+      $departamento = $test['NombreDepartamento'];
       $direccion = $test['Direccion'];
       $genero = $test['Genero'];
       $estadocivil = $test['IdEstadoCivil'];
@@ -111,6 +118,7 @@
       $alergias = $test['Alergias'];
       $medicinas = $test['Medicamentos'];
       $enfermedad = $test['Enfermedad'];
+      $pais = $test['Pais'];
       $telefonoresponsable = $test['TelefonoResponsable'];
       $date = date("Y-m-d H:i:s");
     }
@@ -122,8 +130,8 @@
    
    
     // CONSULTA PARA CARGAR EL ESTADO CIVIL EN EL EXPEDIENTE
-    $queryestadocivil = "SELECT * FROM estadocivil WHERE IdEstadoCivil = '$estadocivil'";
-    $resultadoestadocivil = $mysqli->query($queryestadocivil);
+    // $queryestadocivil = "SELECT * FROM estadocivil WHERE IdEstadoCivil = '$estadocivil'";
+    // $resultadoestadocivil = $mysqli->query($queryestadocivil);
    
    
     // CONSULTA PARA CARGAR LA TABLA DE LAS CONSULTAS EN EL EXPEDIENTE DEL PACIENTE
@@ -261,6 +269,214 @@
                      <div class="tab-content">
                         <div id="tab-CONSULTA" class="tab-pane active">
                            <div class="panel-body">
+                              <div class="tabs-container">
+                                 <ul class="nav nav-tabs">
+                                    <li class="active"><a data-toggle="tab" href="#tab-6"> FICHA DE CONSULTA</a></li>
+                                    <li class=""><a data-toggle="tab" href="#tab-7">DATOS GENERALES</a></li>
+                                    <li class=""><a data-toggle="tab" href="#tab-8">USO GINECOLOGICO</a></li>
+                                    <li class=""><a data-toggle="tab" href="#tab-9">USO PEDIATRICO</a></li>
+                                    <li class=""><a data-toggle="tab" href="#tab-10">OTROS</a></li>
+                                 </ul>
+                                 <form class="form-horizontal">
+                                    <div class="tab-content">
+                                       <div id="tab-6" class="tab-pane active">
+                                          <div class="panel-body">
+                                             <div class="form-group hidden">
+                                                <div class="col-sm-5"><input type="text"  name="txtIdConsulta" id="idconsulta"></div>
+                                             </div>
+                                             <div class="form-group">
+                                                <div class="col-sm-5"><input type="text" hidden="hidden" name="txtid" value="<?php echo $idpersona ?>">  </div>
+                                             </div>
+                                             <div class="form-group">
+                                                <div class="col-sm-2"><label for="inputEmail3" class="control-label">Paciente</label></div>
+                                                <div class="col-sm-4">
+                                                   <div class="input-group">
+                                                      <div class="input-group-addon"><i class="fa fa-user"></i></div>
+                                                      <input type="text" class="form-control" disabled="disabled" id="pacientes" value="<?php echo $idpersona ?>" name="txtPaciente" disabled="disabled">
+                                                   </div>
+                                                </div>
+                                                <div class="col-sm-2"><label for="inputEmail3" class="control-label">Medico</label></div>
+                                                <div class="col-sm-4">
+                                                   <div class="input-group">
+                                                      <div class="input-group-addon"><i class="fa fa-medkit"></i></div>
+                                                      <input type="text" class="form-control" value="<?php echo $idusuario ?>" disabled="disabled" id="medicos" name="txtMedico" disabled="disabled">
+                                                   </div>
+                                                </div>
+                                             </div>
+                                             <div class="form-group">
+                                                <div class="col-sm-2"><label for="inputEmail3" class="control-label">Especialidad</label></div>
+                                                <div class="col-sm-4">
+                                                   <div class="input-group">
+                                                      <div class="input-group-addon"><i class="fa fa-plus-square-o"></i></div>
+                                                      <input type="text" class="form-control" value="<?php echo $idmodulo ?>"  disabled="disabled" id="modulos" name="txtMedico" disabled="disabled">
+                                                   </div>
+                                                </div>
+                                                <div class="col-sm-2"><label for="inputEmail3" class="control-label">Fecha</label></div>
+                                                <div class="col-sm-4">
+                                                   <div class="input-group">
+                                                      <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
+                                                      <input type="text" class="form-control" value="<?php echo $fechaconsulta ?>" disabled="disabled" id="fechas" name="txtfecha" disabled="disabled">
+                                                   </div>
+                                                </div>
+                                             </div>
+                                          </div>
+                                       </div>
+                                       <div id="tab-7" class="tab-pane">
+                                          <div class="panel-body">
+                                             <div class="form-group">
+                                                <div class="col-sm-2"><label for="inputEmail3" class="control-label">Peso</label></div>
+                                                <div class="col-sm-2">
+                                                   <div class="input-group">
+                                                      <div class="input-group-addon"><i class="fa fa-slideshare"></i></div>
+                                                      <input type="text" class="form-control" disabled="disabled" data-inputmask='"mask": "999.9"' data-mask name="txtPeso" id="pesos" required="">
+                                                   </div>
+                                                </div>
+                                                <div class="col-sm-2">
+                                                   <input type="text" class="form-control" disabled="disabled" id="unidadpesos" required="">
+                                                </div>
+                                                <div class="col-sm-2"><label for="inputEmail3" class="control-label">Altura</label></div>
+                                                <div class="col-sm-2">
+                                                   <div class="input-group">
+                                                      <div class="input-group-addon"><i class="fa fa-arrows-v"></i></div>
+                                                      <input type="text" class="form-control" disabled="disabled" data-inputmask='"mask": "9.99"' data-mask name="txtAltura" id="alturas" required="">
+                                                   </div>
+                                                </div>
+                                                <div class="col-sm-2">
+                                                   <input type="text" class="form-control" disabled="disabled" data-inputmask='"mask": "9.99"' data-mask name="txtAltura" id="unidadalturas" required="">
+                                                </div>
+                                             </div>
+                                             <div class="form-group">
+                                                <div class="col-sm-2"><label for="inputEmail3" class="control-label">Temperatura</label></div>
+                                                <div class="col-sm-2">
+                                                   <div class="input-group">
+                                                      <div class="input-group-addon"><i class="fa fa-thermometer-quarter"></i></div>
+                                                      <input type="text" class="form-control" disabled="disabled" data-inputmask='"mask": "99.9"' data-mask name="txtTemperatura" id="temperaturas" required="">
+                                                   </div>
+                                                </div>
+                                                <div class="col-sm-2">
+                                                   <input type="text" class="form-control" disabled="disabled" data-inputmask='"mask": "99.9"' data-mask  id="unidadtemperaturas" required="">
+                                                </div>
+                                                <div class="col-sm-2"><label for="inputEmail3" class="control-label">F/R</label></div>
+                                                <div class="col-sm-4">
+                                                   <div class="input-group">
+                                                      <div class="input-group-addon"><i class="fa fa-tint"></i></div>
+                                                      <input type="text" class="form-control" disabled="disabled"  name="txtFR" id="frs" required="">
+                                                   </div>
+                                                </div>
+                                             </div>
+                                             <div class="form-group">
+                                                <div class="col-sm-2"><label for="inputEmail3" class="control-label">Pulso</label></div>
+                                                <div class="col-sm-2">
+                                                   <div class="input-group">
+                                                      <div class="input-group-addon"><i class="fa fa-heart"></i></div>
+                                                      <input type="text" class="form-control" disabled="disabled" data-inputmask='"mask": "999"' data-mask name="txtPulso" id="pulsos" required="">
+                                                   </div>
+                                                </div>
+                                                <div class="col-sm-2">
+                                                   <label for="inputEmail3" class="control-label">lat/min</label>
+                                                </div>
+                                                <div class="col-sm-2"><label for="inputEmail3" class="control-label">Presion</label></div>
+                                                <div class="col-sm-2">
+                                                   <div class="input-group">
+                                                      <div class="input-group-addon"><i class="fa fa-heart-o"></i></div>
+                                                      <input type="text" class="form-control" disabled="disabled" data-inputmask='"mask": "999"' data-mask name="txtMax" placeholder="MAX" id="maxs" required="">
+                                                   </div>
+                                                </div>
+                                                <div class="col-sm-2">
+                                                   <div class="input-group">
+                                                      <div class="input-group-addon"><i class="fa fa-medkit"></i></div>
+                                                      <input type="text" class="form-control" disabled="disabled" data-inputmask='"mask": "99"' data-mask name="txtMin" placeholder="MIN" id="mins" required="">
+                                                   </div>
+                                                </div>
+                                             </div>
+                                             <div class="form-group">
+                                                <div class="col-sm-2"><label for="inputEmail3" class="control-label">Glucotex</label></div>
+                                                <div class="col-sm-10">
+                                                   <div class="input-group">
+                                                      <div class="input-group-addon"><i class="fa fa-thumbs-o-up"></i></div>
+                                                      <input type="text" class="form-control" disabled="disabled"  name="txtGluco"  id="glucos" required="">
+                                                   </div>
+                                                </div>
+                                             </div>
+                                          </div>
+                                       </div>
+                                       <div id="tab-8" class="tab-pane">
+                                          <div class="panel-body">
+                                             <div class="form-group">
+                                                <div class="col-sm-2"><label for="inputEmail3" class="control-label">Ult. Menstrua</label></div>
+                                                <div class="col-sm-4">
+                                                   <div class="input-group">
+                                                      <div class="input-group-addon"><i class="fa fa-circle"></i></div>
+                                                      <input type="text" class="form-control" disabled="disabled" data-inputmask="'alias': 'yyyy/mm/dd'" data-mask name="txtUmestruacion" id="ultimamestruacions">
+                                                   </div>
+                                                </div>
+                                                <div class="col-sm-2"><label for="inputEmail3" class="control-label">Ult.PAP</label></div>
+                                                <div class="col-sm-4">
+                                                   <div class="input-group">
+                                                      <div class="input-group-addon"><i class="fa fa-circle-o"></i></div>
+                                                      <input type="text" class="form-control" disabled="disabled" data-inputmask="'alias': 'yyyy/mm/dd'" data-mask name="txtUpap" id="ultimapaps">
+                                                   </div>
+                                                </div>
+                                             </div>
+                                          </div>
+                                       </div>
+                                       <div id="tab-9" class="tab-pane">
+                                          <div class="panel-body">
+                                             <div class="form-group">
+                                                <div class="col-sm-1"><label for="inputEmail3" class="control-label">P/C</label></div>
+                                                <div class="col-sm-4">
+                                                   <div class="input-group">
+                                                      <div class="input-group-addon"><i class="fa fa-toggle-down"></i></div>
+                                                      <input type="text" class="form-control" disabled="disabled" name="txtpc" id="pcs">
+                                                   </div>
+                                                </div>
+                                                <div class="col-sm-1"><label for="inputEmail3" class="control-label">cm.</label></div>
+                                                <div class="col-sm-1"><label for="inputEmail3" class="control-label">P/T</label></div>
+                                                <div class="col-sm-4">
+                                                   <div class="input-group">
+                                                      <div class="input-group-addon"><i class="fa fa-toggle-up"></i></div>
+                                                      <input type="text" class="form-control" disabled="disabled"  name="txtpt" id="pts">
+                                                   </div>
+                                                </div>
+                                                <div class="col-sm-1"><label for="inputEmail3" class="control-label">cm.</label></div>
+                                             </div>
+                                             <div class="form-group">
+                                                <div class="col-sm-1"><label for="inputEmail3" class="control-label">P/A</label></div>
+                                                <div class="col-sm-4">
+                                                   <div class="input-group">
+                                                      <div class="input-group-addon"><i class="fa fa-toggle-right"></i></div>
+                                                      <input type="text" class="form-control" disabled="disabled"  name="txtpa" id="pas">
+                                                   </div>
+                                                </div>
+                                                <div class="col-sm-1"><label for="inputEmail3" class="control-label">cm.</label></div>
+                                             </div>
+                                          </div>
+                                       </div>
+                                       <div id="tab-10" class="tab-pane">
+                                          <div class="panel-body">
+                                             <div class="form-group">
+                                                <div class="col-sm-2"><label for="inputEmail3" class="control-label">Observaciones</label></div>
+                                                <div class="col-sm-10">
+                                                   <div class="input-group">
+                                                      <div class="input-group-addon"><i class="fa fa-search"></i></div>
+                                                      <textarea type="text" rows="4" class="form-control" name="txtObservaciones" disabled="disabled" data-parsley-maxlength="100" id="observacioness" data-parsley-maxlength="100"> </textarea>
+                                                   </div>
+                                                </div>
+                                             </div>
+                                             <div class="form-group">
+                                                <div class="col-sm-2"><label for="inputEmail3" class="control-label">Motivo de Visita</label></div>
+                                                <div class="col-sm-10">
+                                                   <div class="input-group">
+                                                      <div class="input-group-addon"><i class="fa fa-comment-o"></i></div>
+                                                      <textarea type="text" rows="4" class="form-control" name="txtMotivo" data-parsley-maxlength="100" disabled="disabled" id="motivos" data-parsley-maxlength="100" required=""> </textarea>
+                                                   </div>
+                                                </div>
+                                             </div>
+                                          </div>
+                                       </div>
+                                    </div>
+                                 </form>
+                              </div>
                            </div>
                         </div>
                         <div id="tab-EXPEDIENTE" class="tab-pane">
@@ -297,14 +513,14 @@
                                              <div class="col-sm-5">
                                                 <div class="input-group">
                                                    <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
-                                                   <input type="text" class="form-control" data-inputmask="'alias': 'yyyy/mm/dd'" data-mask name="txtFechaNacimiento" id="txtFechaNacimiento" required="" value="<?php echo $apellidos ?>" disabled="disabled">
+                                                   <input type="text" class="form-control" data-inputmask="'alias': 'yyyy/mm/dd'" data-mask name="txtFechaNacimiento" id="txtFechaNacimiento" required="" value="<?php echo $fnacimiento ?>" disabled="disabled">
                                                 </div>
                                              </div>
                                              <label for="txtGenero" class="col-sm-1 control-label">Genero</label>
                                              <div class="col-sm-5">
                                                 <div class="input-group">
                                                    <div class="input-group-addon"><i class="fa fa-genderless"></i></div>
-                                                   <input type="text" class="form-control" name="txtFechaNacimiento" id="txtFechaNacimiento" required="" value="<?php echo $apellidos ?>" disabled="disabled">
+                                                   <input type="text" class="form-control" name="txtFechaNacimiento" id="txtGenero" value="<?php echo $genero ?>" disabled="disabled">
                                                 </div>
                                              </div>
                                           </div>
@@ -313,62 +529,14 @@
                                              <div class="col-sm-5">
                                                 <div class="input-group">
                                                    <div class="input-group-addon"><i class="fa fa-circle-o"></i></div>
-                                                   <select class="form-control select2" style="width: 100%;" id="txtIdEstadoCivil" name="txtIdEstadoCivil" required="" >
-                                                      <option value=""></option>
-                                                      <?php
-                                                         while ($row = $resultadoestadocivil->fetch_assoc()) {
-                                                           echo "<option value = '".$row['IdEstadoCivil']."'>".$row['Nombre']."</option>";
-                                                         }
-                                                         ?>
-                                                   </select>
+                                                   <input type="text" class="form-control" name="txtFechaNacimiento" id="txtFechaNacimiento" required="" value="<?php echo $estadocivil ?>" disabled="disabled">
                                                 </div>
                                              </div>
                                              <label for="txtDui" class="col-sm-1 control-label">Dui</label>
                                              <div class="col-sm-5">
                                                 <div class="input-group">
                                                    <div class="input-group-addon"><i class="fa fa-credit-card"></i></div>
-                                                   <input type="text" class="form-control" data-mask="99999999-9" name="txtDui" id="txtDui"  >
-                                                </div>
-                                             </div>
-                                          </div>
-                                          <div class="form-group">
-                                             <label for="txtIdPais" class="col-sm-1 control-label">Pais</label>
-                                             <div class="col-sm-5">
-                                                <div class="input-group">
-                                                   <div class="input-group-addon"><i class="fa fa-flag"></i></div>
-                                                   <select class="form-control select2" style="width: 100%;" id="txtIdPais" name="txtIdPais" required="">
-                                                      <option value=""></option>
-                                                   </select>
-                                                </div>
-                                             </div>
-                                             <label for="txtDepartamento" class="col-sm-1 control-label">Departamento</label>
-                                             <div class="col-sm-5">
-                                                <div class="input-group">
-                                                   <div class="input-group-addon"><i class="fa fa-flag"></i></div>
-                                                   <select class="form-control select2" style="width: 100%;" id="txtDepartamento" name="txtDepartamento" required="" >
-                                                      <option value=""></option>
-                                                      <?php
-                                                         while ($row = $resultadodepartamentos->fetch_assoc()) {
-                                                           echo "<option value = '".$row['IdGeografia']."'>".$row['Nombre']."</option>";
-                                                         }
-                                                         ?>
-                                                   </select>
-                                                </div>
-                                             </div>
-                                          </div>
-                                          <div class="form-group">
-                                             <label for="txtMunicipio" class="col-sm-1 control-label">Municipio</label>
-                                             <div class="col-sm-5">
-                                                <div class="input-group">
-                                                   <div class="input-group-addon"><i class="fa fa-flag"></i></div>
-                                                   <select class="form-control select2" style="width: 100%;" id="txtMunicipio" name="txtMunicipio" required=""></select>
-                                                </div>
-                                             </div>
-                                             <label for="txtCanton" class="col-sm-1 control-label">Cantón</label>
-                                             <div class="col-sm-5">
-                                                <div class="input-group">
-                                                   <div class="input-group-addon"><i class="fa fa-flag"></i></div>
-                                                   <select class="form-control select2" style="width: 100%;" name="txtCanton" id="txtCanton"></select>
+                                                   <input type="text" class="form-control" data-mask="99999999-9" name="txtDui" id="txtDui" value="<?php echo $dui ?>" disabled="disabled" >
                                                 </div>
                                              </div>
                                           </div>
@@ -377,7 +545,7 @@
                                              <div class="col-sm-11">
                                                 <div class="input-group">
                                                    <div class="input-group-addon"><i class="fa fa-arrows"></i></div>
-                                                   <input type="text" class="form-control" id="txtDireccion" name="txtDireccion" required="">
+                                                   <input type="text" class="form-control" id="txtDireccion" name="txtDireccion" required="" value="<?php echo $direccion ?>" disabled="disabled">
                                                 </div>
                                              </div>
                                           </div>
@@ -386,21 +554,21 @@
                                              <div class="col-sm-2">
                                                 <div class="input-group">
                                                    <div class="input-group-addon"><i class="fa fa-phone-square"></i></div>
-                                                   <input type="text" class="form-control"  data-mask="9999-9999" id="txtTelefono" name="txtTelefono" />
+                                                   <input type="text" class="form-control"  data-mask="9999-9999" id="txtTelefono" name="txtTelefono" value="<?php echo $telefono ?>" disabled="disabled" />
                                                 </div>
                                              </div>
                                              <label for="txtCelular" class="col-sm-1 control-label">Celular</label>
                                              <div class="col-sm-2">
                                                 <div class="input-group">
                                                    <div class="input-group-addon"><i class="fa fa-mobile"></i></div>
-                                                   <input type="text" class="form-control" data-mask="9999-9999" id="txtCelular" name="txtCelular" />
+                                                   <input type="text" class="form-control" data-mask="9999-9999" id="txtCelular" name="txtCelular" value="<?php echo $celular ?>" disabled="disabled"/>
                                                 </div>
                                              </div>
                                              <label for="txtCorreo" class="col-sm-1 control-label">Correo</label>
                                              <div class="col-sm-5">
                                                 <div class="input-group">
                                                    <div class="input-group-addon"><i class="fa fa-envelope"></i></div>
-                                                   <input type="text" class="form-control" id="txtCorreo" name="txtCorreo"  data-parsley-trigger="change">
+                                                   <input type="text" value="<?php echo $correo ?>" disabled="disabled" class="form-control" id="txtCorreo" name="txtCorreo"  data-parsley-trigger="change">
                                                 </div>
                                              </div>
                                           </div>
@@ -409,18 +577,18 @@
                                     <div id="EXPRESPON" class="tab-pane">
                                        <div class="panel-body">
                                           <div class="form-group">
-                                             <label for="txtNombresResponsable" class="col-sm-1 control-label">Nombres</label>
+                                             <label for="txtNombresResponsable"  class="col-sm-1 control-label">Nombres</label>
                                              <div class="col-sm-5">
                                                 <div class="input-group">
                                                    <div class="input-group-addon"><i class="fa fa-user"></i></div>
-                                                   <input type="text" class="form-control" id="txtNombresResponsable"  name="txtNombresResponsable"/>
+                                                   <input type="text" class="form-control" id="txtNombresResponsable" value="<?php echo $nombreResponsable ?>" disabled="disabled"  name="txtNombresResponsable"/>
                                                 </div>
                                              </div>
                                              <label for="txtApellidosResponsable" class="col-sm-1 control-label">Apellidos</label>
                                              <div class="col-sm-5">
                                                 <div class="input-group">
                                                    <div class="input-group-addon"><i class="fa fa-user"></i></div>
-                                                   <input type="text" class="form-control" id="txtApellidosResponsable"  name="txtApellidosResponsable"/>
+                                                   <input type="text" class="form-control" id="txtApellidosResponsable" value="<?php echo $apellidoResponsable ?>" disabled="disabled"  name="txtApellidosResponsable"/>
                                                 </div>
                                              </div>
                                           </div>
@@ -429,36 +597,21 @@
                                              <div class="col-sm-2">
                                                 <div class="input-group">
                                                    <div class="input-group-addon"><i class="fa fa-users"></i></div>
-                                                   <select class="form-control" id="txtParentesco" name="txtParentesco">
-                                                      <option value=""></option>
-                                                      <option value="ESPOSO">ESPOSO</option>
-                                                      <option value="ESPOSA">ESPOSA</option>
-                                                      <option value="MADRE">MADRE</option>
-                                                      <option value="PADRE">PADRE</option>
-                                                      <option value="ABUELO">ABUELO</option>
-                                                      <option value="ABUELA">ABUELA</option>
-                                                      <option value="TIO">TIO</option>
-                                                      <option value="TIA">TIA</option>
-                                                      <option value="HERMANO">HERMANO</option>
-                                                      <option value="HERMANA">HERMANA</option>
-                                                      <option value="PRIMO">PRIMO</option>
-                                                      <option value="PRIMA">PRIMA</option>
-                                                      <option value="NINGUNO">NINGUNO</option>
-                                                   </select>
+                                                   <input type="text" class="form-control" id="txtApellidosResponsable" value="<?php echo $parentesco ?>" disabled="disabled"  name="txtApellidosResponsable"/>
                                                 </div>
                                              </div>
                                              <label for="txtDuiResponsable" class="col-sm-1 control-label">Dui Responsable</label>
                                              <div class="col-sm-2">
                                                 <div class="input-group">
                                                    <div class="input-group-addon"><i class="fa fa-credit-card"></i></div>
-                                                   <input type="text" class="form-control" data-inputmask='"mask": "99999999-9"' data-mask name="txtDuiResponsable" id="txtDuiResponsable" >
+                                                   <input type="text" class="form-control" id="txtApellidosResponsable" value="<?php echo $duiresponsable ?>" disabled="disabled"  name="txtApellidosResponsable"/>
                                                 </div>
                                              </div>
                                              <label for="txtTelefonoResponsable" class="col-sm-1 control-label">Telefono</label>
                                              <div class="col-sm-2">
                                                 <div class="input-group">
                                                    <div class="input-group-addon"><i class="fa fa-phone-square"></i></div>
-                                                   <input type="text" class="form-control"  data-inputmask='"mask": "9999-9999"' data-mask id="txtTelefonoResponsable" name="txtTelefonoResponsable" />
+                                                   <input type="text" value="<?php echo $telefonoresponsable ?>" disabled="disabled" class="form-control"  data-inputmask='"mask": "9999-9999"' data-mask id="txtTelefonoResponsable" name="txtTelefonoResponsable" />
                                                 </div>
                                              </div>
                                           </div>
@@ -471,7 +624,7 @@
                                              <div class="col-sm-10">
                                                 <div class="input-group">
                                                    <div class="input-group-addon"><i class="fa fa-check"></i></div>
-                                                   <textarea type="text" rows="3" class="form-control" id="txtEnfermedad" name="txtEnfermedad" data-parsley-maxlength="100"></textarea>
+                                                   <input type="text" value="<?php echo $enfermedad ?>" disabled="disabled" rows="3" class="form-control" id="txtEnfermedad" name="txtEnfermedad" >
                                                 </div>
                                              </div>
                                           </div>
@@ -480,7 +633,7 @@
                                              <div class="col-sm-10">
                                                 <div class="input-group">
                                                    <div class="input-group-addon"><i class="fa fa-check"></i></div>
-                                                   <textarea type="text" rows="3" class="form-control" id="txtAlergias" name="txtAlergias" data-parsley-maxlength="100"></textarea>
+                                                   <input type="text" value="<?php echo $alergias ?>" disabled="disabled" rows="3" class="form-control" id="txtAlergias" name="txtAlergias" data-parsley-maxlength="100">
                                                 </div>
                                              </div>
                                           </div>
@@ -489,7 +642,7 @@
                                              <div class="col-sm-10">
                                                 <div class="input-group">
                                                    <div class="input-group-addon"><i class="fa fa-check"></i></div>
-                                                   <textarea type="text" rows="3" class="form-control" id="txtMedicamentos"  name="txtMedicamentos" data-parsley-maxlength="100"></textarea>
+                                                   <input type="text" value="<?php echo $medicinas ?>" disabled="disabled" rows="3" class="form-control" id="txtMedicamentos"  name="txtMedicamentos" data-parsley-maxlength="100">
                                                 </div>
                                              </div>
                                           </div>
