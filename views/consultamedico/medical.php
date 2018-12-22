@@ -297,14 +297,14 @@
                                                 <div class="col-sm-4">
                                                    <div class="input-group">
                                                       <div class="input-group-addon"><i class="fa fa-user"></i></div>
-                                                      <input type="text" class="form-control" disabled="disabled" id="pacientes" value="<?php echo $idpersona ?>" name="txtPaciente" disabled="disabled">
+                                                      <input type="text" class="form-control" disabled="disabled"  value="<?php echo $idpersona ?>" name="txtPaciente" disabled="disabled">
                                                    </div>
                                                 </div>
                                                 <div class="col-sm-2"><label for="inputEmail3" class="control-label">Medico</label></div>
                                                 <div class="col-sm-4">
                                                    <div class="input-group">
                                                       <div class="input-group-addon"><i class="fa fa-medkit"></i></div>
-                                                      <input type="text" class="form-control" value="<?php echo $idusuario ?>" disabled="disabled" id="medicos" name="txtMedico" disabled="disabled">
+                                                      <input type="text" class="form-control" value="<?php echo $idusuario ?>" disabled="disabled" name="txtMedico" disabled="disabled">
                                                    </div>
                                                 </div>
                                              </div>
@@ -313,14 +313,14 @@
                                                 <div class="col-sm-4">
                                                    <div class="input-group">
                                                       <div class="input-group-addon"><i class="fa fa-plus-square-o"></i></div>
-                                                      <input type="text" class="form-control" value="<?php echo $idmodulo ?>"  disabled="disabled" id="modulos" name="txtMedico" disabled="disabled">
+                                                      <input type="text" class="form-control" value="<?php echo $idmodulo ?>"  disabled="disabled" name="txtMedico" disabled="disabled">
                                                    </div>
                                                 </div>
                                                 <div class="col-sm-2"><label for="inputEmail3" class="control-label">Fecha</label></div>
                                                 <div class="col-sm-4">
                                                    <div class="input-group">
                                                       <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
-                                                      <input type="text" class="form-control" value="<?php echo $fechaconsulta ?>" disabled="disabled" id="fechas" name="txtfecha" disabled="disabled">
+                                                      <input type="text" class="form-control" value="<?php echo $fechaconsulta ?>" disabled="disabled" name="txtfecha" disabled="disabled">
                                                    </div>
                                                 </div>
                                              </div>
@@ -333,21 +333,21 @@
                                                 <div class="col-sm-2">
                                                    <div class="input-group">
                                                       <div class="input-group-addon"><i class="fa fa-slideshare"></i></div>
-                                                      <input type="text" class="form-control" value="<?php echo $peso ?>" disabled="disabled" data-inputmask='"mask": "999.9"' data-mask name="txtPeso" id="pesos" required="">
+                                                      <input type="text" class="form-control" value="<?php echo $peso ?>" disabled="disabled" data-inputmask='"mask": "999.9"' data-mask name="txtPeso" required="">
                                                    </div>
                                                 </div>
                                                 <div class="col-sm-2">
-                                                   <input type="text" class="form-control" value="<?php echo $unidadpeso ?>" disabled="disabled" id="unidadpesos" required="">
+                                                   <input type="text" class="form-control" value="<?php echo $unidadpeso ?>" disabled="disabled"  required="">
                                                 </div>
                                                 <div class="col-sm-2"><label for="inputEmail3" class="control-label">Altura</label></div>
                                                 <div class="col-sm-2">
                                                    <div class="input-group">
                                                       <div class="input-group-addon"><i class="fa fa-arrows-v"></i></div>
-                                                      <input type="text" class="form-control" value="<?php echo $altura ?>" disabled="disabled" data-inputmask='"mask": "9.99"' data-mask name="txtAltura" id="alturas" required="">
+                                                      <input type="text" class="form-control" value="<?php echo $altura ?>" disabled="disabled" data-inputmask='"mask": "9.99"' data-mask name="txtAltura"  required="">
                                                    </div>
                                                 </div>
                                                 <div class="col-sm-2">
-                                                   <input type="text" class="form-control" value="<?php echo $unidadaltura ?>" disabled="disabled" data-inputmask='"mask": "9.99"' data-mask name="txtAltura" id="unidadalturas" required="">
+                                                   <input type="text" class="form-control" value="<?php echo $unidadaltura ?>" disabled="disabled" data-inputmask='"mask": "9.99"' data-mask name="txtAltura" required="">
                                                 </div>
                                              </div>
                                              <div class="form-group">
@@ -355,17 +355,17 @@
                                                 <div class="col-sm-2">
                                                    <div class="input-group">
                                                       <div class="input-group-addon"><i class="fa fa-thermometer-quarter"></i></div>
-                                                      <input type="text" class="form-control" value="<?php echo $temperatura ?>" disabled="disabled" data-inputmask='"mask": "99.9"' data-mask name="txtTemperatura" id="temperaturas" required="">
+                                                      <input type="text" class="form-control" value="<?php echo $temperatura ?>" disabled="disabled" data-inputmask='"mask": "99.9"' data-mask name="txtTemperatura" required="">
                                                    </div>
                                                 </div>
                                                 <div class="col-sm-2">
-                                                   <input type="text" class="form-control" disabled="disabled" value="<?php echo $unidadtemperatura ?>" data-inputmask='"mask": "99.9"' data-mask  id="unidadtemperaturas" required="">
+                                                   <input type="text" class="form-control" disabled="disabled" value="<?php echo $unidadtemperatura ?>" data-inputmask='"mask": "99.9"' data-mask  required="">
                                                 </div>
                                                 <div class="col-sm-2"><label for="inputEmail3" class="control-label">F/R</label></div>
                                                 <div class="col-sm-4">
                                                    <div class="input-group">
                                                       <div class="input-group-addon"><i class="fa fa-tint"></i></div>
-                                                      <input type="text" class="form-control" value="<?php echo $fr ?>" disabled="disabled"  name="txtFR" id="frs" required="">
+                                                      <input type="text" class="form-control" value="<?php echo $fr ?>" disabled="disabled"  name="txtFR"required="">
                                                    </div>
                                                 </div>
                                              </div>
@@ -374,7 +374,7 @@
                                                 <div class="col-sm-2">
                                                    <div class="input-group">
                                                       <div class="input-group-addon"><i class="fa fa-heart"></i></div>
-                                                      <input type="text" class="form-control" value="<?php echo $pulso ?>" disabled="disabled" data-inputmask='"mask": "999"' data-mask name="txtPulso" id="pulsos" required="">
+                                                      <input type="text" class="form-control" value="<?php echo $pulso ?>" disabled="disabled" data-inputmask='"mask": "999"' data-mask name="txtPulso" required="">
                                                    </div>
                                                 </div>
                                                 <div class="col-sm-2">
@@ -390,7 +390,7 @@
                                                 <div class="col-sm-2">
                                                    <div class="input-group">
                                                       <div class="input-group-addon"><i class="fa fa-medkit"></i></div>
-                                                      <input type="text" class="form-control" value="<?php echo $min ?>" disabled="disabled" data-inputmask='"mask": "99"' data-mask name="txtMin" placeholder="MIN" id="mins" required="">
+                                                      <input type="text" class="form-control" value="<?php echo $min ?>" disabled="disabled" data-inputmask='"mask": "99"' data-mask name="txtMin" placeholder="MIN"  required="">
                                                    </div>
                                                 </div>
                                              </div>
@@ -399,7 +399,7 @@
                                                 <div class="col-sm-10">
                                                    <div class="input-group">
                                                       <div class="input-group-addon"><i class="fa fa-thumbs-o-up"></i></div>
-                                                      <input type="text" class="form-control" disabled="disabled" value="<?php echo $glucotex ?>"  name="txtGluco"  id="glucos" required="">
+                                                      <input type="text" class="form-control" disabled="disabled" value="<?php echo $glucotex ?>"  name="txtGluco"  required="">
                                                    </div>
                                                 </div>
                                              </div>
@@ -412,14 +412,14 @@
                                                 <div class="col-sm-4">
                                                    <div class="input-group">
                                                       <div class="input-group-addon"><i class="fa fa-circle"></i></div>
-                                                      <input type="text" class="form-control" disabled="disabled" value="<?php echo $periodomenstrual ?>" data-inputmask="'alias': 'yyyy/mm/dd'" data-mask name="txtUmestruacion" id="ultimamestruacions">
+                                                      <input type="text" class="form-control" disabled="disabled" value="<?php echo $periodomenstrual ?>" data-inputmask="'alias': 'yyyy/mm/dd'" data-mask name="txtUmestruacion" >
                                                    </div>
                                                 </div>
                                                 <div class="col-sm-2"><label for="inputEmail3" class="control-label">Ult.PAP</label></div>
                                                 <div class="col-sm-4">
                                                    <div class="input-group">
                                                       <div class="input-group-addon"><i class="fa fa-circle-o"></i></div>
-                                                      <input type="text" class="form-control" value="<?php echo $pap ?>" disabled="disabled" data-inputmask="'alias': 'yyyy/mm/dd'" data-mask name="txtUpap" id="ultimapaps">
+                                                      <input type="text" class="form-control" value="<?php echo $pap ?>" disabled="disabled" data-inputmask="'alias': 'yyyy/mm/dd'" data-mask name="txtUpap">
                                                    </div>
                                                 </div>
                                              </div>
@@ -432,7 +432,7 @@
                                                 <div class="col-sm-4">
                                                    <div class="input-group">
                                                       <div class="input-group-addon"><i class="fa fa-toggle-down"></i></div>
-                                                      <input type="text" class="form-control" disabled="disabled" value="<?php echo $pc ?>" name="txtpc" id="pcs">
+                                                      <input type="text" class="form-control" disabled="disabled" value="<?php echo $pc ?>" name="txtpc">
                                                    </div>
                                                 </div>
                                                 <div class="col-sm-1"><label for="inputEmail3" class="control-label">cm.</label></div>
@@ -440,7 +440,7 @@
                                                 <div class="col-sm-4">
                                                    <div class="input-group">
                                                       <div class="input-group-addon"><i class="fa fa-toggle-up"></i></div>
-                                                      <input type="text" class="form-control" value="<?php echo $pt ?>" disabled="disabled"  name="txtpt" id="pts">
+                                                      <input type="text" class="form-control" value="<?php echo $pt ?>" disabled="disabled"  name="txtpt">
                                                    </div>
                                                 </div>
                                                 <div class="col-sm-1"><label for="inputEmail3" class="control-label">cm.</label></div>
@@ -450,7 +450,7 @@
                                                 <div class="col-sm-4">
                                                    <div class="input-group">
                                                       <div class="input-group-addon"><i class="fa fa-toggle-right"></i></div>
-                                                      <input type="text" class="form-control" value="<?php echo $pa ?>" disabled="disabled"  name="txtpa" id="pas">
+                                                      <input type="text" class="form-control" value="<?php echo $pa ?>" disabled="disabled"  name="txtpa">
                                                    </div>
                                                 </div>
                                                 <div class="col-sm-1"><label for="inputEmail3" class="control-label">cm.</label></div>
@@ -464,7 +464,7 @@
                                                 <div class="col-sm-10">
                                                    <div class="input-group">
                                                       <div class="input-group-addon"><i class="fa fa-search"></i></div>
-                                                      <input type="text" rows="4" class="form-control" value="<?php echo $observaciones ?>" name="txtObservaciones" disabled="disabled" data-parsley-maxlength="100" id="observacioness" data-parsley-maxlength="100">
+                                                      <input type="text" rows="4" class="form-control" value="<?php echo $observaciones ?>" name="txtObservaciones" disabled="disabled" data-parsley-maxlength="100" data-parsley-maxlength="100">
                                                    </div>
                                                 </div>
                                              </div>
@@ -473,7 +473,7 @@
                                                 <div class="col-sm-10">
                                                    <div class="input-group">
                                                       <div class="input-group-addon"><i class="fa fa-comment-o"></i></div>
-                                                      <input type="text" rows="4" class="form-control" value="<?php echo $motivo ?>" name="txtMotivo" data-parsley-maxlength="100" disabled="disabled" id="motivos" data-parsley-maxlength="100" required="">
+                                                      <input type="text" rows="4" class="form-control" value="<?php echo $motivo ?>" name="txtMotivo" data-parsley-maxlength="100" disabled="disabled" data-parsley-maxlength="100" required="">
                                                    </div>
                                                 </div>
                                              </div>
@@ -866,7 +866,7 @@
                                          <div class="col-sm-2">
                                             <div class="input-group">
                                                <div class="input-group-addon"><i class="fa fa-slideshare"></i></div>
-                                               <input type="text" class="form-control" disabled="disabled" data-inputmask='"mask": "999.9"' data-mask name="txtPeso" id="pesos" required="">
+                                               <input type="text" class="form-control" value="" disabled="disabled" data-inputmask='"mask": "999.9"' data-mask name="txtPeso" id="pesos" required="">
                                             </div>
                                          </div>
                                          <div class="col-sm-2">
@@ -1150,7 +1150,7 @@
             <!-- MODAL PARA EXAMEN HEMOGRAMA -->
             <div class="example-modal modal fade" id="modalCargarExamenHemograma">
                <div class="modal">
-                  <div class="modal-dialog modal-lg">
+                  <div class="modal-dialog">
                      <div class="modal-content">
                         <form class="form-horizontal"  role="form"  id="demo-form1" data-parsley-validate="">
                            <div class="modal-header">
@@ -1665,75 +1665,6 @@
                </div>
             </div>
             <!-- MODAL CARGAR PROCEDIMIENTOS -->
-            <div class="example-modal modal fade" id="">
-               <div class="modal">
-                  <div class="modal-dialog modal-lg">
-                     <div class="modal-content">
-                        <form class="form-horizontal"   role="form" method="POST" id="demo-form1" data-parsley-validate="">
-                           <div class="modal-header">
-                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                              <span aria-hidden="true">&times;</span></button>
-                              <h3><i class="fa fa-globe"></i> Centro Medico Familiar Shalom</h3>
-                              <h4 class="modal-title">REPORTE DE PROCEDIMIENTOS</h4>
-                           </div>
-                           <div class="modal-body ">
-                              <div class="row">
-                                 <div class="col-md-12">
-                                    <div class="box box-primary">
-                                       <div class="box-header with-border">
-                                          <h3 class="box-title">FICHA DE CONSULTA</h3>
-                                       </div>
-                                       <div class="form-group">
-                                          <div class="col-sm-1"></div>
-                                          <div class="col-sm-3"><label for="inputEmail3" class="control-label">Paciente</label></div>
-                                          <div class="col-sm-7"><input type="text" class="form-control" name="txtPaciente" id="procepacientes" disabled="disabled"></div>
-                                       </div>
-                                       <div class="form-group">
-                                          <div class="col-sm-1"></div>
-                                          <div class="col-sm-3"><label for="inputEmail3" class="control-label">Medico</label></div>
-                                          <div class="col-sm-7"> <input type="text" class="form-control" name="txtMedico" id="procemedicos" disabled="disabled" value=" "></div>
-                                       </div>
-                                       <div class="form-group">
-                                          <div class="col-sm-1"></div>
-                                          <div class="col-sm-3"><label for="inputEmail3" class="control-label">Especialidad</label></div>
-                                          <div class="col-sm-7"> <input type="text" class="form-control" name="txtMedico" id="procemodulos" disabled="disabled" value=" "></div>
-                                       </div>
-                                       <div class="form-group">
-                                          <div class="col-sm-1"></div>
-                                          <div class="col-sm-3"><label for="inputEmail3" class="control-label">Fecha</label></div>
-                                          <div class="col-sm-7"> <input type="text" class="form-control" name="txtFecha" id="procefechas" disabled="disabled"></div>
-                                       </div>
-                                       <div class="form-group">
-                                          <div class="col-sm-1"></div>
-                                          <div class="col-sm-3"><label for="inputEmail3" class="control-label">Procedimiento</label></div>
-                                          <div class="col-sm-7"> <input type="text" class="form-control" name="" id="procemotivos" disabled="disabled"></div>
-                                       </div>
-                                    </div>
-                                 </div>
-                              </div>
-                              <div class="row">
-                                 <div class="col-md-12">
-                                    <div class="box box-primary">
-                                       <div class="box-header with-border">
-                                          <h3 class="box-title">OTROS</h3>
-                                       </div>
-                                       <div class="form-group">
-                                          <div class="col-sm-1"></div>
-                                          <div class="col-sm-3"><label for="inputEmail3" class="control-label">Observaciones</label></div>
-                                          <div class="col-sm-7"> <textarea disabled="disabled" type="text" rows="8" class="form-control" name="txtObservaciones" data-parsley-maxlength="400" id="proceobservacioness"> </textarea> </div>
-                                       </div>
-                                    </div>
-                                 </div>
-                              </div>
-                           </div>
-                           <div class="modal-footer">
-                              <button type="button" class="btn btn-danger pull-left" id="btn-cerrarmodal" data-dismiss="modal" >Cerrar</button>
-                           </div>
-                        </form>
-                     </div>
-                  </div>
-               </div>
-            </div>
 
             <div class="modal inmodal" id="modalCargarProcedimientos" tabindex="-1" role="dialog"  aria-hidden="true">
                  <div class="modal-dialog">
@@ -1758,7 +1689,7 @@
                                 <div class="col-sm-7">
                                 <div class="input-group">
                                 <div class="input-group-addon"><i class="fa fa-user"></i></div>
-                                  <input type="text" class="form-control" name="txtPaciente" id="pacientes" disabled="disabled"></div>
+                                  <input type="text" class="form-control" name="txtPaciente" id="procepacientes" disabled="disabled"></div>
                                   </div>
                                 <div class="col-sm-1"></div>
                              </div>
@@ -1768,7 +1699,7 @@
                                 <div class="col-sm-7">
                                 <div class="input-group">
                                 <div class="input-group-addon"><i class="fa fa-medkit"></i></div>
-                                   <input type="text" class="form-control" name="txtMedico" id="medicos" disabled="disabled" value=" ">
+                                   <input type="text" class="form-control" name="txtMedico" id="procemedicos" disabled="disabled" value=" ">
                                 </div></div>
                                 <div class="col-sm-1"></div>
                              </div>
@@ -1778,7 +1709,7 @@
                                 <div class="col-sm-7">
                                 <div class="input-group">
                                 <div class="input-group-addon"><i class="fa fa-bookmark-o"></i></div>
-                                   <input type="text" class="form-control" name="txtMedico" id="modulos" disabled="disabled" value=" ">
+                                   <input type="text" class="form-control" name="txtMedico" id="procemodulos" disabled="disabled" value=" ">
                                 </div></div>
                                 <div class="col-sm-1"></div>
                              </div>
@@ -1788,7 +1719,7 @@
                                 <div class="col-sm-7">
                                 <div class="input-group">
                                 <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
-                                   <input type="text" class="form-control" name="txtFecha" id="fechas" disabled="disabled">
+                                   <input type="text" class="form-control" name="txtFecha" id="procefechas" disabled="disabled">
                                 </div></div>
                                 <div class="col-sm-1"></div>
                              </div>
@@ -1798,7 +1729,7 @@
                                 <div class="col-sm-7">
                                 <div class="input-group">
                                 <div class="input-group-addon"><i class="fa fa-search"></i></div>
-                                   <textarea type="text" rows="8" class="form-control" name="txtObservaciones" data-parsley-maxlength="400" disabled="disabled" id="observacioness"> </textarea>
+                                   <textarea type="text" rows="8" class="form-control" name="txtObservaciones" data-parsley-maxlength="400" disabled="disabled" id="proceobservacioness"> </textarea>
                                 </div></div>
                                 <div class="col-sm-1"></div>
                              </div>
@@ -1809,7 +1740,7 @@
                        </div>
                     </div>
                  </div>
-              </div>
+            </div>
          </div>
       </div>
    </div>
