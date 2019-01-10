@@ -149,6 +149,16 @@
                                          WHERE c.Activo = 0 AND c.IdPersona = $idpersonaid
                                          ORDER BY c.FechaConsulta DESC";
     $resultadotablaconsulta = $mysqli->query($querytablaconsulta);
+
+
+    // CONSULTA PARA CARGAR LA TABLA DE LAS EXAMENES ASIGNADOS AL PACIENTE
+    $querytablaexameneslabasignados = "SELECT LE.IdListaExamen as 'IdListaExamen',TE.NombreExamen AS 'NombreExamen', CONCAT(US.Nombres,' ', US.Apellidos) As 'Medico', LE.Indicacion as 'Indicacion'  
+                                        FROM listaexamen LE
+                                        INNER JOIN TipoExamen TE on LE.IdTipoExamen = TE.IdTipoExamen
+                                        INNER JOIN Usuario US on LE.IdUsuario = US.IdUsuario
+                                        WHERE LE.Activo = 1 and LE.IdUsuario =  '$idusuarioid' and LE.IdConsulta = '$id'";
+    $resultadotablaexameneslabasignados = $mysqli->query($querytablaexameneslabasignados);
+   
    
    
     // CONSULTA PARA CARGAR LA TABLA DE LOS EXAMENES FINALIZADOS EN EL EXPEDIENTE DEL PACIENTE
@@ -329,6 +339,33 @@
                                                 </div>
                                              </div>
                                           </div>
+                                          <br>
+                                       <div class="box-header with-border">
+                                          <h4 class="box-title">EXAMENES ASIGNADOS</h4>
+                                       </div>
+                                          <table id="example2" class="table table-bordered table-hover">
+                                             <?php
+                                                echo"<thead>";
+                                                echo"<tr>";
+                                                echo"<th style = 'width:150px'>Tipo de Examen</th>";
+                                                echo"<th>Medico</th>";
+                                                echo"<th>Indicacion</th>";
+                                                echo"<th style = 'width:150px'>Accion</th>";
+                                                echo"</tr>";
+                                                echo"</thead>";
+                                                echo"<tbody>";
+                                                while ($row = $resultadotablaexameneslabasignados->fetch_assoc()) {
+                                                    $idexamenasignado = $row['IdListaExamen'];
+                                                    echo"<tr>";
+                                                    echo"<td>" . $row['NombreExamen'] . "</td>";
+                                                    echo"<td>" . $row['Medico'] . "</td>";
+                                                    echo"<td>" . $row['Indicacion'] . "</td>";
+                                                    echo "<td><a style='width:140px'  class='btn  btn-danger dim' href='../../views/consultamedico/eliminarexamenasignado.php?did=".$idexamenasignado."'>Eliminar </a></td>";
+                                                    echo"</tr>";
+                                                    echo"</body>  ";
+                                                }
+                                                ?>
+                                          </table>
                                        </div>
                                     </div>
                                     <div id="tab-7" class="tab-pane">
@@ -1946,15 +1983,17 @@
             </div>
          </div>
          <!-- MODAL ASIGNAR EXAMENES DE LABORATORIO -->
-         <div class="example-modal modal fade" id="modalGuardarExamenes">
-            <div class="modal">
-               <div class="modal-dialog modal-md">
+         <div class="modal inmodal" id="modalGuardarExamenes" tabindex="-1" role="dialog"  aria-hidden="true">
+            <div class="modal-dialog modal-md">
+               <div class="modal-content animated fadeIn">
                   <div class="modal-content">
-                     <form class="form-horizontal" method="POST" action="medico_guardar_examen.php"  id="demo-form1" data-parsley-validate="">
-                        <div class="modal-header">
-                           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                           <span aria-hidden="true">&times;</span></button>
-                           <h4 class="modal-title">Examenes para: <?php echo $idpersona ?></h4>
+                     <form class="form-horizontal" method="POST" action="../../views/consultamedico/guardarexamen.php"  id="demo-form1" data-parsley-validate="">
+     
+                      <div class="modal-header">
+                           <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                           <i class="fa fa-stethoscope modal-icon"></i>
+                           <h4 class="modal-title">ASIGNACION DE EXAMENES MEDICOS</h4>
+                           <small>ASIGNACION DE EXAMENES: <?php echo $idpersona; ?></small>
                         </div>
                         <div class="modal-body ">
                            <div class="form-group">
@@ -2008,14 +2047,15 @@
                            </div>
                         </div>
                         <div class="modal-footer">
-                           <div class="col-sm-2">
-                           </div>
-                           <div class="col-sm-2">
-                              <button type="button" class="btn btn-danger pull-left" id="btn-cerrarmodal" data-dismiss="modal" >Cerrar</button>
-                           </div>
-                           <div class="col-sm-4">
+                           <div class="col-sm-3">
                            </div>
                            <div class="col-sm-3">
+                              
+                           </div>
+                           <div class="col-sm-2">
+                           <button type="button" class="btn btn-danger" id="btn-cerrarmodal" data-dismiss="modal" >Cerrar</button>
+                           </div>
+                           <div class="col-sm-2">
                               <button type="submit" class="btn btn-primary" name="guardarIndicador" >Guardar Cambios</button>
                            </div>
                         </div>
@@ -2339,7 +2379,21 @@
                    $("#modalAsignarGuardarMedicamento").modal("show");
                }
            });
+
+        $(".btn-mdlasigs").click(function () {
+           var id = $(this).attr("id").replace("btn", "");
+           var myData = {"id": id};
+           //alert(myData);
+           $.ajax({
+               url: "../../views/consultamedico/eliminarexamenasignado.php",
+               type: "POST",
+               data: myData,
+               dataType: "JSON",
+                   success: function (data) {
+
+           });
        });
+
        $(".btn-mdlrex").click(function () {
            var id = $(this).attr("id").replace("btn", "");
            var myData = {"id": id};

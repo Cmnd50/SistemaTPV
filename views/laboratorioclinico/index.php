@@ -25,18 +25,16 @@
 
 
 
-
 use yii\helpers\Html;
 use yii\grid\GridView;
 use app\models\Persona;
+use app\models\Tipoexamen;
 
 /* @var $this yii\web\View */
-/* @var $searchModel app\models\ConsultamedicoSearch */
+/* @var $searchModel app\models\LaboratorioclinicoSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-
-
-$this->title = 'Medico - Consultas';
+$this->title = 'Laboratorio - Examenes';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 </br>
@@ -45,12 +43,13 @@ $this->params['breadcrumbs'][] = $this->title;
       <div class="ibox float-e-margins">
       <div class="ibox-title">
         <h3><?= Html::encode($this->title) ?></h3>
+
       </div>
           <div class="ibox-content">
               <table class="table table-hover">
-                  <?= GridView::widget([
+                                    <?= GridView::widget([
                       'dataProvider' => $dataProvider,
-                       'columns' => [
+                      'columns' => [
                         ['class' => 'yii\grid\SerialColumn'],
                         [
                             'attribute' => 'IdPersona',
@@ -58,16 +57,18 @@ $this->params['breadcrumbs'][] = $this->title;
                                 return $model->persona->getFullName();
                             },
                          ],
-                        [
-                            'attribute' => 'IdModulo',
+                         [
+                            'attribute' => 'IdTipoExamen',
                             'value' => function ($model) {
-                                return $model->modulo->NombreModulo;
+                                return $model->tipoExamen->NombreExamen;
                             },
                          ],
-
+                          // 'Activo',
+                         'FechaExamen',
+                         'Indicacion',
                               ['class' => 'yii\grid\ActionColumn',
-                               'options' => ['style' => 'width:50px;'],
-                               'template' => "{medical}"
+                               'options' => ['style' => 'width:100px;'],
+                               'template' => " medical  "
                               ],
                           ],
                       ]); ?>
