@@ -91,11 +91,6 @@ $this->params['breadcrumbs'][] = $this->title;
                                     
                                 ]
                             ]
-
-
-
-
-
                           ],
                       ]); ?>
                                   </table>

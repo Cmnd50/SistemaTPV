@@ -17,4 +17,3 @@ session_start();
     header('Location: ../../web/enfermeriaprocedimiento/medical?id='.$persona);
 
     
-?>
