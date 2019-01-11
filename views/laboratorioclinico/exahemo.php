@@ -27,7 +27,7 @@
   
       }
   
-  $this->title = 'Examenen Hemograma';
+  $this->title = 'Examen Hemograma';
   $this->params['breadcrumbs'][] = ['label' => 'Laboratorio Clinico', 'url' => ['index']];
   $this->params['breadcrumbs'][] = $this->title;
   ?>
@@ -99,7 +99,6 @@
                <button type="submit" class="btn  btn-info dim"> Guardar <i class="fa fa-heart"></i></button>                
             </li>
           </ul>
-          <form class="form-horizontal" action="../../views/laboratorioclinico/guardarexamenhemograma.php" role="form" method="POST">
             <div class="tab-content">
               <div id="TABEXAMEN1" class="tab-pane active">
                 <div class="panel-body">

@@ -102,7 +102,7 @@ class Persona extends \yii\db\ActiveRecord
             'Enfermedad' => 'Enfermedad',
             'Dui' => 'Dui',
             'TelefonoResponsable' => 'Telefono Responsable',
-            'IdEstado' => 'Id Estado',
+            'IdEstado' => 'Estado de Consulta',
             'Categoria' => 'Categoria',
             'NombresResponsable' => 'Nombres Responsable',
             'ApellidosResponsable' => 'Apellidos Responsable',
