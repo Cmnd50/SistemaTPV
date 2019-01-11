@@ -1,6 +1,6 @@
    <?php
 
-   protected function initDefaultButtons()
+ protected function initDefaultButtons()
      {
          if (!isset($this->buttons['view'])) {
              $this->buttons['view'] = function ($url, $model, $key) {
@@ -42,14 +42,14 @@
                  return Html::a('<span class=" btn-xs btn-warning"><i class="fa fa-edit"></i></span>', $url, $options);
              };
          }
-                  if (!isset($this->buttons['exahemog'])) {
-             $this->buttons['exahemog'] = function ($url, $model, $key) {
+                  if (!isset($this->buttons['exahemo'])) {
+             $this->buttons['exahemo'] = function ($url, $model, $key) {
                  $options = array_merge([
                      'title' => Yii::t('yii', 'Ingresar registro'),
                      'aria-label' => Yii::t('yii', 'ExamenHemo'),
                      'data-pjax' => '0',
                  ], $this->buttonOptions);
-                 return Html::a('<span class=" btn-xs btn-warning"><i class="fa fa-edit"></i></span>', $url, $options);
+                 return Html::a('<span class=" btn-xs btn-info"><i class="fa fa-edit"></i></span>', $url, $options);
              };
          }
                   if (!isset($this->buttons['exaorina'])) {
@@ -59,7 +59,7 @@
                      'aria-label' => Yii::t('yii', 'ExamenOrina'),
                      'data-pjax' => '0',
                  ], $this->buttonOptions);
-                 return Html::a('<span class=" btn-xs btn-warning"><i class="fa fa-edit"></i></span>', $url, $options);
+                 return Html::a('<span class=" btn-xs btn-info"><i class="fa fa-edit"></i></span>', $url, $options);
              };
          }
                   if (!isset($this->buttons['exaheces'])) {
@@ -69,7 +69,17 @@
                      'aria-label' => Yii::t('yii', 'ExamenHeces'),
                      'data-pjax' => '0',
                  ], $this->buttonOptions);
-                 return Html::a('<span class=" btn-xs btn-warning"><i class="fa fa-edit"></i></span>', $url, $options);
+                 return Html::a('<span class=" btn-xs btn-info"><i class="fa fa-edit"></i></span>', $url, $options);
+             };
+         }
+               if (!isset($this->buttons['exaquimica'])) {
+             $this->buttons['exaquimica'] = function ($url, $model, $key) {
+                 $options = array_merge([
+                     'title' => Yii::t('yii', 'Ingresar registro'),
+                     'aria-label' => Yii::t('yii', 'ExamenQuimica'),
+                     'data-pjax' => '0',
+                 ], $this->buttonOptions);
+                 return Html::a('<span class=" btn-xs btn-info"><i class="fa fa-edit"></i></span>', $url, $options);
              };
          }
                   if (!isset($this->buttons['exavarios'])) {
@@ -79,7 +89,7 @@
                      'aria-label' => Yii::t('yii', 'ExamenVarios'),
                      'data-pjax' => '0',
                  ], $this->buttonOptions);
-                 return Html::a('<span class=" btn-xs btn-warning"><i class="fa fa-edit"></i></span>', $url, $options);
+                 return Html::a('<span class=" btn-xs btn-info"><i class="fa fa-edit"></i></span>', $url, $options);
              };
          }
 
