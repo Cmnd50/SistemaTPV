@@ -66,10 +66,36 @@ $this->params['breadcrumbs'][] = $this->title;
                           // 'Activo',
                          'FechaExamen',
                          'Indicacion',
-                              ['class' => 'yii\grid\ActionColumn',
-                               'options' => ['style' => 'width:100px;'],
-                               'template' => " medical  "
-                              ],
+                              [
+                                'class' => 'yii\grid\ActionColumn',
+                                'options' => ['style' => 'width:45px;'],
+                                'template' => ' {exahemo} {exaorina} {exaheces} {exavarios} {exaquimica} ',
+                                'visibleButtons' => [
+                                    'exaorina' => function ($model, $key, $index) {
+                                        return $model->IdTipoExamen == 3;
+                                     },
+                                     'exaheces' => function ($model, $key, $index) {
+                                        return $model->IdTipoExamen == 2;
+                                     },
+
+                                     'exavarios' => function ($model, $key, $index) {
+                                        return $model->IdTipoExamen == 5;
+                                     },
+
+                                     'exahemo' => function ($model, $key, $index) {
+                                        return $model->IdTipoExamen == 1;
+                                     },
+                                      'exaquimica' => function ($model, $key, $index) {
+                                        return $model->IdTipoExamen == 4;
+                                     },
+                                    
+                                ]
+                            ]
+
+
+
+
+
                           ],
                       ]); ?>
                                   </table>

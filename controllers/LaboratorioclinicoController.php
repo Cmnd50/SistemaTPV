@@ -57,6 +57,40 @@ class LaboratorioclinicoController extends Controller
         ]);
     }
 
+        public function actionExahemo($id)
+    {
+        return $this->render('exahemo', [
+            'model' => $this->findModel($id),
+        ]);
+    }
+
+        public function actionExaorina($id)
+    {
+        return $this->render('exaorina', [
+            'model' => $this->findModel($id),
+        ]);
+    }
+
+        public function actionExaheces($id)
+    {
+        return $this->render('exaheces', [
+            'model' => $this->findModel($id),
+        ]);
+    }
+
+        public function actionExavarios($id)
+    {
+        return $this->render('exavarios', [
+            'model' => $this->findModel($id),
+        ]);
+    }
+        public function actionExaquimica($id)
+    {
+        return $this->render('exaquimica', [
+            'model' => $this->findModel($id),
+        ]);
+    }
+
     /**
      * Creates a new Listaexamen model.
      * If creation is successful, the browser will be redirected to the 'view' page.
