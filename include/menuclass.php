@@ -13,7 +13,7 @@ require_once("../include/database.php");
              $menu = $this->_db->query("select distinct m.IdMenu ,DescripcionMenu, Icono from menu m
                   inner join menuusuario mu on m.IdMenu = mu.IdMenu
                   inner join usuario u on mu.IdUsuario = u.IdUsuario
-                  where m.IdMenu <> 9 and m.IdMenu <> 8 and m.IdMenu between 1 and 30 and m.TipoMenu = 'Menu' and u.InicioSesion = '" . $_SESSION['user'] . "'
+                  where m.IdMenu <> 11 and m.IdMenu <> 12 and m.IdMenu between 1 and 30 and m.TipoMenu = 'Menu' and u.InicioSesion = '" . $_SESSION['user'] . "'
                   order by m.IdMenu
                   ") ;
              return $menu->fetchAll();

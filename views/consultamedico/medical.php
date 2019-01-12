@@ -2234,6 +2234,7 @@
    </div>
 </div>
 <script type="text/javascript">
+
    $(document).ready(function () {
    
        $.post( "../../views/consultamedico/historico.php", { IdFactor: "2", IdPersona: "<?php echo $idpersonaid; ?>" })
@@ -2357,42 +2358,7 @@
                }
            });
        });
-       $(".btn-mdlme").click(function () {
-           var id = $(this).attr("id").replace("btn", "");
-           var myData = {"id": id};
-           //alert(myData);
-           $.ajax({
-               url: "../../views/consultamedico/cargarmedicamentomodal.php",
-               type: "POST",
-               data: myData,
-               dataType: "JSON",
-               beforeSend: function () {
-                   $(this).html("Cargando");
-               },
-               success: function (data) {
-                   $("#idmedicamentos").val(data.IdMedicamento);
-                   $("#medicamentos").val(data.Medicamento);
-                   $("#presentacions").val(data.Presentacion);
-                   $("#categorias").val(data.Categoria);
-                   $("#laboratorios").val(data.Laboratorio);
-                   $("#existencias").val(data.Existencia);
-                   $("#modalAsignarGuardarMedicamento").modal("show");
-               }
-           });
 
-        $(".btn-mdlasigs").click(function () {
-           var id = $(this).attr("id").replace("btn", "");
-           var myData = {"id": id};
-           //alert(myData);
-           $.ajax({
-               url: "../../views/consultamedico/eliminarexamenasignado.php",
-               type: "POST",
-               data: myData,
-               dataType: "JSON",
-                   success: function (data) {
-
-           });
-       });
 
        $(".btn-mdlrex").click(function () {
            var id = $(this).attr("id").replace("btn", "");
@@ -2506,6 +2472,7 @@
                }
            });
        });
+
        $('#demo-form').parsley().on('field:validated', function () {
            var ok = $('.parsley-error').length === 0;
            $('.bs-callout-info').toggleClass('hidden', !ok);

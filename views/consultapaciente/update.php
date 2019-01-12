@@ -7,8 +7,8 @@ use yii\helpers\Html;
 /* @var $model app\models\Consulta */
 
 $this->title = 'Actualizar estado de Consulta: ' . $model->fullName;
-$this->params['breadcrumbs'][] = ['label' => 'Personas', 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->fullName, 'url' => ['view', 'id' => $model->IdPersona]];
+$this->params['breadcrumbs'][] = ['label' => 'Listado de Pacientes', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => $model->fullName];
 $this->params['breadcrumbs'][] = 'Actualizar';
 ?>
 </br>

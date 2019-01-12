@@ -3,16 +3,16 @@
 namespace app\controllers;
 
 use Yii;
-use app\models\Laboratorio;
-use app\models\LaboratorioSearch;
+use app\models\Persona;
+use app\models\LaboratoriopacienteSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * LaboratorioController implements the CRUD actions for Laboratorio model.
+ * LaboratoriopacienteController implements the CRUD actions for Persona model.
  */
-class LaboratorioController extends Controller
+class LaboratoriopacienteController extends Controller
 {
     /**
      * {@inheritdoc}
@@ -30,12 +30,12 @@ class LaboratorioController extends Controller
     }
 
     /**
-     * Lists all Laboratorio models.
+     * Lists all Persona models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new LaboratorioSearch();
+        $searchModel = new LaboratoriopacienteSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -45,7 +45,7 @@ class LaboratorioController extends Controller
     }
 
     /**
-     * Displays a single Laboratorio model.
+     * Displays a single Persona model.
      * @param integer $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
@@ -57,20 +57,29 @@ class LaboratorioController extends Controller
         ]);
     }
 
-
-
+        public function actionMedical($id)
+    {
+        return $this->render('medical', [
+            'model' => $this->findModel($id),
+        ]);
+    }
 
     /**
-     * Creates a new Laboratorio model.
+     * Creates a new Persona model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new Laboratorio();
+        $model = new Persona();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->IdLaboratorio]);
+        if ($model->load(Yii::$app->request->post())) {
+          if ($model->save()) {
+            Yii::$app->session->setFlash('success', "User created successfully.");
+            } else {
+              Yii::$app->session->setFlash('error', "User created successfully.");
+            }
+            return $this->redirect(['view', 'id' => $model->IdPersona]);
         }
 
         return $this->render('create', [
@@ -79,7 +88,7 @@ class LaboratorioController extends Controller
     }
 
     /**
-     * Updates an existing Laboratorio model.
+     * Updates an existing Persona model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -89,8 +98,13 @@ class LaboratorioController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->IdLaboratorio]);
+        if ($model->load(Yii::$app->request->post())) {
+          if ($model->save()) {
+            Yii::$app->session->setFlash('warning', "User created successfully.");
+            } else {
+              Yii::$app->session->setFlash('warning', "User created successfully.");
+            }
+            return $this->redirect(['view', 'id' => $model->IdPersona]);
         }
 
         return $this->render('update', [
@@ -99,7 +113,7 @@ class LaboratorioController extends Controller
     }
 
     /**
-     * Deletes an existing Laboratorio model.
+     * Deletes an existing Persona model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -108,20 +122,20 @@ class LaboratorioController extends Controller
     public function actionDelete($id)
     {
         $this->findModel($id)->delete();
-
+        Yii::$app->session->setFlash('error', "User created successfully.");
         return $this->redirect(['index']);
     }
 
     /**
-     * Finds the Laboratorio model based on its primary key value.
+     * Finds the Persona model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Laboratorio the loaded model
+     * @return Persona the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Laboratorio::findOne($id)) !== null) {
+        if (($model = Persona::findOne($id)) !== null) {
             return $model;
         }
 
