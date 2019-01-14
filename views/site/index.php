@@ -7,8 +7,14 @@
                 showMethod: 'slideDown',
                 timeOut: 4000
             };
-            toastr.success('Centro Medico Familiar Shalom', 'Bienvenido');
-    });
+            <?php if ($_SESSION['IdIdioma'] == 1){ ?>
+                    toastr.success('Centro Medico Familiar Shalom', 'Bienvenido');
+              <?php }else
+                { ?>
+                     toastr.success('Centro Medico Familiar Shalom', 'Welcome');
+                <?php } ?>
+ });
+         
 </script>
 <?php
 /* @var $this yii\web\View */
@@ -93,7 +99,7 @@ $this->title = 'Sistema TPV';
 <div class="wrapper wrapper-content">
   <h1>
     Centro Medio Familiar Shalom |
-    <small>Adminstración de Pacientes y Laboratorio</small>
+    <small id="encabezado1">  </small>
   </h1>
     <div class="row animated fadeInDown">
         <div class="col-lg-6">
@@ -105,7 +111,7 @@ $this->title = 'Sistema TPV';
                           <i class="fa fa-hospital-o fa-5x"></i>
                       </div>
                       <div class="col-xs-8 text-right">
-                          <span> Paciente Atendido </span>
+                          <span id='widget1'></span>
                           <h2 class="font-bold"><?php echo $listado; ?></h2>
                       </div>
                   </div>
@@ -118,7 +124,7 @@ $this->title = 'Sistema TPV';
                           <i class="fa fa-user fa-5x"></i>
                       </div>
                       <div class="col-xs-8 text-right">
-                          <span> Adultos </span>
+                          <span id='widget2'></span>
                           <h2 class="font-bold"><?php echo $adulto; ?></h2>
                       </div>
                   </div>
@@ -133,7 +139,7 @@ $this->title = 'Sistema TPV';
                           <i class="fa fa-smile-o fa-5x"></i>
                       </div>
                       <div class="col-xs-8 text-right">
-                          <span> Niños </span>
+                          <span id='widget3'></span>
                           <h2 class="font-bold"><?php echo $nino; ?></h2>
                       </div>
                   </div>
@@ -146,7 +152,7 @@ $this->title = 'Sistema TPV';
                           <i class="fa fa-stethoscope fa-5x"></i>
                       </div>
                       <div class="col-xs-8 text-right">
-                          <span> En proceso </span>
+                          <span id='widget4'></span>
                           <h2 class="font-bold"><?php echo $activo; ?></h2>
                       </div>
                   </div>
@@ -161,7 +167,7 @@ $this->title = 'Sistema TPV';
                           <i class="fa fa-female fa-5x"></i>
                       </div>
                       <div class="col-xs-8 text-right">
-                          <span> Mujer Atendida </span>
+                          <span id='widget5'></span>
                           <h2 class="font-bold"> <?php echo $mujeres; ?></h2>
                       </div>
                   </div>
@@ -174,7 +180,7 @@ $this->title = 'Sistema TPV';
                           <i class="fa fa-male fa-5x"></i>
                       </div>
                       <div class="col-xs-8 text-right">
-                          <span> Hombre Atendido </span>
+                          <span id='widget6'></span>
                           <h2 class="font-bold"><?php echo $hombres ?></h2>
                       </div>
                   </div>
@@ -189,7 +195,7 @@ $this->title = 'Sistema TPV';
                           <i class="fa fa-area-chart fa-5x"></i>
                       </div>
                       <div class="col-xs-8 text-right">
-                          <span> Mujere Atendida </span>
+                          <span id='widget7'></span>
                           <h2 class="font-bold"><?php echo $mujeresPor;?>%</h2>
                       </div>
                   </div>
@@ -202,7 +208,7 @@ $this->title = 'Sistema TPV';
                           <i class="fa fa-line-chart fa-5x"></i>
                       </div>
                       <div class="col-xs-8 text-right">
-                          <span> Hombre Atendido </span>
+                          <span id='widget8'></span>
                           <h2 class="font-bold"><?php echo $hombresPor;?>%</h2>
                       </div>
                   </div>
@@ -213,7 +219,7 @@ $this->title = 'Sistema TPV';
         <div class="col-lg-6">
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
-                    <h5>Calendario </h5>
+                    <h5 id='calendarname'></h5>
                 </div>
                 <div class="ibox-content">
                     <div id="calendar"></div>
@@ -226,6 +232,42 @@ $this->title = 'Sistema TPV';
 <script src="../template/js/bootstrap.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
+
+   <?php if ($_SESSION['IdIdioma'] == 1){ ?>
+       $("#encabezado1").text('Adminstración de Pacientes y Laboratorio');
+       $("#widget1").text('Paciente Atendido');
+       $("#widget2").text('Adultos');
+       $("#widget3").text('Niños');
+       $("#widget4").text('En Proceso');
+       $("#widget5").text('Mujer Atendida');
+       $("#widget6").text('Hombre Atendido');
+       $("#widget7").text('Mujer Atendida');
+       $("#widget8").text('Hombre Atendido');
+       $("#calendarname").text('Calendario');
+       $("#").text('Adminstración de Pacientes y Laboratorio');
+       $("#").text('Adminstración de Pacientes y Laboratorio');
+       $("#").text('Adminstración de Pacientes y Laboratorio');
+       $("#").text('Adminstración de Pacientes y Laboratorio');
+       $("#").text('Adminstración de Pacientes y Laboratorio');
+<?php }else
+  { ?>
+       $("#encabezado1").text('Patient and Laboratory Management');
+       $("#widget1").text('Patient Served');
+       $("#widget2").text('Adults');
+       $("#widget3").text('Childrens');
+       $("#widget4").text('In Process');
+       $("#widget5").text('Woman attended');
+       $("#widget6").text('Man attended');
+       $("#widget7").text('Woman attended');
+       $("#widget8").text('Man attended');
+       $("#calendarname").text('Calendar');
+       $("#").text('Adminstración de Pacientes y Laboratorio');
+       $("#").text('Adminstración de Pacientes y Laboratorio');
+       $("#").text('Adminstración de Pacientes y Laboratorio');
+       $("#").text('Adminstración de Pacientes y Laboratorio');
+       $("#").text('Adminstración de Pacientes y Laboratorio');
+  <?php } ?>
+ });
 
   var calendar = $('#calendar').fullCalendar({
    editable:true,
@@ -261,31 +303,6 @@ $(document).ready(function() {
       }
      })
     }
-    // bootbox.prompt({
-    //     title: "Ingrese Titulo de Evento",
-    //     inputType: 'text',
-    //     callback: function (result) {
-    //        var start = $.fullCalendar.formatDate(start, "Y-MM-DD HH:mm:ss");
-    //        var end = $.fullCalendar.formatDate(end, "Y-MM-DD HH:mm:ss");
-    //        $.ajax({
-    //         url:"insert.php",
-    //         type:"POST",
-    //         data:{ start:start, end:end},
-    //         success:function()
-    //         {
-    //          calendar.fullCalendar('refetchEvents');
-    //          bootbox.alert({
-    //               message: "Agregado Exitosamente!",
-    //               size: 'small',
-    //               callback: function () {
-    //                   console.log('This was logged in the callback!');
-    //               }
-    //           })
-    //         }
-    //        })
-    //         console.log(result);
-    //     }
-    // });
 
    },
    editable:true,
@@ -345,7 +362,8 @@ $(document).ready(function() {
    },
 
   });
- });
+
+ 
  </script>
 
  <?php

@@ -3,6 +3,11 @@
    use yii\widgets\DetailView;
    
    include '../include/dbconnect.php';
+
+   if(!isset($_SESSION))
+       {
+           session_start();
+       }
    
    
    /* @var $this yii\web\View */
@@ -48,7 +53,7 @@
       $resultadousuario = $mysqli->query($queryusuario);
    
    
-      $querymodulo = "SELECT * from modulo order by NombreModulo asc";
+      $querymodulo = "SELECT * FROM modulo WHERE IdModulo in(3,6,7) order by NombreModulo asc";
       $resultadomodulo = $mysqli->query($querymodulo);
    
       $querytablaconsulta = "SELECT c.IdConsulta, c.FechaConsulta, CONCAT(u.Nombres,' ', u.Apellidos) As 'Medico', CONCAT(p.Nombres,' ', p.Apellidos) As 'Paciente', m.NombreModulo As 'Especialidad', 
@@ -91,7 +96,7 @@
             <div class="box-header with-border">
                <div class="box-body">
                   <p align="right">
-                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalConsulta"> Nueva consulta </button>
+                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalConsulta" id='btnconsulta'> </button>
                   </p>
                   <div class="modal inmodal" id="modalConsulta" tabindex="-1" role="dialog"  aria-hidden="true">
                      <div class="modal-dialog">
@@ -99,20 +104,20 @@
                            <div class="modal-header">
                               <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
                               <i class="fa fa-medkit modal-icon"></i>
-                              <h4 class="modal-title">Nueva Consulta</h4>
-                              <small>Ingrese los datos requeridos.</small>
+                              <h4 class="modal-title" id='encabezadomodal1'></h4>
+                              <small id='encabezadomodal2'></small>
                            </div>
                            <div class="modal-body">
                               <form class="form-horizontal" action="../../views/enfermeriaconsulta/guardarconsulta.php" role="form" method="POST">
                                  <div class="form-group">
                                     <div class="col-sm-1"></div>
-                                    <div class="col-sm-3"><label for="inputEmail3" class="control-label">Fecha</label></div>
+                                    <div class="col-sm-3"><label for="inputEmail3" class="control-label" id='FechaModal1'></label></div>
                                     <div class="col-sm-7"><input  value="<?php echo $date ?>" class="form-control" name="txtFecha" disabled="disabled"></div>
                                     <div class="col-sm-1"></div>
                                  </div>
                                  <div class="form-group">
                                     <div class="col-sm-1"></div>
-                                    <div class="col-sm-3"><label for="inputEmail3" class="control-label">Medico</label></div>
+                                    <div class="col-sm-3"><label for="inputEmail3" class="control-label" id='MedicoModal1'></label></div>
                                     <div class="col-sm-7">
                                        <select class="form-control select2" style="width: 100%;" name="cboUsuario">
                                        <?php
@@ -126,7 +131,7 @@
                                  </div>
                                  <div class="form-group">
                                     <div class="col-sm-1"></div>
-                                    <div class="col-sm-3"><label for="inputEmail3" class="control-label">Paciente</label></div>
+                                    <div class="col-sm-3"><label for="inputEmail3" class="control-label" id='PacienteModal1'></label></div>
                                     <div class="col-sm-7"><input type="text" value="<?php echo $nombres. " " .$apellidos ?>" class="form-control"  disabled="disabled" >
                                        <input type="hidden" name="txtPaciente" value="<?php echo $idpersona ?>">  
                                     </div>
@@ -134,7 +139,7 @@
                                  </div>
                                  <div class="form-group">
                                     <div class="col-sm-1"></div>
-                                    <div class="col-sm-3"><label for="inputEmail3" class="control-label">Modulo</label></div>
+                                    <div class="col-sm-3"><label for="inputEmail3" class="control-label" id='ModuloModal1'></label></div>
                                     <div class="col-sm-7">
                                        <select class="form-control select2" style="width: 100%;" name="cboModulo">
                                        <?php
@@ -147,8 +152,8 @@
                                     <div class="col-sm-1"></div>
                                  </div>
                                  <div class="modal-footer">
-                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
-                                    <button type="submit" class="btn btn-primary" name="guardarConsulta" >Guardar Cambios</button>
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal" id='btncerrarmodal1'></button>
+                                    <button type="submit" class="btn btn-primary" name="guardarConsulta" id='btnguardarmodal1'></button>
                                  </div>
                               </form>
                            </div>
@@ -159,7 +164,7 @@
                <!--    TABLA Consulta    -->
                <div class="box">
                   <div class="box-header with-border">
-                     <h3 class="box-title">Historial de Consultas</h3>
+                     <h3 class="box-title" id='tablaconsultas'></h3>
                      <br>
                   </div>
                   <!-- /.box-header -->
@@ -168,11 +173,11 @@
                         <?php
                            echo"<thead>";
                                echo"<tr>";
-                               echo"<th>Fecha de Consulta</th>";
-                               echo"<th>Nombre de Paciente</th>";
-                               echo"<th>Nombre de Medico</th>";
-                               echo"<th>Nombre de Especialidad</th>";
-                               echo"<th style = 'width:150px'>Accion</th>";
+                               echo"<th id='tabla1columna1'></th>";
+                               echo"<th id='tabla1columna2'></th>";
+                               echo"<th id='tabla1columna3'></th>";
+                               echo"<th id='tabla1columna4'></th>";
+                               echo"<th style = 'width:150px' id='tabla1columna5'></th>";
                                echo"</tr>";
                            echo"</thead>";
                            echo"<tbody>";
@@ -186,14 +191,29 @@
                               echo"<td>".$row['Medico']."</td>";
                               echo"<td>".$row['Especialidad']."</td>";
                               if($row['Estado'] == 1){
-                              echo "<td>".
-                                     "<span id='btn".$idSignosVitales."' style='width:140px' class='btn  btn-success btn-mdl'> + Signo Vital</span>".
-                                     "</td>";
+                                 if($_SESSION['IdIdioma'] == 1){
+                                    echo "<td>".
+                                           "<span id='btn".$idSignosVitales."' style='width:140px' class='btn  btn-success btn-mdl'> + Signo Vital</span>".
+                                           "</td>";
+                                    }
+                                 else{
+                                    echo "<td>".
+                                           "<span id='btn".$idSignosVitales."' style='width:140px' class='btn  btn-success btn-mdl'> + Vital Signs</span>".
+                                           "</td>";
+                                 }
                               }
                               else{
-                              echo "<td>".
-                                     "<span id='btn". $idSignosVitales  ."' style='width:140px' class='btn btn-warning btn-mdls'>Ver Signo Vital</span>".
+                                  if($_SESSION['IdIdioma'] == 1){
+                                    echo "<td>".
+                                     "<span id='btn". $idSignosVitales."' style='width:140px' class='btn btn-warning btn-mdls'>Ver Signo Vital</span>".
                                      "</td>";
+                                  }
+                                  else{
+                                    echo "<td>".
+                                     "<span id='btn". $idSignosVitales."' style='width:140px' class='btn btn-warning btn-mdls'>See Vital Signs</span>".
+                                     "</td>";
+                                  }
+
                               }
                            
                               echo"</tr>";
@@ -210,18 +230,18 @@
                         <div class="modal-header">
                            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
                            <i class="fa fa-stethoscope modal-icon"></i>
-                           <h4 class="modal-title">SIGNOS VITALES</h4>
-                           <small>INGRESE LOS DATOS REQUERIDOS</small>
+                           <h4 class="modal-title" id='mdlsignosvitalesencabezado1'>SIGNOS VITALES</h4>
+                           <small id='mdlsignosvitalesencabezado2'>INGRESE LOS DATOS REQUERIDOS</small>
                         </div>
                         <div class="modal-body">
                         <form class="form-horizontal" action="../../views/enfermeriaconsulta/guardarindicador.php"  role="form" method="POST" id="demo-form1" data-parsley-validate="">
                            <div class="tabs-container">
                               <ul class="nav nav-tabs">
-                                 <li class="active"><a data-toggle="tab" href="#tab-1"> FICHA DE CONSULTA</a></li>
-                                 <li class=""><a data-toggle="tab" href="#tab-2">DATOS GENERALES</a></li>
-                                 <li class=""><a data-toggle="tab" href="#tab-3">USO GINECOLOGICO</a></li>
-                                 <li class=""><a data-toggle="tab" href="#tab-4">USO PEDIATRICO</a></li>
-                                 <li class=""><a data-toggle="tab" href="#tab-5">OTROS</a></li>
+                                 <li class="active"><a data-toggle="tab" href="#tab-1" id='tab1signosvitales1'></a></li>
+                                 <li class=""><a data-toggle="tab" href="#tab-2" id='tab1signosvitales2'></a></li>
+                                 <li class=""><a data-toggle="tab" href="#tab-3" id='tab1signosvitales3'></a></li>
+                                 <li class=""><a data-toggle="tab" href="#tab-4" id='tab1signosvitales4'></a></li>
+                                 <li class=""><a data-toggle="tab" href="#tab-5" id='tab1signosvitales5'></a></li>
                               </ul>
                               <form class="form-horizontal">
                                  <div class="tab-content">
@@ -234,14 +254,14 @@
                                              <div class="col-sm-5"><input type="text" hidden="hidden" name="txtid" value="<?php echo $idpersona ?>">  </div>
                                           </div>
                                           <div class="form-group">
-                                             <div class="col-sm-2"><label for="inputEmail3" class="control-label">Paciente</label></div>
+                                             <div class="col-sm-2"><label for="inputEmail3" class="control-label" id='tab1tab1paciente'>Paciente</label></div>
                                              <div class="col-sm-4">
                                                 <div class="input-group">
                                                    <div class="input-group-addon"><i class="fa fa-user"></i></div>
                                                    <input type="text" class="form-control" id="paciente" name="txtPaciente" disabled="disabled">
                                                 </div>
                                              </div>
-                                             <div class="col-sm-2"><label for="inputEmail3" class="control-label">Medico</label></div>
+                                             <div class="col-sm-2"><label for="inputEmail3" class="control-label" id='tab1tab1medico'>Medico</label></div>
                                              <div class="col-sm-4">
                                                 <div class="input-group">
                                                    <div class="input-group-addon"><i class="fa fa-medkit"></i></div>
@@ -250,14 +270,14 @@
                                              </div>
                                           </div>
                                           <div class="form-group">
-                                             <div class="col-sm-2"><label for="inputEmail3" class="control-label">Especialidad</label></div>
+                                             <div class="col-sm-2"><label for="inputEmail3" class="control-label" id='tab1tab1especialidad'>Especialidad</label></div>
                                              <div class="col-sm-4">
                                                 <div class="input-group">
                                                    <div class="input-group-addon"><i class="fa fa-plus-square-o"></i></div>
                                                    <input type="text" class="form-control" id="modulo" name="txtMedico" disabled="disabled">
                                                 </div>
                                              </div>
-                                             <div class="col-sm-2"><label for="inputEmail3" class="control-label">Fecha</label></div>
+                                             <div class="col-sm-2"><label for="inputEmail3" class="control-label" id='tab1tab1fecha'>Fecha</label></div>
                                              <div class="col-sm-4">
                                                 <div class="input-group">
                                                    <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
@@ -270,7 +290,7 @@
                                     <div id="tab-2" class="tab-pane">
                                        <div class="panel-body">
                                           <div class="form-group">
-                                             <div class="col-sm-2"><label for="inputEmail3" class="control-label">Peso</label></div>
+                                             <div class="col-sm-2"><label for="inputEmail3" class="control-label" id='tab1tab2peso'></label></div>
                                              <div class="col-sm-2">
                                                 <div class="input-group">
                                                    <div class="input-group-addon"><i class="fa fa-slideshare"></i></div>
@@ -283,7 +303,7 @@
                                                    <option Value="2">kg</option>
                                                 </select>
                                              </div>
-                                             <div class="col-sm-2"><label for="inputEmail3" class="control-label">Altura</label></div>
+                                             <div class="col-sm-2"><label for="inputEmail3" class="control-label" id='tab1tab2altura'></label></div>
                                              <div class="col-sm-2">
                                                 <div class="input-group">
                                                    <div class="input-group-addon"><i class="fa fa-arrows-v"></i></div>
@@ -298,7 +318,7 @@
                                              </div>
                                           </div>
                                           <div class="form-group">
-                                             <div class="col-sm-2"><label for="inputEmail3" class="control-label">Temperatura</label></div>
+                                             <div class="col-sm-2"><label for="inputEmail3" class="control-label" id='tab1tab2temperatura'></label></div>
                                              <div class="col-sm-2">
                                                 <div class="input-group">
                                                    <div class="input-group-addon"><i class="fa fa-thermometer-quarter"></i></div>
@@ -311,7 +331,7 @@
                                                    <option Value="2">F</option>
                                                 </select>
                                              </div>
-                                             <div class="col-sm-2"><label for="inputEmail3" class="control-label">F/R</label></div>
+                                             <div class="col-sm-2"><label for="inputEmail3" class="control-label" id='tab1tab2fr'></label></div>
                                              <div class="col-sm-4">
                                                 <div class="input-group">
                                                    <div class="input-group-addon"><i class="fa fa-tint"></i></div>
@@ -320,7 +340,7 @@
                                              </div>
                                           </div>
                                           <div class="form-group">
-                                             <div class="col-sm-2"><label for="inputEmail3" class="control-label">Pulso</label></div>
+                                             <div class="col-sm-2"><label for="inputEmail3" class="control-label" id='tab1tab2pulso'></label></div>
                                              <div class="col-sm-2">
                                                 <div class="input-group">
                                                    <div class="input-group-addon"><i class="fa fa-heart"></i></div>
@@ -330,7 +350,7 @@
                                              <div class="col-sm-2">
                                                 <label for="inputEmail3" class="control-label">lat/min</label>
                                              </div>
-                                             <div class="col-sm-2"><label for="inputEmail3" class="control-label">Presion</label></div>
+                                             <div class="col-sm-2"><label for="inputEmail3" class="control-label" id='tab1tab2presion'></label></div>
                                              <div class="col-sm-2">
                                                 <div class="input-group">
                                                    <div class="input-group-addon"><i class="fa fa-heart-o"></i></div>
@@ -345,7 +365,7 @@
                                              </div>
                                           </div>
                                           <div class="form-group">
-                                             <div class="col-sm-2"><label for="inputEmail3" class="control-label">Glucotex</label></div>
+                                             <div class="col-sm-2"><label for="inputEmail3" class="control-label" id='tab1tab2glucotex'></label></div>
                                              <div class="col-sm-10">
                                                 <div class="input-group">
                                                    <div class="input-group-addon"><i class="fa fa-thumbs-o-up"></i></div>
@@ -358,14 +378,14 @@
                                     <div id="tab-3" class="tab-pane">
                                        <div class="panel-body">
                                           <div class="form-group">
-                                             <div class="col-sm-2"><label for="inputEmail3" class="control-label">Ult. Menstrua</label></div>
+                                             <div class="col-sm-2"><label for="inputEmail3" class="control-label" id='tab1tab3menstruacion'>Ult. Menstrua</label></div>
                                              <div class="col-sm-4">
                                                 <div class="input-group">
                                                    <div class="input-group-addon"><i class="fa fa-circle"></i></div>
                                                    <input type="text" class="form-control" data-inputmask="'alias': 'yyyy/mm/dd'" data-mask name="txtUmestruacion" id="ultimamestruacion">
                                                 </div>
                                              </div>
-                                             <div class="col-sm-2"><label for="inputEmail3" class="control-label">Ult.PAP</label></div>
+                                             <div class="col-sm-2"><label for="inputEmail3" class="control-label" id='tab1tab3pap'>Ult.PAP</label></div>
                                              <div class="col-sm-4">
                                                 <div class="input-group">
                                                    <div class="input-group-addon"><i class="fa fa-circle-o"></i></div>
@@ -410,7 +430,7 @@
                                     <div id="tab-5" class="tab-pane">
                                        <div class="panel-body">
                                           <div class="form-group">
-                                             <div class="col-sm-2"><label for="inputEmail3" class="control-label">Observaciones</label></div>
+                                             <div class="col-sm-2"><label for="inputEmail3" class="control-label" id='tab1tab5observaciones'>Observaciones</label></div>
                                              <div class="col-sm-10">
                                                 <div class="input-group">
                                                    <div class="input-group-addon"><i class="fa fa-search"></i></div>
@@ -419,7 +439,7 @@
                                              </div>
                                           </div>
                                           <div class="form-group">
-                                             <div class="col-sm-2"><label for="inputEmail3" class="control-label">Motivo de Visita</label></div>
+                                             <div class="col-sm-2"><label for="inputEmail3" class="control-label" id='tab1tab5motivo'>Motivo de Visita</label></div>
                                              <div class="col-sm-10">
                                                 <div class="input-group">
                                                    <div class="input-group-addon"><i class="fa fa-comment-o"></i></div>
@@ -433,8 +453,8 @@
                            </div>
                         </div>
                         <div class="modal-footer">
-                           <button type="button" class="btn btn-danger" id="btn-cerrarmodal" data-dismiss="modal" >Cerrar</button>
-                           <button type="submit" class="btn btn-primary" name="guardarIndicador" >Guardar Cambios</button>
+                           <button type="button" class="btn btn-danger" data-dismiss="modal" id='btnmodalsignoscerrar'></button>
+                           <button type="submit" class="btn btn-primary" name="guardarIndicador" id='btnmodalsignosguardar'></button>
                         </div>
                         </form>
                      </div>
@@ -447,17 +467,17 @@
                         <div class="modal-header">
                            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
                            <i class="fa fa-stethoscope modal-icon"></i>
-                           <h4 class="modal-title">SIGNOS VITALES</h4>
-                           <small>FICHA DE CONSULTA</small>
+                           <h4 class="modal-title" id='mdlsignosvitalesencabezado12'></h4>
+                           <small id='mdlsignosvitalesencabezado22'></small>
                         </div>
                         <div class="modal-body">
                            <div class="tabs-container">
                               <ul class="nav nav-tabs">
-                                 <li class="active"><a data-toggle="tab" href="#tab-6"> FICHA DE CONSULTA</a></li>
-                                 <li class=""><a data-toggle="tab" href="#tab-7">DATOS GENERALES</a></li>
-                                 <li class=""><a data-toggle="tab" href="#tab-8">USO GINECOLOGICO</a></li>
-                                 <li class=""><a data-toggle="tab" href="#tab-9">USO PEDIATRICO</a></li>
-                                 <li class=""><a data-toggle="tab" href="#tab-10">OTROS</a></li>
+                                 <li class="active"><a data-toggle="tab" href="#tab-6" id='tab1signosvitales12'></a></li>
+                                 <li class=""><a data-toggle="tab" href="#tab-7" id='tab1signosvitales22'></a></li>
+                                 <li class=""><a data-toggle="tab" href="#tab-8" id='tab1signosvitales32'></a></li>
+                                 <li class=""><a data-toggle="tab" href="#tab-9" id='tab1signosvitales42'></a></li>
+                                 <li class=""><a data-toggle="tab" href="#tab-10" id='tab1signosvitales52'></a></li>
                               </ul>
                               <form class="form-horizontal">
                                  <div class="tab-content">
@@ -470,14 +490,14 @@
                                              <div class="col-sm-5"><input type="text" hidden="hidden" name="txtid" value="<?php echo $idpersona ?>">  </div>
                                           </div>
                                           <div class="form-group">
-                                             <div class="col-sm-2"><label for="inputEmail3" class="control-label">Paciente</label></div>
+                                             <div class="col-sm-2"><label for="inputEmail3" class="control-label" id='tab1tab1paciente2'></label></div>
                                              <div class="col-sm-4">
                                                 <div class="input-group">
                                                    <div class="input-group-addon"><i class="fa fa-user"></i></div>
                                                    <input type="text" class="form-control" disabled="disabled" id="pacientes" name="txtPaciente" disabled="disabled">
                                                 </div>
                                              </div>
-                                             <div class="col-sm-2"><label for="inputEmail3" class="control-label">Medico</label></div>
+                                             <div class="col-sm-2"><label for="inputEmail3" class="control-label" id='tab1tab1medico2'></label></div>
                                              <div class="col-sm-4">
                                                 <div class="input-group">
                                                    <div class="input-group-addon"><i class="fa fa-medkit"></i></div>
@@ -486,14 +506,14 @@
                                              </div>
                                           </div>
                                           <div class="form-group">
-                                             <div class="col-sm-2"><label for="inputEmail3" class="control-label">Especialidad</label></div>
+                                             <div class="col-sm-2"><label for="inputEmail3" class="control-label" id='tab1tab1especialidad2'></label></div>
                                              <div class="col-sm-4">
                                                 <div class="input-group">
                                                    <div class="input-group-addon"><i class="fa fa-plus-square-o"></i></div>
                                                    <input type="text" class="form-control" disabled="disabled" id="modulos" name="txtMedico" disabled="disabled">
                                                 </div>
                                              </div>
-                                             <div class="col-sm-2"><label for="inputEmail3" class="control-label">Fecha</label></div>
+                                             <div class="col-sm-2"><label for="inputEmail3" class="control-label" id='tab1tab1fecha2'></label></div>
                                              <div class="col-sm-4">
                                                 <div class="input-group">
                                                    <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
@@ -506,7 +526,7 @@
                                     <div id="tab-7" class="tab-pane">
                                        <div class="panel-body">
                                           <div class="form-group">
-                                             <div class="col-sm-2"><label for="inputEmail3" class="control-label">Peso</label></div>
+                                             <div class="col-sm-2"><label for="inputEmail3" class="control-label" id='tab1tab2peso2'></label></div>
                                              <div class="col-sm-2">
                                                 <div class="input-group">
                                                    <div class="input-group-addon"><i class="fa fa-slideshare"></i></div>
@@ -516,7 +536,7 @@
                                              <div class="col-sm-2">
                                              <input type="text" class="form-control" disabled="disabled" id="unidadpesos" required="">
                                              </div>
-                                             <div class="col-sm-2"><label for="inputEmail3" class="control-label">Altura</label></div>
+                                             <div class="col-sm-2"><label for="inputEmail3" class="control-label" id='tab1tab2altura2'></label></div>
                                              <div class="col-sm-2">
                                                 <div class="input-group">
                                                    <div class="input-group-addon"><i class="fa fa-arrows-v"></i></div>
@@ -528,7 +548,7 @@
                                              </div>
                                           </div>
                                           <div class="form-group">
-                                             <div class="col-sm-2"><label for="inputEmail3" class="control-label">Temperatura</label></div>
+                                             <div class="col-sm-2"><label for="inputEmail3" class="control-label" id='tab1tab2temperatura2'></label></div>
                                              <div class="col-sm-2">
                                                 <div class="input-group">
                                                    <div class="input-group-addon"><i class="fa fa-thermometer-quarter"></i></div>
@@ -538,7 +558,7 @@
                                              <div class="col-sm-2">
                                              <input type="text" class="form-control" disabled="disabled" data-inputmask='"mask": "99.9"' data-mask  id="unidadtemperaturas" required="">
                                              </div>
-                                             <div class="col-sm-2"><label for="inputEmail3" class="control-label">F/R</label></div>
+                                             <div class="col-sm-2"><label for="inputEmail3" class="control-label" id='tab1tab2fr2'></label></div>
                                              <div class="col-sm-4">
                                                 <div class="input-group">
                                                    <div class="input-group-addon"><i class="fa fa-tint"></i></div>
@@ -547,7 +567,7 @@
                                              </div>
                                           </div>
                                           <div class="form-group">
-                                             <div class="col-sm-2"><label for="inputEmail3" class="control-label">Pulso</label></div>
+                                             <div class="col-sm-2"><label for="inputEmail3" class="control-label" id='tab1tab2pulso2'></label></div>
                                              <div class="col-sm-2">
                                                 <div class="input-group">
                                                    <div class="input-group-addon"><i class="fa fa-heart"></i></div>
@@ -557,7 +577,7 @@
                                              <div class="col-sm-2">
                                                 <label for="inputEmail3" class="control-label">lat/min</label>
                                              </div>
-                                             <div class="col-sm-2"><label for="inputEmail3" class="control-label">Presion</label></div>
+                                             <div class="col-sm-2"><label for="inputEmail3" class="control-label" id='tab1tab2presion2'></label></div>
                                              <div class="col-sm-2">
                                                 <div class="input-group">
                                                    <div class="input-group-addon"><i class="fa fa-heart-o"></i></div>
@@ -572,7 +592,7 @@
                                              </div>
                                           </div>
                                           <div class="form-group">
-                                             <div class="col-sm-2"><label for="inputEmail3" class="control-label">Glucotex</label></div>
+                                             <div class="col-sm-2"><label for="inputEmail3" class="control-label" id='tab1tab2glucotex2'></label></div>
                                              <div class="col-sm-10">
                                                 <div class="input-group">
                                                    <div class="input-group-addon"><i class="fa fa-thumbs-o-up"></i></div>
@@ -585,14 +605,14 @@
                                     <div id="tab-8" class="tab-pane">
                                        <div class="panel-body">
                                           <div class="form-group">
-                                             <div class="col-sm-2"><label for="inputEmail3" class="control-label">Ult. Menstrua</label></div>
+                                             <div class="col-sm-2"><label for="inputEmail3" class="control-label" id='tab1tab3menstruacion2'></label></div>
                                              <div class="col-sm-4">
                                                 <div class="input-group">
                                                    <div class="input-group-addon"><i class="fa fa-circle"></i></div>
                                                    <input type="text" class="form-control" disabled="disabled" data-inputmask="'alias': 'yyyy/mm/dd'" data-mask name="txtUmestruacion" id="ultimamestruacions">
                                                 </div>
                                              </div>
-                                             <div class="col-sm-2"><label for="inputEmail3" class="control-label">Ult.PAP</label></div>
+                                             <div class="col-sm-2"><label for="inputEmail3" class="control-label" id='tab1tab3pap2'></label></div>
                                              <div class="col-sm-4">
                                                 <div class="input-group">
                                                    <div class="input-group-addon"><i class="fa fa-circle-o"></i></div>
@@ -605,7 +625,7 @@
                                     <div id="tab-9" class="tab-pane">
                                        <div class="panel-body">
                                           <div class="form-group">
-                                             <div class="col-sm-1"><label for="inputEmail3" class="control-label">P/C</label></div>
+                                             <div class="col-sm-1"><label for="inputEmail3" class="control-label" id=''>P/C</label></div>
                                              <div class="col-sm-4">
                                                 <div class="input-group">
                                                    <div class="input-group-addon"><i class="fa fa-toggle-down"></i></div>
@@ -613,7 +633,7 @@
                                                 </div>
                                              </div>
                                              <div class="col-sm-1"><label for="inputEmail3" class="control-label">cm.</label></div>
-                                             <div class="col-sm-1"><label for="inputEmail3" class="control-label">P/T</label></div>
+                                             <div class="col-sm-1"><label for="inputEmail3" class="control-label" id=''>P/T</label></div>
                                              <div class="col-sm-4">
                                                 <div class="input-group">
                                                    <div class="input-group-addon"><i class="fa fa-toggle-up"></i></div>
@@ -623,7 +643,7 @@
                                              <div class="col-sm-1"><label for="inputEmail3" class="control-label">cm.</label></div>
                                           </div>
                                           <div class="form-group">
-                                             <div class="col-sm-1"><label for="inputEmail3" class="control-label">P/A</label></div>
+                                             <div class="col-sm-1"><label for="inputEmail3" class="control-label" id=''>P/A</label></div>
                                              <div class="col-sm-4">
                                                 <div class="input-group">
                                                    <div class="input-group-addon"><i class="fa fa-toggle-right"></i></div>
@@ -637,7 +657,7 @@
                                     <div id="tab-10" class="tab-pane">
                                        <div class="panel-body">
                                           <div class="form-group">
-                                             <div class="col-sm-2"><label for="inputEmail3" class="control-label">Observaciones</label></div>
+                                             <div class="col-sm-2"><label for="inputEmail3" class="control-label" id='tab1tab5observaciones2'></label></div>
                                              <div class="col-sm-10">
                                                 <div class="input-group">
                                                    <div class="input-group-addon"><i class="fa fa-search"></i></div>
@@ -646,7 +666,7 @@
                                              </div>
                                           </div>
                                           <div class="form-group">
-                                             <div class="col-sm-2"><label for="inputEmail3" class="control-label">Motivo de Visita</label></div>
+                                             <div class="col-sm-2"><label for="inputEmail3" class="control-label" id='tab1tab5motivo2'></label></div>
                                              <div class="col-sm-10">
                                                 <div class="input-group">
                                                    <div class="input-group-addon"><i class="fa fa-comment-o"></i></div>
@@ -661,7 +681,7 @@
                            </div>
                         </div>
                         <div class="modal-footer">
-                           <button type="button" class="btn btn-danger" id="btn-cerrarmodal" data-dismiss="modal" >Cerrar</button>
+                           <button type="button" class="btn btn-danger" data-dismiss="modal" id='btnmodalsignoscerrar2'>Cerrar</button>
                         </div>
                      </div>
                   </div>
@@ -751,7 +771,7 @@
        });
    });
 
-    $('#demo-form1').parsley().on('field:validated', function() {
+   $('#demo-form1').parsley().on('field:validated', function() {
     var ok = $('.parsley-error').length === 0;
     $('.bs-callout-info').toggleClass('hidden', !ok);
     $('.bs-callout-warning').toggleClass('hidden', ok);
@@ -759,5 +779,143 @@
       .on('form:submit', function() {
         return true;
       });
-   });
+
+
+   <?php if ($_SESSION['IdIdioma'] == 1){ ?>
+       $("#btnconsulta").text('Nueva consulta');
+       $("#encabezadomodal1").text('Nueva Consulta');
+       $("#encabezadomodal2").text('Ingrese los datos requeridos.');
+       $("#FechaModal1").text('Fecha');
+       $("#MedicoModal1").text('Medico');
+       $("#PacienteModal1").text('Paciente');
+       $("#ModuloModal1").text('Modulo');
+       $("#btncerrarmodal1").text('Cerrar');
+       $("#btnguardarmodal1").text('Guardar Cambios');
+       $("#tablaconsultas").text('Historial de Consultas');
+       $("#tabla1columna1").text('Fecha de Consulta');
+       $("#tabla1columna2").text('Nombre de Paciente');
+       $("#tabla1columna3").text('Nombre de Medico');
+       $("#tabla1columna4").text('Nombre de Especialidad');
+       $("#tabla1columna5").text('Accion');
+
+
+       $("#mdlsignosvitalesencabezado1").text('SIGNOS VITALES');
+       $("#mdlsignosvitalesencabezado2").text('INGRESE LOS DATOS REQUERIDOS');
+       $("#tab1signosvitales1").text('FICHA DE CONSULTA');
+       $("#tab1signosvitales2").text('DATOS GENERALES');
+       $("#tab1signosvitales3").text('USO GINECOLOGICO');
+       $("#tab1signosvitales4").text('USO PEDIATRICO');
+       $("#tab1signosvitales5").text('OTROS');
+       $("#tab1tab1paciente").text('Paciente');
+       $("#tab1tab1medico").text('Medico');
+       $("#tab1tab1especialidad").text('Especialidad');
+       $("#tab1tab1fecha").text('Fecha');
+       $("#tab1tab2peso").text('Peso');
+       $("#tab1tab2altura").text('Altura');
+       $("#tab1tab2temperatura").text('Temperatura');
+       $("#tab1tab2fr").text('F/R');
+       $("#tab1tab2pulso").text('Pulso');
+       $("#tab1tab2presion").text('Presion');
+       $("#tab1tab2glucotex").text('Glucotex');
+       $("#tab1tab3menstruacion").text('Ult. Menstruacion');
+       $("#tab1tab3pap").text('Ult. PAP');
+       $("#tab1tab5observaciones").text('Observaciones');
+       $("#tab1tab5motivo").text('Motivo de Visita');
+       $("#btnmodalsignoscerrar").text('Cerrar');
+       $("#btnmodalsignosguardar").text('Guardar Cambios');
+
+       $("#mdlsignosvitalesencabezado12").text('SIGNOS VITALES');
+       $("#mdlsignosvitalesencabezado22").text('FICHA DE CONSULTA');
+       $("#tab1signosvitales12").text('FICHA DE CONSULTA');
+       $("#tab1signosvitales22").text('DATOS GENERALES');
+       $("#tab1signosvitales32").text('USO GINECOLOGICO');
+       $("#tab1signosvitales42").text('USO PEDIATRICO');
+       $("#tab1signosvitales52").text('OTROS');
+       $("#tab1tab1paciente2").text('Paciente');
+       $("#tab1tab1medico2").text('Medico');
+       $("#tab1tab1especialidad2").text('Especialidad');
+       $("#tab1tab1fecha2").text('Fecha');
+       $("#tab1tab2peso2").text('Peso');
+       $("#tab1tab2altura2").text('Altura');
+       $("#tab1tab2temperatura2").text('Temperatura');
+       $("#tab1tab2fr2").text('F/R');
+       $("#tab1tab2pulso2").text('Pulso');
+       $("#tab1tab2presion2").text('Presion');
+       $("#tab1tab2glucotex2").text('Glucotex');
+       $("#tab1tab3menstruacion2").text('Ult. Menstruacion');
+       $("#tab1tab3pap2").text('Ult. PAP');
+       $("#tab1tab5observaciones2").text('Observaciones');
+       $("#tab1tab5motivo2").text('Motivo de Visita');
+       $("#btnmodalsignoscerrar2").text('Cerrar');
+       $("#btnmodalsignosguardar2").text('Guardar Cambios');
+<?php }else
+  { ?>
+       $("#btnconsulta").text('Doctor Appointment');
+       $("#encabezadomodal1").text('New Doctor Appointment');
+       $("#encabezadomodal2").text('ENTER THE REQUIRED DATA');
+       $("#FechaModal1").text('Date');
+       $("#MedicoModal1").text('Doctor');
+       $("#PacienteModal1").text('Patient Name');
+       $("#ModuloModal1").text('Speciality Name');
+       $("#btncerrarmodal1").text('Close');
+       $("#btnguardarmodal1").text('Save Changes');
+       $("#tablaconsultas").text('History of Medical Consultations');
+       $("#tabla1columna1").text('Date');
+       $("#tabla1columna2").text('Patient Name');
+       $("#tabla1columna3").text('Doctor Name');
+       $("#tabla1columna4").text('Speciality Name');
+       $("#tabla1columna5").text('Action');
+
+       
+       $("#mdlsignosvitalesencabezado1").text('VITAL SINGS');
+       $("#mdlsignosvitalesencabezado2").text('ENTER THE REQUIRED DATA');
+       $("#tab1signosvitales1").text('MEDICAL CONSULTION');
+       $("#tab1signosvitales2").text('GENERAL DATA');
+       $("#tab1signosvitales3").text('GYNECOLOGICAL USE');
+       $("#tab1signosvitales4").text('PEDIATRIC USE');
+       $("#tab1signosvitales5").text('OTHERS');
+       $("#tab1tab1paciente").text('Patient Name');
+       $("#tab1tab1medico").text('Doctor');
+       $("#tab1tab1especialidad").text('Speciality Name');
+       $("#tab1tab1fecha").text('Date');
+       $("#tab1tab2peso").text('Weight');
+       $("#tab1tab2altura").text('Height');
+       $("#tab1tab2temperatura").text('Temperature');
+       $("#tab1tab2fr").text('F/R');
+       $("#tab1tab2pulso").text('Pulse');
+       $("#tab1tab2presion").text('Pressure');
+       $("#tab1tab2glucotex").text('Glucotex');
+       $("#tab1tab3menstruacion").text('Last Menstrua.');
+       $("#tab1tab3pap").text('Last PAP');
+       $("#tab1tab5observaciones").text('Observations');
+       $("#tab1tab5motivo").text('Reason for Visit');
+       $("#btnmodalsignoscerrar").text('Close');
+       $("#btnmodalsignosguardar").text('Save Changes');
+
+       $("#mdlsignosvitalesencabezado12").text('VITAL SINGS');
+       $("#mdlsignosvitalesencabezado22").text('MEDICAL FORM');
+       $("#tab1signosvitales12").text('MEDICAL CONSULTION');
+       $("#tab1signosvitales22").text('GENERAL DATA');
+       $("#tab1signosvitales32").text('GYNECOLOGICAL USE');
+       $("#tab1signosvitales42").text('PEDIATRIC USE');
+       $("#tab1signosvitales52").text('OTHERS');
+       $("#tab1tab1paciente2").text('Patient Name');
+       $("#tab1tab1medico2").text('Doctor');
+       $("#tab1tab1especialidad2").text('Speciality Name');
+       $("#tab1tab1fecha2").text('Date');
+       $("#tab1tab2peso2").text('Weight');
+       $("#tab1tab2altura2").text('Height');
+       $("#tab1tab2temperatura2").text('Temperature');
+       $("#tab1tab2fr2").text('F/R');
+       $("#tab1tab2pulso2").text('Pulse');
+       $("#tab1tab2presion2").text('Pressure');
+       $("#tab1tab2glucotex2").text('Glucotex');
+       $("#tab1tab3menstruacion2").text('Last Menstrua.');
+       $("#tab1tab3pap2").text('Last PAP');
+       $("#tab1tab5observaciones2").text('Observations');
+       $("#tab1tab5motivo2").text('Reason for Visit');
+       $("#btnmodalsignoscerrar2").text('Close');
+       $("#btnmodalsignosguardar2").text('Save Changes');
+  <?php } ?>
+ });
 </script>

@@ -10,7 +10,7 @@ if(isset($_POST['btn-login']))
 $InicioSesion = $_POST['InicioSesion'];
 $Clave = $_POST['Clave'];
 $queryusuario = "
-SELECT a.IdUsuario, a.InicioSesion, b.IdPuesto, b.Descripcion as NombrePuesto, concat(a.Nombres, ' ', a.Apellidos) as NombreCompleto
+SELECT a.IdUsuario, a.InicioSesion, b.IdPuesto, b.Descripcion as 'NombrePuesto', concat(a.Nombres, ' ', a.Apellidos) as NombreCompleto, a.Idioma as 'Idioma'
 FROM usuario as a
 inner join puesto as b on b.IdPuesto = a.IdPuesto
 WHERE InicioSesion='$InicioSesion' and Clave = md5('$Clave') and Activo = 1";
@@ -19,6 +19,7 @@ while ($row = $resultado_usuario->fetch_assoc()) {
        $_SESSION['IdUsuario'] = $row['IdUsuario'];
        $_SESSION['user'] = $row['InicioSesion'];
        $_SESSION['IdPuesto'] = $row['IdPuesto'];
+       $_SESSION['IdIdioma'] = $row['Idioma'];
 
              }
 

@@ -269,16 +269,16 @@
    <div class="col-lg-12">
       <div class="ibox float-e-margins">
          <div class="ibox-title">
-            <h5>INGRESO DE EXPEDIENTE <small>INGRESE LOS DATOS REQUERIDOS.  </small></h5>
+            <h5 id='encabezadoform1'></h5>&nbsp;&nbsp;<small id='encabezadoform2'></small>
             <div class="ibox-tools">
             </div>
          </div>
          <div class="form-horizontal">
             <div class="tabs-container">
                <ul class="nav nav-tabs">
-                  <li class="active"><a data-toggle="tab" href="#tab-CONSULTA">CONSULTA</a></li>
-                  <li class=""><a data-toggle="tab" href="#tab-EXPEDIENTE">EXPEDIENTE</a></li>
-                  <li class=""><a data-toggle="tab" href="#tab-HISTORIAL">HISTORIAL</a></li>
+                  <li class="active"><a data-toggle="tab" href="#tab-CONSULTA" id='tabgeneral1'></a></li>
+                  <li class=""><a data-toggle="tab" href="#tab-EXPEDIENTE" id='tabgeneral2'></a></li>
+                  <li class=""><a data-toggle="tab" href="#tab-HISTORIAL" id='tabgeneral3'></a></li>
                   <li class="pull-right">
                      <button type="button" class="btn  btn-danger dim"   data-toggle="modal" data-target="#modalGuardarDiagnostico"> <i class="fa fa-heart"></i></button>   
                      <button type="button" class="btn  btn-info dim"  data-toggle="modal" data-target="#modalGuardarExamenes"><i class="fa fa-bars"></i></button>                
@@ -970,7 +970,7 @@
                <div class="hidden">
                   <textarea  type="text" rows="1" class="form-control"   name="txtpersonaID"> <?php echo $idpersonaid ?> </textarea>
                </div>
-               <button type="submit" class="btn btn-success dim">  FINALIZAR CONSULTA </button>
+               <button type="submit" class="btn btn-success dim" id='btnfinalizarconsulta'></button>
             </form>
          </center>
          <!-- MODAL CARGAR CONSULTA -->
@@ -2236,6 +2236,7 @@
 <script type="text/javascript">
 
    $(document).ready(function () {
+
    
        $.post( "../../views/consultamedico/historico.php", { IdFactor: "2", IdPersona: "<?php echo $idpersonaid; ?>" })
          .done(function( data ) {
@@ -2482,6 +2483,74 @@
                .on('form:submit', function () {
                    return true;
                });
+
+
+      <?php if ($_SESSION['IdIdioma'] == 1){ ?>
+        // ENCABEZADO, PRIMER TAB Y BOTON DE FINALIZAR CONSULTA
+       $("#encabezadoform1").text('INGRESO DE CONSULTA');
+       $("#encabezadoform2").text('INGRESE LOS DATOS REQUERIDOS');
+       $("#tabgeneral1").text('CONSULTA');
+       $("#tabgeneral2").text('EXPEDIENTE');
+       $("#tabgeneral3").text('HISTORIAL');
+       $("#btnfinalizarconsulta").text('FINALIZAR CONSULTA');
+
+      // TAB DE INGRESO DE CONSULTA - FICHA DE CONSULTA
+       $("#tab1signosvitales1").text('FICHA DE CONSULTA');
+       $("#tab1signosvitales2").text('DATOS GENERALES');
+       $("#tab1signosvitales3").text('USO GINECOLOGICO');
+       $("#tab1signosvitales4").text('USO PEDIATRICO');
+       $("#tab1signosvitales5").text('OTROS');
+       $("#tab1tab1paciente").text('Paciente');
+       $("#tab1tab1medico").text('Medico');
+       $("#tab1tab1especialidad").text('Especialidad');
+       $("#tab1tab1fecha").text('Fecha');
+       $("#tab1tab2peso").text('Peso');
+       $("#tab1tab2altura").text('Altura');
+       $("#tab1tab2temperatura").text('Temperatura');
+       $("#tab1tab2fr").text('F/R');
+       $("#tab1tab2pulso").text('Pulso');
+       $("#tab1tab2presion").text('Presion');
+       $("#tab1tab2glucotex").text('Glucotex');
+       $("#tab1tab3menstruacion").text('Ult. Menstruacion');
+       $("#tab1tab3pap").text('Ult. PAP');
+       $("#tab1tab5observaciones").text('Observaciones');
+       $("#tab1tab5motivo").text('Motivo de Visita');
+       $("#btnmodalsignoscerrar").text('Cerrar');
+<?php }else
+  { ?>
+       // ENCABEZADO, PRIMER TAB Y BOTON DE FINALIZAR CONSULTA
+       $("#encabezadoform1").text('ENTRY OF MEDICAL APPOINTMENT');
+       $("#encabezadoform2").text('ENTER THE DATA REQUIRED');
+       $("#tabgeneral1").text('MEDICAL APPOINTMENT');
+       $("#tabgeneral2").text('MEDICAL RECORD');
+       $("#tabgeneral3").text('MEDICAL HISTORY');
+       $("#btnfinalizarconsulta").text('FINISH');
+
+      // TAB DE INGRESO DE CONSULTA - FICHA DE CONSULTA
+       $("#tab1signosvitales1").text('MEDICAL CONSULTION');
+       $("#tab1signosvitales2").text('GENERAL DATA');
+       $("#tab1signosvitales3").text('GYNECOLOGICAL USE');
+       $("#tab1signosvitales4").text('PEDIATRIC USE');
+       $("#tab1signosvitales5").text('OTHERS');
+       $("#tab1tab1paciente").text('Patient Name');
+       $("#tab1tab1medico").text('Doctor');
+       $("#tab1tab1especialidad").text('Speciality Name');
+       $("#tab1tab1fecha").text('Date');
+       $("#tab1tab2peso").text('Weight');
+       $("#tab1tab2altura").text('Height');
+       $("#tab1tab2temperatura").text('Temperature');
+       $("#tab1tab2fr").text('F/R');
+       $("#tab1tab2pulso").text('Pulse');
+       $("#tab1tab2presion").text('Pressure');
+       $("#tab1tab2glucotex").text('Glucotex');
+       $("#tab1tab3menstruacion").text('Last Menstrua.');
+       $("#tab1tab3pap").text('Last PAP');
+       $("#tab1tab5observaciones").text('Observations');
+       $("#tab1tab5motivo").text('Reason for Visit');
+       $("#btnmodalsignoscerrar").text('Close');
+
+      
+  <?php } ?>
    
    });
 </script>
