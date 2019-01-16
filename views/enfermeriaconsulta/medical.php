@@ -66,9 +66,16 @@
          order by c.IdConsulta DESC";
    
       $resultadotablaconsulta = $mysqli->query($querytablaconsulta);
+
+   $label = '';
+   if($_SESSION['IdIdioma'] == 1){
+    $label = 'Enfermeria - Consultas';
+   }else{
+    $label = 'Nursing - Visits';
+   }   
    
    $this->title = $model->fullName;
-   $this->params['breadcrumbs'][] = ['label' => 'Enfermeria - Consultas', 'url' => ['index']];
+   $this->params['breadcrumbs'][] = ['label' => $label, 'url' => ['index']];
    $this->params['breadcrumbs'][] = $this->title;
    ?>
 </br>

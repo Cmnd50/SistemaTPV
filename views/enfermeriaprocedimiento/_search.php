@@ -30,7 +30,12 @@ use kartik\select2\Select2;
     ]);
     ?>
 <div class="form-group">
-    <?= Html::submitButton('Buscar', ['class' => 'btn btn-success']) ?>
+          <?php if($_SESSION['IdIdioma'] == 1) {?>
+                      <?= Html::submitButton('Buscar', ['class' => 'btn btn-success']) ?>
+        <?php } else{ ?> 
+                     <?= Html::submitButton('Search', ['class' => 'btn btn-success']) ?>
+
+        <?php } ?>
 </div> 
 
     <?php ActiveForm::end(); ?>

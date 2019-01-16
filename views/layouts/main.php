@@ -40,10 +40,21 @@ DashboardAsset::register($this);
       <div class="row wrapper border-bottom white-bg page-heading">
           <div class="col-lg-10">
           </br>
-              <?php echo Breadcrumbs::widget([
+
+          <?php if($_SESSION['IdIdioma'] == 1) {?>
+                      <?php echo Breadcrumbs::widget([
                           'homeLink'=> ['url'=>'../site/index','label'=>'Inicio'],
                           'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
                       ]) ?>
+        <?php } else{ ?> 
+                     <?php echo Breadcrumbs::widget([
+                          'homeLink'=> ['url'=>'../site/index','label'=>'Start'],
+                          'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
+                      ]) ?>
+
+        <?php } ?>
+
+
           </div>
       </div>
         <?= $content ?>

@@ -33,7 +33,15 @@ use yii\grid\GridView;
 /* @var $searchModel app\models\EnfermeriaconsultaSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Enfermeria - Consultas';
+$titulo = '';
+if($_SESSION['IdIdioma'] == 1){
+  $titulo = 'Enfermeria - Consultas';
+}
+else{
+   $titulo = 'Nursing - Exams';
+}
+
+$this->title = $titulo;
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 </br>
@@ -43,7 +51,6 @@ $this->params['breadcrumbs'][] = $this->title;
       <div class="ibox-title">
         <h3><?= Html::encode($this->title) ?></h3>
         <p align="right">
-           <!-- <?= Html::a('Ingresar Persona', ['create'], ['class' => 'btn btn-primary']) ?> -->
         </p>
       </div>
           <div class="ibox-content">
@@ -51,7 +58,7 @@ $this->params['breadcrumbs'][] = $this->title;
                   <?php echo $this->render('_search', ['model' => $searchModel]); ?>
                                     <?= GridView::widget([
                       'dataProvider' => $dataProvider,
-'columns' => [
+                      'columns' => [
                         ['class' => 'yii\grid\SerialColumn'],
                           [
                             'attribute' => 'IdPersona',

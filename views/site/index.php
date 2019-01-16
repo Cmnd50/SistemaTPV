@@ -98,7 +98,7 @@ $this->title = 'Sistema TPV';
 
 <div class="wrapper wrapper-content">
   <h1>
-    Centro Medio Familiar Shalom |
+    Centro Medico Familiar Shalom |
     <small id="encabezado1">  </small>
   </h1>
     <div class="row animated fadeInDown">
@@ -252,14 +252,14 @@ $(document).ready(function() {
 <?php }else
   { ?>
        $("#encabezado1").text('Patient and Laboratory Management');
-       $("#widget1").text('Patient Served');
+       $("#widget1").text('Patients Served');
        $("#widget2").text('Adults');
-       $("#widget3").text('Childrens');
+       $("#widget3").text('Children');
        $("#widget4").text('In Process');
-       $("#widget5").text('Woman attended');
-       $("#widget6").text('Man attended');
-       $("#widget7").text('Woman attended');
-       $("#widget8").text('Man attended');
+       $("#widget5").text('Women Served');
+       $("#widget6").text('Men Served');
+       $("#widget7").text('Women Served');
+       $("#widget8").text('Men Served');
        $("#calendarname").text('Calendar');
        $("#").text('Adminstración de Pacientes y Laboratorio');
        $("#").text('Adminstración de Pacientes y Laboratorio');

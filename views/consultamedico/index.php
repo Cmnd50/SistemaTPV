@@ -1,6 +1,8 @@
 
 <?php if (Yii::$app->session->hasFlash("error")): ?>
 <?php
+
+
     $session = \Yii::$app->getSession();
     $session->setFlash("error", "Se a eliminado con Exito!"); ?>
     <?= \odaialali\yii2toastr\ToastrFlash::widget([
@@ -33,10 +35,15 @@ use app\models\Persona;
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\ConsultamedicoSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
+$titulo = '';
+if($_SESSION['IdIdioma'] == 1){
+  $titulo = 'Consullta - Medica';
+}
+else{
+   $titulo = 'Physician - Exams';
+}
 
-
-
-$this->title = 'Medico - Consultas';
+$this->title = $titulo;
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 </br>

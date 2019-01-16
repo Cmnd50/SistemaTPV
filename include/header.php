@@ -7,7 +7,13 @@
     </div>
       <ul class="nav navbar-top-links navbar-right">
           <li>
+          <?php if($_SESSION['IdIdioma'] == 1) {?>
               <span class="m-r-sm text-muted welcome-message">Bienvenidos Sistema TPV</span>
+          <?php } else{
+            ?>
+              <span class="m-r-sm text-muted welcome-message">Welcome Sistema TPV</span>  
+            <?php } ?>
+          
           </li>
           <li>
               <a href="../../include/logout.php?logout">

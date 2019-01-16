@@ -53,9 +53,14 @@ use yii\widgets\ActiveForm;
 
     <?php // echo $form->field($model, 'Alergias') ?>
 
-    <div class="form-group">
-        <?= Html::submitButton('Buscar', ['class' => 'btn btn-info']) ?>
-    </div>
+<div class="form-group">
+          <?php if($_SESSION['IdIdioma'] == 1) {?>
+                      <?= Html::submitButton('Buscar', ['class' => 'btn btn-success']) ?>
+        <?php } else{ ?> 
+                     <?= Html::submitButton('Search', ['class' => 'btn btn-success']) ?>
+
+        <?php } ?>
+</div> 
 
     <?php ActiveForm::end(); ?>
 

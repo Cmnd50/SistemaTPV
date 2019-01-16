@@ -74,7 +74,8 @@ class Consulta extends \yii\db\ActiveRecord
      */
     public function attributeLabels()
     {
-        return [
+        if($_SESSION['IdIdioma'] == 1){
+             return [
             'IdConsulta' => 'Id Consulta',
             'IdUsuario' => 'Id Usuario',
             'IdPersona' => 'Paciente',
@@ -95,6 +96,31 @@ class Consulta extends \yii\db\ActiveRecord
             'FechaProxVisita' => 'Fecha Prox Visita',
             'Alergias' => 'Alergias',
         ];
+        }
+        else{
+            return [
+            'IdConsulta' => 'Id Consulta',
+            'IdUsuario' => 'Id Usuario',
+            'IdPersona' => 'Patient',
+            'IdModulo' => 'Module',
+            'Diagnostico' => 'Diagnostico',
+            'Comentarios' => 'Comentarios',
+            'Otros' => 'Otros',
+            'IdEnfermedad' => 'Id Enfermedad',
+            'FechaConsulta' => 'Fecha Consulta',
+            'Activo' => 'Activo',
+            'IdEstado' => 'Id Estado',
+            'Status' => 'Status',
+            'EstadoNutricional' => 'Estado Nutricional',
+            'CirugiasPrevias' => 'Cirugias Previas',
+            'MedicamentosActuales' => 'Medicamentos Actuales',
+            'ExamenFisica' => 'Examen Fisica',
+            'PlanTratamiento' => 'Plan Tratamiento',
+            'FechaProxVisita' => 'Fecha Prox Visita',
+            'Alergias' => 'Alergias',
+            ];
+        }
+       
     }
 
     /**

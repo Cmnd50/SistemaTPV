@@ -84,6 +84,7 @@ class Persona extends \yii\db\ActiveRecord
      */
     public function attributeLabels()
     {
+     if($_SESSION['IdIdioma'] == 1){
         return [
             'IdPersona' => 'Paciente',
             'Nombres' => 'Nombres',
@@ -113,6 +114,38 @@ class Persona extends \yii\db\ActiveRecord
             'fullName' => Yii::t('app', 'Full Name'),
             'fullName' => 'Paciente'
         ];
+    }
+    else{
+        return [
+           'IdPersona' => 'Patient',
+            'Nombres' => 'Nombres',
+            'Apellidos' => 'Apellidos',
+            'FechaNacimiento' => 'Fecha Nacimiento',
+            'Direccion' => 'Direccion',
+            'Correo' => 'Correo',
+            'IdGeografia' => 'Id Geografia',
+            'Genero' => 'Genero',
+            'IdEstadoCivil' => 'Id Estado Civil',
+            'IdParentesco' => 'Id Parentesco',
+            'Telefono' => 'Telefono',
+            'Celular' => 'Celular',
+            'Alergias' => 'Alergias',
+            'Medicamentos' => 'Medicamentos',
+            'Enfermedad' => 'Enfermedad',
+            'Dui' => 'Dui',
+            'TelefonoResponsable' => 'Telefono Responsable',
+            'IdEstado' => 'Estado de Consulta',
+            'Categoria' => 'Category',
+            'NombresResponsable' => 'Nombres Responsable',
+            'ApellidosResponsable' => 'Apellidos Responsable',
+            'Parentesco' => 'Parentesco',
+            'DuiResponsable' => 'Dui Responsable',
+            'IdPais' => 'Id Pais',
+            'estado.NombreEstado' => 'Estado',
+            'fullName' => Yii::t('app', 'Full Name'),
+            'fullName' => 'Patient'
+            ];
+    }
     }
 
     /**

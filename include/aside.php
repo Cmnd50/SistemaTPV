@@ -47,7 +47,11 @@
                 <?php
                     $menu = new Menu();
                   ?>
-                   <?php foreach ($menu->getMenu() as $m) : ?>
+                   <?php foreach ($menu->getMenu() as $m) : 
+
+                  if($_SESSION['IdIdioma'] == 1){
+  
+                   ?>
                 <li>
                   <a href="<?php echo $m['IdMenu'] ?>"><i class="<?php echo $m['Icono'] ?>"></i>
                     <span class="nav-label"><?php echo $m['DescripcionMenu'] ?></span>
@@ -60,6 +64,24 @@
                             </li>
                         </ul>
                 </li>
+                <?php }
+                else{
+                  ?>
+                <li>
+                  <a href="<?php echo $m['IdMenu'] ?>"><i class="<?php echo $m['Icono'] ?>"></i>
+                    <span class="nav-label"><?php echo $m['DescripcionMenuIng'] ?></span>
+                    <span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level collapse"id="<?php echo $m['IdMenu'] ?>">
+                            <li>
+                              <?php foreach ($menu->getSubMenu($m['IdMenu']) as $s) : ?>
+                                <a href="<?php echo $s['Url'] ?>"><i class="<?php echo $s['Icono'] ?>"></i><?php echo $s['DescripcionMenuDetalle'] ?></a>
+                                <?php endforeach; ?>
+                            </li>
+                        </ul>
+                </li>
+
+                <?php } ?>
+
                 <?php endforeach; ?>
         </ul>
     </div>
