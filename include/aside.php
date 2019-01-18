@@ -74,7 +74,7 @@
                         <ul class="nav nav-second-level collapse"id="<?php echo $m['IdMenu'] ?>">
                             <li>
                               <?php foreach ($menu->getSubMenu($m['IdMenu']) as $s) : ?>
-                                <a href="<?php echo $s['Url'] ?>"><i class="<?php echo $s['Icono'] ?>"></i><?php echo $s['DescripcionMenuDetalle'] ?></a>
+                                <a href="<?php echo $s['Url'] ?>"><i class="<?php echo $s['Icono'] ?>"></i><?php echo $s['DescripcionMenuDetalleIng'] ?></a>
                                 <?php endforeach; ?>
                             </li>
                         </ul>

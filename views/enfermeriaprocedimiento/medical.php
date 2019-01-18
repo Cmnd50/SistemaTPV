@@ -74,8 +74,8 @@
     $resultadotablaconsulta = $mysqli->query($querytablaconsulta);
    
     $queryselectprocedimiento = "SELECT * FROM motivoprocedimiento";
-   
     $resultadoselectprocedimiento = $mysqli->query($queryselectprocedimiento);
+    
    
    $this->title = $model->fullName;
    $this->params['breadcrumbs'][] = ['label' => 'Enfermeria - Procedimientos', 'url' => ['index']];

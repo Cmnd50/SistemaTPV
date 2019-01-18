@@ -80,7 +80,7 @@
    
    
     // CONSULTA PARA CARGAR EL CBO DE LOS EXAMENES
-    $querytipoexamen = "SELECT IdTipoExamen, NombreExamen FROM tipoexamen";
+    $querytipoexamen = "SELECT IdTipoExamen, NombreExamen, DescripcionExamen FROM tipoexamen";
     $resultadotipoexamen = $mysqli->query($querytipoexamen);
    
    
@@ -151,7 +151,7 @@
                                          ORDER BY c.FechaConsulta DESC";
     $resultadotablaconsulta = $mysqli->query($querytablaconsulta);
 
-        $querytablaconsulta2 = "SELECT c.IdConsulta, c.FechaConsulta, CONCAT(u.Nombres,' ', u.Apellidos) As 'Medico',
+    $querytablaconsulta2 = "SELECT c.IdConsulta, c.FechaConsulta, CONCAT(u.Nombres,' ', u.Apellidos) As 'Medico',
                                          CONCAT(p.Nombres,' ', p.Apellidos) As 'Paciente', m.Descripcion As 'Especialidad', c.IdEstado as 'Estado'
                                          FROM consulta c
                                          INNER JOIN usuario u ON c.IdUsuario = u.IdUsuario
@@ -163,7 +163,7 @@
 
 
     // CONSULTA PARA CARGAR LA TABLA DE LAS EXAMENES ASIGNADOS AL PACIENTE
-    $querytablaexameneslabasignados = "SELECT LE.IdListaExamen as 'IdListaExamen',TE.NombreExamen AS 'NombreExamen', CONCAT(US.Nombres,' ', US.Apellidos) As 'Medico', LE.Indicacion as 'Indicacion'  
+    $querytablaexameneslabasignados = "SELECT LE.IdListaExamen as 'IdListaExamen',TE.NombreExamen AS 'NombreExamen', TE.DescripcionExamen AS 'NombreExamening', CONCAT(US.Nombres,' ', US.Apellidos) As 'Medico', LE.Indicacion as 'Indicacion'  
                                         FROM listaexamen LE
                                         INNER JOIN TipoExamen TE on LE.IdTipoExamen = TE.IdTipoExamen
                                         INNER JOIN Usuario US on LE.IdUsuario = US.IdUsuario
@@ -216,9 +216,14 @@
                                           FROM enfermedad";
     $resultadotablaenfermedad = $mysqli->query($querytablaenfermedad);
 
-    $querytablaenfermedad2 = "SELECT IdEnfermedad, CONCAT(CodigoICD,' ',NombreTraduc) AS 'Nombre'
+
+    $querytablaenfermedad2 = "SELECT IdEnfermedad, CONCAT(CodigoICD,' ',Nombre) AS 'Nombre'
                                           FROM enfermedad";
     $resultadotablaenfermedad2 = $mysqli->query($querytablaenfermedad2);
+
+    $querytablaenfermedadICD = "SELECT IdCodigoICD, NombreCodigo 
+                                          FROM codigoicd";
+    $resultadotablaenfermedadICD = $mysqli->query($querytablaenfermedadICD);
    
     $querytablarecetamedicamentos = "SELECT CONCAT(m.NombreComercial,' ',m.NombreMedicamento,' ',um.NombreUnidadMedida) As 'Medicamento', rm.Total As 'Cantidad'
                       FROM receta_medicamentos rm
@@ -243,7 +248,7 @@
     $resultadotablahistoricomedicamentos = $mysqli->query($queryhistoricomedicamentos);
    
     $querytablaprocedimientos = "SELECT ep.IdEnfermeriaProcedimiento As 'ID', CONCAT(p.Nombres,' ',p.Apellidos) As 'Paciente',
-                    CONCAT(u.Nombres,' ',u.Apellidos) As 'Medico', m.NombreModulo As 'Modulo', ep.FechaProcedimiento As 'Fecha',
+                    CONCAT(u.Nombres,' ',u.Apellidos) As 'Medico', m.NombreModulo As 'Modulo',m.Descripcion As 'Moduloing', ep.FechaProcedimiento As 'Fecha',
                       mp.Nombre As 'Motivo', ep.Observaciones As 'Observaciones', ep.Estado As 'Estado'
                       FROM enfermeriaprocedimiento ep
                       INNER JOIN persona p ON p.IdPersona = ep.IdPersona
@@ -393,16 +398,31 @@ $label = '';
                                                 echo"</tr>";
                                                 echo"</thead>";
                                                 echo"<tbody>";
-                                                while ($row = $resultadotablaexameneslabasignados->fetch_assoc()) {
+                                                if($_SESSION['IdIdioma'] == 1){
+                                                      while ($row = $resultadotablaexameneslabasignados->fetch_assoc()) {
+                                                        $idexamenasignado = $row['IdListaExamen'];
+                                                        echo"<tr>";
+                                                        echo"<td>" . $row['NombreExamen'] . "</td>";
+                                                        echo"<td>" . $row['Medico'] . "</td>";
+                                                        echo"<td>" . $row['Indicacion'] . "</td>";
+                                                        echo "<td><a style='width:140px'  class='btn  btn-danger dim' href='../../views/consultamedico/eliminarexamenasignado.php?did=".$idexamenasignado."'>Eliminar</a></td>";
+                                                        echo"</tr>";
+                                                        echo"</body>  ";
+                                                    }
+                                                }
+                                                else{
+                                                   while ($row = $resultadotablaexameneslabasignados->fetch_assoc()) {
                                                     $idexamenasignado = $row['IdListaExamen'];
                                                     echo"<tr>";
-                                                    echo"<td>" . $row['NombreExamen'] . "</td>";
+                                                    echo"<td>" . $row['NombreExamening'] . "</td>";
                                                     echo"<td>" . $row['Medico'] . "</td>";
                                                     echo"<td>" . $row['Indicacion'] . "</td>";
-                                                    echo "<td><a style='width:140px'  class='btn  btn-danger dim' href='../../views/consultamedico/eliminarexamenasignado.php?did=".$idexamenasignado."'>Eliminar </a></td>";
+                                                    echo "<td><a style='width:140px'  class='btn  btn-danger dim' href='../../views/consultamedico/eliminarexamenasignado.php?did=".$idexamenasignado."'>Delete</a></td>";
                                                     echo"</tr>";
                                                     echo"</body>  ";
                                                 }
+                                                }
+                                               
                                                 ?>
                                           </table>
                                        </div>
@@ -1052,6 +1072,7 @@ $label = '';
                                                 echo"</tr>";
                                                 echo"</thead>";
                                                 echo"<tbody>";
+                                                if($_SESSION['IdIdioma'] == 1){
                                                 while ($row = $resultadotablaprocedimientos->fetch_assoc()) {
                                                     $idSignosVitales = $row['ID'];
                                                     echo"<tr>";
@@ -1070,8 +1091,29 @@ $label = '';
                                                     "</td>";
                                                          }
                                                     echo"</tr>";
-                                                    echo"</body>  ";
-                                                }
+                                                    echo"</body>  ";}}else{
+                                                      while ($row = $resultadotablaprocedimientos->fetch_assoc()) {
+                                                    $idSignosVitales = $row['ID'];
+                                                    echo"<tr>";
+                                                    echo"<td>" . $row['Fecha'] . "</td>";
+                                                    echo"<td>" . $row['Paciente'] . "</td>";
+                                                    echo"<td>" . $row['Medico'] . "</td>";
+                                                    echo"<td>" . $row['Moduloing'] . "</td>";
+                                                    echo"<td>" . $row['Motivo'] . "</td>";
+                                                    if($_SESSION['IdIdioma'] == 1){
+                                                            echo "<td>" .
+                                                    "<span id='btn" . $idSignosVitales . "' style='width:140px' class='btn btn-md btn-warning btn-proce'>Ver Consulta</span>" .
+                                                    "</td>";}
+                                                         else{
+                                                            echo "<td>" .
+                                                    "<span id='btn" . $idSignosVitales . "' style='width:140px' class='btn btn-md btn-warning btn-proce'>See Visit</span>" .
+                                                    "</td>";
+                                                         }
+                                                    echo"</tr>";
+                                                    echo"</body>  ";}
+                                                    }
+
+
                                                 ?>
                                           </table>
                                        </div>
@@ -1455,19 +1497,19 @@ $label = '';
                      <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
                         <i class="fa fa-gittip modal-icon"></i>
-                        <h4 class="modal-title">EXAMEN HEMOGRAMA</h4>
-                        <small>RESULTADOS DE EXAMENES DE FECHA: <label id="ExamenHemogramaFechas"></label> </small>
+                        <h4 class="modal-title" id='modalconsultahemograma1'>EXAMEN HEMOGRAMA</h4>
+                        <small id='modalconsultahemograma2'></small> <small><label id="ExamenHemogramaFechas"></label> </small>
                      </div>
                      <div class="modal-body ">
                         <div class="form-group">
-                           <div class="col-sm-2"><label for="inputEmail3"  class="control-label">Paciente</label></div>
+                           <div class="col-sm-2" ><label for="inputEmail3"  class="control-label" id='modalconsultahemograma3'>Paciente</label></div>
                            <div class="col-sm-4">
                               <div class="input-group">
                                  <div class="input-group-addon"><i class="fa fa-user"></i></div>
                                  <input type="text" class="form-control" disabled="disabled" id="ExamenHemogramaPaciente" name="txtPaciente" disabled="disabled">
                               </div>
                            </div>
-                           <div class="col-sm-2"><label for="inputEmail3" class="control-label">Medico</label></div>
+                           <div class="col-sm-2"><label for="inputEmail3" class="control-label" id='modalconsultahemograma4'>Medico</label></div>
                            <div class="col-sm-4">
                               <div class="input-group">
                                  <div class="input-group-addon"><i class="fa fa-medkit"></i></div>
@@ -1476,7 +1518,7 @@ $label = '';
                            </div>
                         </div>
                         <div class="form-group">
-                           <div class="col-sm-2"><label for="inputEmail3" class="control-label">Fecha</label></div>
+                           <div class="col-sm-2"><label for="inputEmail3" class="control-label" id='modalconsultahemograma5'>Fecha</label></div>
                            <div class="col-sm-10">
                               <div class="input-group">
                                  <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
@@ -1486,56 +1528,56 @@ $label = '';
                         </div>
                         <div class="tabs-container">
                            <ul class="nav nav-tabs">
-                              <li class="active"><a data-toggle="tab" href="#MDLHEMOGRAMA1">FICHA 1</a></li>
-                              <li class=""><a data-toggle="tab" href="#MDLHEMOGRAMA2">FICHA 2</a></li>
+                              <li class="active"><a data-toggle="tab" href="#MDLHEMOGRAMA1" id='modalconsultahemograma6'>FICHA 1</a></li>
+                              <li class=""><a data-toggle="tab" href="#MDLHEMOGRAMA2" id='modalconsultahemograma7'>FICHA 2</a></li>
                            </ul>
                   <form class="form-horizontal">
                   <div class="tab-content">
                   <div id="MDLHEMOGRAMA1" class="tab-pane active">
                   <div class="panel-body">
                   <div class="form-group">
-                  <label for="inputEmail3" class="col-sm-2 control-label">Globulos Rojos</label>
+                  <label for="inputEmail3" class="col-sm-2 control-label" id='modalconsultahemograma8'>Globulos Rojos</label>
                   <div class="col-sm-2">
                   <input type="text" class="form-control" id="ExamenHemogramaGlobulosRojos" disabled="disabled">
                   </div>
                   <label for="inputEmail3" class="col-sm-1 control-label"><small>X mm3</small></label>
-                  <label for="inputEmail3" class="col-sm-2 control-label">Hemoglobina</label>
+                  <label for="inputEmail3" class="col-sm-2 control-label" id='modalconsultahemograma9'>Hemoglobina</label>
                   <div class="col-sm-2">
                   <input type="text" class="form-control" id="ExamenHemogramaHemoglobina" disabled="disabled">
                   </div>
                   <label for="inputEmail3" class="col-sm-1 control-label"><small>Gr/dl</small></label>
                   </div>
                   <div class="form-group">
-                  <label for="inputEmail3" class="col-sm-2 control-label">Hematocrito</label>
+                  <label for="inputEmail3" class="col-sm-2 control-label" id='modalconsultahemograma10'>Hematocrito</label>
                   <div class="col-sm-2">
                   <input type="text" class="form-control" id="ExamenHemogramaHematocrito" disabled="disabled">
                   </div>
                   <label for="inputEmail3" class="col-sm-1 control-label"><small>%</small></label>
-                  <label for="inputEmail3" class="col-sm-2 control-label">VGM</label>
+                  <label for="inputEmail3" class="col-sm-2 control-label" id='modalconsultahemograma11'>VGM</label>
                   <div class="col-sm-2">
                   <input type="text" class="form-control" id="ExamenHemogramaVgm" disabled="disabled">
                   </div>
                   <label for="inputEmail3" class="col-sm-1 control-label"><small>Micras cubicas</small></label>
                   </div>
                   <div class="form-group">
-                  <label for="inputEmail3" class="col-sm-2 control-label">HCM</label>
+                  <label for="inputEmail3" class="col-sm-2 control-label" id='modalconsultahemograma12'>HCM</label>
                   <div class="col-sm-2">
                   <input type="text" class="form-control" id="ExamenHemogramaHcm" disabled="disabled">
                   </div>
                   <label for="inputEmail3" class="col-sm-1 control-label"><small>Micro microgramos</small></label>
-                  <label for="inputEmail3" class="col-sm-2 control-label">CHCM</label>
+                  <label for="inputEmail3" class="col-sm-2 control-label" id='modalconsultahemograma13'>CHCM</label>
                   <div class="col-sm-2">
                   <input type="text" class="form-control" id="ExamenHemogramaChcm" disabled="disabled">
                   </div>
                   <label for="inputEmail3" class="col-sm-1 control-label"><small>%</small></label>
                   </div>
                   <div class="form-group">
-                  <label for="inputEmail3" class="col-sm-2 control-label">Leucocitos</label>
+                  <label for="inputEmail3" class="col-sm-2 control-label" id='modalconsultahemograma14'>Leucocitos</label>
                   <div class="col-sm-2">
                   <input type="text" class="form-control" id="ExamenHemogramaLeucocitos" disabled="disabled">
                   </div>
                   <label for="inputEmail3" class="col-sm-1 control-label"><small>X mm3</small></label>
-                  <label for="inputEmail3" class="col-sm-2 control-label">Neutrofilos en Banda</label>
+                  <label for="inputEmail3" class="col-sm-2 control-label" id='modalconsultahemograma15'>Neutrofilos en Banda</label>
                   <div class="col-sm-2">
                   <input type="text" class="form-control" id="ExamenHemogramaNeutrofilos" disabled="disabled">
                   </div>
@@ -1546,7 +1588,7 @@ $label = '';
                   <div id="MDLHEMOGRAMA2" class="tab-pane">
                   <div class="panel-body">
                   <div class="form-group">
-                  <label for="inputEmail3" class="col-sm-2 control-label">Linfocitos</label>
+                  <label for="inputEmail3" class="col-sm-2 control-label" id='modalconsultahemograma16'>Linfocitos</label>
                   <div class="col-sm-2">
                   <input type="text" class="form-control" id="ExamenHemogramaLinfocitos" disabled="disabled">
                   </div>
@@ -1558,35 +1600,35 @@ $label = '';
                   <label for="inputEmail3" class="col-sm-1 control-label"><small>%</small></label>
                   </div>
                   <div class="form-group">
-                  <label for="inputEmail3" class="col-sm-2 control-label">Eosinofilos</label>
+                  <label for="inputEmail3" class="col-sm-2 control-label" id='modalconsultahemograma17'>Eosinofilos</label>
                   <div class="col-sm-2">
                   <input type="text" class="form-control" id="ExamenHemogramaEosinofilos" disabled="disabled">
                   </div>
                   <label for="inputEmail3" class="col-sm-1 control-label"><small>%</small></label>
-                  <label for="inputEmail3" class="col-sm-2 control-label">Basofilos</label>
+                  <label for="inputEmail3" class="col-sm-2 control-label" id='modalconsultahemograma18'>Basofilos</label>
                   <div class="col-sm-2">
                   <input type="text" class="form-control" id="ExamenHemogramaBasofilos" disabled="disabled">
                   </div>
                   <label for="inputEmail3" class="col-sm-1 control-label"><small>%</small></label>
                   </div>
                   <div class="form-group">
-                  <label for="inputEmail3" class="col-sm-2 control-label">Plaquetas</label>
+                  <label for="inputEmail3" class="col-sm-2 control-label" id='modalconsultahemograma19'>Plaquetas</label>
                   <div class="col-sm-2">
                   <input type="text" class="form-control" id="ExamenHemogramaPlaquetas" disabled="disabled">
                   </div>
                   <label for="inputEmail3" class="col-sm-1 control-label"><small>X mm3</small></label>
-                  <label for="inputEmail3" class="col-sm-2 control-label">Eritro Sedimentacion</label>
+                  <label for="inputEmail3" class="col-sm-2 control-label" id='modalconsultahemograma20'>Eritro Sedimentacion</label>
                   <div class="col-sm-2">
                   <input type="text" class="form-control" id="ExamenHemogramaEritrosedimentacion" disabled="disabled">
                   </div>
                   <label for="inputEmail3" class="col-sm-1 control-label"><small>mm/h</small></label>
                   </div>
                   <div class="form-group">
-                  <label for="inputEmail3" class="col-sm-2 control-label">Otros</label>
+                  <label for="inputEmail3" class="col-sm-2 control-label" id='modalconsultahemograma21'>Otros</label>
                   <div class="col-sm-3">
                   <input type="text" class="form-control" id="ExamenHemogramaOtros" disabled="disabled">
                   </div>
-                  <label for="inputEmail3" class="col-sm-2 control-label">Neutrofilos Segmentados</label>
+                  <label for="inputEmail3" class="col-sm-2 control-label" id='modalconsultahemograma22'>Neutrofilos Segmentados</label>
                   <div class="col-sm-2">
                   <input type="text" class="form-control" id="ExamenHemogramaNeutrofilosSegmentados" disabled="disabled">
                   </div>
@@ -1599,7 +1641,7 @@ $label = '';
                   </div>
                   </div>
                   <div class="modal-footer">
-                     <button type="button" class="btn btn-danger" id="btn-cerrarmodal" data-dismiss="modal" >Cerrar</button>
+                     <button type="button" class="btn btn-danger"  data-dismiss="modal" id='modalconsultahemograma23'>Cerrar</button>
                   </div>
                   </form>
                </div>
@@ -1613,19 +1655,19 @@ $label = '';
                      <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
                         <i class="fa fa-gittip modal-icon"></i>
-                        <h4 class="modal-title">EXAMEN HECES</h4>
-                        <small>RESULTADOS DE EXAMENES DE FECHA: <label id="ExamenHecesFechas"></label> </small>
+                        <h4 class="modal-title" id='modalconsultaheces1'>EXAMEN HECES</h4>
+                        <small id='modalconsultaheces2'></small>RESULTADOS DE EXAMENES DE FECHA:<small> <label id="ExamenHecesFechas"></label> </small>
                      </div>
                      <div class="modal-body ">
                         <div class="form-group">
-                           <div class="col-sm-2"><label for="inputEmail3"  class="control-label">Paciente</label></div>
+                           <div class="col-sm-2"><label for="inputEmail3"  class="control-label" id='modalconsultaheces3'>Paciente</label></div>
                            <div class="col-sm-4">
                               <div class="input-group">
                                  <div class="input-group-addon"><i class="fa fa-user"></i></div>
                                  <input type="text" class="form-control" disabled="disabled" id="ExamenHecesPaciente" name="txtPaciente" disabled="disabled">
                               </div>
                            </div>
-                           <div class="col-sm-2"><label for="inputEmail3" class="control-label">Medico</label></div>
+                           <div class="col-sm-2"><label for="inputEmail3" class="control-label" id='modalconsultaheces4'>Medico</label></div>
                            <div class="col-sm-4">
                               <div class="input-group">
                                  <div class="input-group-addon"><i class="fa fa-medkit"></i></div>
@@ -1634,7 +1676,7 @@ $label = '';
                            </div>
                         </div>
                         <div class="form-group">
-                           <div class="col-sm-2"><label for="inputEmail3" class="control-label">Fecha</label></div>
+                           <div class="col-sm-2"><label for="inputEmail3" class="control-label" id='modalconsultaheces5'>Fecha</label></div>
                            <div class="col-sm-10">
                               <div class="input-group">
                                  <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
@@ -1644,39 +1686,39 @@ $label = '';
                         </div>
                         <div class="tabs-container">
                            <ul class="nav nav-tabs">
-                              <li class="active"><a data-toggle="tab" href="#MDLHECES1">FICHA 1</a></li>
-                              <li class=""><a data-toggle="tab" href="#MDLHECES2">FICHA 2</a></li>
+                              <li class="active"><a data-toggle="tab" href="#MDLHECES1" id='modalconsultaheces6'>FICHA 1</a></li>
+                              <li class=""><a data-toggle="tab" href="#MDLHECES2" id='modalconsultaheces7'>FICHA 2</a></li>
                            </ul>
                   <form class="form-horizontal">
                   <div class="tab-content">
                   <div id="MDLHECES1" class="tab-pane active">
                   <div class="panel-body">
                   <div class="form-group">
-                  <label for="inputEmail3" class="col-sm-2 control-label">Color</label>
+                  <label for="inputEmail3" class="col-sm-2 control-label" id='modalconsultaheces8'>Color</label>
                   <div class="col-sm-3">
                   <input type="text" class="form-control" id="ExamenHecesColor" disabled="disabled">
                   </div>
-                  <label for="inputEmail3" class="col-sm-2 control-label">Consistencia</label>
+                  <label for="inputEmail3" class="col-sm-2 control-label" id='modalconsultaheces9'>Consistencia</label>
                   <div class="col-sm-4">
                   <input type="text" class="form-control" id="ExamenHecesConsistencia" disabled="disabled">
                   </div>
                   </div>
                   <div class="form-group">
-                  <label for="inputEmail3" class="col-sm-2 control-label">Mucus</label>
+                  <label for="inputEmail3" class="col-sm-2 control-label" id='modalconsultaheces10'>Mucus</label>
                   <div class="col-sm-3">
                   <input type="text" class="form-control" id="ExamenHecesMucus" disabled="disabled">
                   </div>
-                  <label for="inputEmail3" class="col-sm-2 control-label">Hematies</label>
+                  <label for="inputEmail3" class="col-sm-2 control-label" id='modalconsultaheces11'>Hematies</label>
                   <div class="col-sm-4">
                   <input type="text" class="form-control" id="ExamenHecesHematies" disabled="disabled">
                   </div>
                   </div>
                   <div class="form-group">
-                  <label for="inputEmail3" class="col-sm-2 control-label">Leucocitos</label>
+                  <label for="inputEmail3" class="col-sm-2 control-label" id='modalconsultaheces12'>Leucocitos</label>
                   <div class="col-sm-3">
                   <input type="text" class="form-control" id="ExamenHecesLeucocitos" disabled="disabled">
                   </div>
-                  <label for="inputEmail3" class="col-sm-2 control-label">Restos Alimenticios</label>
+                  <label for="inputEmail3" class="col-sm-2 control-label" id='modalconsultaheces13'>Restos Alimenticios</label>
                   <div class="col-sm-4">
                   <input type="text" class="form-control" id="ExamenHecesRestosAlimenticios" disabled="disabled">
                   </div>
@@ -1686,31 +1728,31 @@ $label = '';
                   <div id="MDLHECES2" class="tab-pane">
                   <div class="panel-body">
                   <div class="form-group">
-                  <label for="inputEmail3" class="col-sm-2 control-label">Macroscopios</label>
+                  <label for="inputEmail3" class="col-sm-2 control-label" id='modalconsultaheces14'>Macroscopios</label>
                   <div class="col-sm-3">
                   <input type="text" class="form-control" id="ExamenHecesMacrocopios" disabled="disabled">
                   </div>
-                  <label for="inputEmail3" class="col-sm-2 control-label">Microscopios</label>
+                  <label for="inputEmail3" class="col-sm-2 control-label" id='modalconsultaheces15'>Microscopios</label>
                   <div class="col-sm-4">
                   <input type="text" class="form-control" id="ExamenHecesMicroscopicos" disabled="disabled">
                   </div>
                   </div>
                   <div class="form-group">
-                  <label for="inputEmail3" class="col-sm-2 control-label">Flora Bacteriana</label>
+                  <label for="inputEmail3" class="col-sm-2 control-label" id='modalconsultaheces16'>Flora Bacteriana</label>
                   <div class="col-sm-3">
                   <input type="text" class="form-control" id="ExamenHecesFlora" disabled="disabled">
                   </div>
-                  <label for="inputEmail3" class="col-sm-2 control-label">Otros</label>
+                  <label for="inputEmail3" class="col-sm-2 control-label" id='modalconsultaheces1'>Otros</label>
                   <div class="col-sm-4">
                   <input type="text" class="form-control" id="ExamenHecesOtros" disabled="disabled">
                   </div>
                   </div>
                   <div class="form-group">
-                  <label for="inputEmail3" class="col-sm-2 control-label">PActivos</label>
+                  <label for="inputEmail3" class="col-sm-2 control-label" id='modalconsultaheces17'>PActivos</label>
                   <div class="col-sm-3">
                   <input type="text" class="form-control" id="ExamenHecesPActivos" disabled="disabled">
                   </div>
-                  <label for="inputEmail3" class="col-sm-2 control-label">PQuistes</label>
+                  <label for="inputEmail3" class="col-sm-2 control-label" id='modalconsultaheces18'>PQuistes</label>
                   <div class="col-sm-4">
                   <input type="text" class="form-control" id="ExamenHecesPQuistes" disabled="disabled">
                   </div>
@@ -1722,7 +1764,7 @@ $label = '';
                   </div>
                   </div>
                   <div class="modal-footer">
-                     <button type="button" class="btn btn-danger" id="btn-cerrarmodal" data-dismiss="modal" >Cerrar</button>
+                     <button type="button" class="btn btn-danger"  data-dismiss="modal" id='modalconsultaheces19'>Cerrar</button>
                   </div>
                   </form>
                </div>
@@ -1737,42 +1779,42 @@ $label = '';
                         <div class="modal-header">
                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                            <span aria-hidden="true">&times;</span></button>
-                           <h4 class="modal-title">Examen Varios</h4>
+                           <h4 class="modal-title" id='modalconsultavarios1'>Examen Varios</h4>
                         </div>
                         <div class="modal-body ">
                            <div class="form-group">
-                              <label for="inputEmail3" class="col-sm-2 control-label">Paciente</label>
+                              <label for="inputEmail3" class="col-sm-2 control-label" id='modalconsultavarios2'>Paciente</label>
                               <div class="col-sm-9">
                                  <input type="text" class="form-control" id="ExamenesVariosPaciente" disabled="disabled">
                               </div>
                            </div>
                            <div class="form-group">
-                              <label for="inputEmail3" class="col-sm-2 control-label">Medico</label>
+                              <label for="inputEmail3" class="col-sm-2 control-label" id='modalconsultavarios3'>Medico</label>
                               <div class="col-sm-9">
                                  <input type="text" class="form-control" id="ExamenesVariosMedico" disabled="disabled">
                               </div>
                            </div>
                            <div class="form-group">
-                              <label for="inputEmail3" class="col-sm-2 control-label">Examen</label>
+                              <label for="inputEmail3" class="col-sm-2 control-label" id='modalconsultavarios4'>Examen</label>
                               <div class="col-sm-9">
                                  <input type="text" class="form-control" id="ExamenesVariosNombreExamen" disabled="disabled">
                               </div>
                            </div>
                            <div class="form-group">
-                              <label for="inputEmail3" class="col-sm-2 control-label">Fecha</label>
+                              <label for="inputEmail3" class="col-sm-2 control-label" id='modalconsultavarios5'>Fecha</label>
                               <div class="col-sm-9">
                                  <input type="text" class="form-control" id="ExamenesVariosFecha" disabled="disabled">
                               </div>
                            </div>
                            <div class="form-group">
-                              <label for="inputEmail3" class="col-sm-2 control-label">Resultado</label>
+                              <label for="inputEmail3" class="col-sm-2 control-label" id='modalconsultavarios6'>Resultado</label>
                               <div class="col-sm-9">
                                  <textarea type="text" rows="3" id="ExamenesVariosResultado" class="form-control" disabled="disabled"></textarea>
                               </div>
                            </div>
                         </div>
                         <div class="modal-footer">
-                           <button type="button" class="btn btn-danger pull-left" id="btn-cerrarmodal" data-dismiss="modal" >Cerrar</button>
+                           <button type="button" class="btn btn-danger" data-dismiss="modal"  id='modalconsultavarios7'>Cerrar</button>
                         </div>
                      </form>
                   </div>
@@ -1787,19 +1829,19 @@ $label = '';
                      <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
                         <i class="fa fa-gittip modal-icon"></i>
-                        <h4 class="modal-title">EXAMEN ORINA</h4>
-                        <small>RESULTADOS DE ORINA DE FECHA: <label id="ExamenOrinaFechas"></label> </small>
+                        <h4 class="modal-title" id='modalconsultaorina1'>EXAMEN ORINA</h4>
+                        <small id='modalconsultaorina2'>RESULTADOS DE ORINA DE FECHA: </small> <small><label id="ExamenOrinaFechas"></label> </small>
                      </div>
                      <div class="modal-body ">
                         <div class="form-group">
-                           <div class="col-sm-2"><label for="inputEmail3"  class="control-label">Paciente</label></div>
+                           <div class="col-sm-2"><label for="inputEmail3"  class="control-label" id='modalconsultaorina3'>Paciente</label></div>
                            <div class="col-sm-4">
                               <div class="input-group">
                                  <div class="input-group-addon"><i class="fa fa-user"></i></div>
                                  <input type="text" class="form-control" disabled="disabled" id="ExamenOrinaPaciente" name="txtPaciente" disabled="disabled">
                               </div>
                            </div>
-                           <div class="col-sm-2"><label for="inputEmail3" class="control-label">Medico</label></div>
+                           <div class="col-sm-2"><label for="inputEmail3" class="control-label" id='modalconsultaorina4'>Medico</label></div>
                            <div class="col-sm-4">
                               <div class="input-group">
                                  <div class="input-group-addon"><i class="fa fa-medkit"></i></div>
@@ -1808,7 +1850,7 @@ $label = '';
                            </div>
                         </div>
                         <div class="form-group">
-                           <div class="col-sm-2"><label for="inputEmail3" class="control-label">Fecha</label></div>
+                           <div class="col-sm-2"><label for="inputEmail3" class="control-label" id='modalconsultaorina5'>Fecha</label></div>
                            <div class="col-sm-10">
                               <div class="input-group">
                                  <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
@@ -1818,59 +1860,59 @@ $label = '';
                         </div>
                         <div class="tabs-container">
                            <ul class="nav nav-tabs">
-                              <li class="active"><a data-toggle="tab" href="#MDLORINA1">FICHA 1</a></li>
-                              <li class=""><a data-toggle="tab" href="#MDLORINA2">FICHA 2</a></li>
+                              <li class="active"><a data-toggle="tab" href="#MDLORINA1" id='modalconsultaorina6'>FICHA 1</a></li>
+                              <li class=""><a data-toggle="tab" href="#MDLORINA2" id='modalconsultaorina7'>FICHA 2</a></li>
                            </ul>
                   <form class="form-horizontal">
                   <div class="tab-content">
                   <div id="MDLORINA1" class="tab-pane active">
                   <div class="panel-body">
                   <div class="form-group">
-                  <label for="inputEmail3" class="col-sm-2 control-label">Color</label>
+                  <label for="inputEmail3" class="col-sm-2 control-label" id='modalconsultaorina8'>Color</label>
                   <div class="col-sm-3">
                   <input type="text" class="form-control" id="ExamenOrinaColor" disabled="disabled">
                   </div>
-                  <label for="inputEmail3" class="col-sm-2 control-label">Aspecto</label>
+                  <label for="inputEmail3" class="col-sm-2 control-label" id='modalconsultaorina9'>Aspecto</label>
                   <div class="col-sm-4">
                   <input type="text" class="form-control" id="ExamenOrinaAspecto" disabled="disabled">
                   </div>
                   </div>
                   <div class="form-group">
-                  <label for="inputEmail3" class="col-sm-2 control-label">Densidad</label>
+                  <label for="inputEmail3" class="col-sm-2 control-label" id='modalconsultaorina10'>Densidad</label>
                   <div class="col-sm-3">
                   <input type="text" class="form-control" id="ExamenOrinaDendisdad" disabled="disabled">
                   </div>
-                  <label for="inputEmail3" class="col-sm-2 control-label">Ph</label>
+                  <label for="inputEmail3" class="col-sm-2 control-label" id='modalconsultaorina11'>Ph</label>
                   <div class="col-sm-4">
                   <input type="text" class="form-control" id="ExamenOrinaPh" disabled="disabled">
                   </div>
                   </div>
                   <div class="form-group">
-                  <label for="inputEmail3" class="col-sm-2 control-label">Proteinas</label>
+                  <label for="inputEmail3" class="col-sm-2 control-label" id='modalconsultaorina12'>Proteinas</label>
                   <div class="col-sm-3">
                   <input type="text" class="form-control" id="ExamenOrinaProteinas" disabled="disabled">
                   </div>
-                  <label for="inputEmail3" class="col-sm-2 control-label">Glucosa</label>
+                  <label for="inputEmail3" class="col-sm-2 control-label" id='modalconsultaorina13'>Glucosa</label>
                   <div class="col-sm-4">
                   <input type="text" class="form-control" id="ExamenOrinaGlucosa" disabled="disabled">
                   </div>
                   </div>
                   <div class="form-group">
-                  <label for="inputEmail3" class="col-sm-2 control-label">Sangre Oculta</label>
+                  <label for="inputEmail3" class="col-sm-2 control-label" id='modalconsultaorina14'>Sangre Oculta</label>
                   <div class="col-sm-3">
                   <input type="text" class="form-control" id="ExamenOrinaSangreOculta" disabled="disabled">
                   </div>
-                  <label for="inputEmail3" class="col-sm-2 control-label">Cuerpos Cetomicos</label>
+                  <label for="inputEmail3" class="col-sm-2 control-label" id='modalconsultaorina15'>Cuerpos Cetomicos</label>
                   <div class="col-sm-4">
                   <input type="text" class="form-control" id="ExamenOrinaCuerposCetomicos" disabled="disabled">
                   </div>
                   </div>
                   <div class="form-group">
-                  <label for="inputEmail3" class="col-sm-2 control-label">Uroblinogeno</label>
+                  <label for="inputEmail3" class="col-sm-2 control-label" id='modalconsultaorina16'>Uroblinogeno</label>
                   <div class="col-sm-3">
                   <input type="text" class="form-control" id="ExamenOrinaUrobilinogeno" disabled="disabled">
                   </div>
-                  <label for="inputEmail3" class="col-sm-2 control-label">Bilirrubina</label>
+                  <label for="inputEmail3" class="col-sm-2 control-label" id='modalconsultaorina17'>Bilirrubina</label>
                   <div class="col-sm-4">
                   <input type="text" class="form-control" id="ExamenOrinaBilirrubina" disabled="disabled">
                   </div>
@@ -1926,7 +1968,7 @@ $label = '';
                   </div>
                   </div>
                   <div class="modal-footer">
-                     <button type="button" class="btn btn-danger" id="btn-cerrarmodal" data-dismiss="modal" >Cerrar</button>
+                     <button type="button" class="btn btn-danger"  data-dismiss="modal" id='modalconsultaorina18'>Cerrar</button>
                   </div>
                   </form>
                </div>
@@ -1941,75 +1983,75 @@ $label = '';
                         <div class="modal-header">
                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                            <span aria-hidden="true">&times;</span></button>
-                           <h4 class="modal-title">Examen Quimico</h4>
+                           <h4 class="modal-title" id='modalconsultaquimico1'>Examen Quimico</h4>
                         </div>
                         <div class="modal-body ">
                            <div class="form-group">
-                              <label for="inputEmail3" class="col-sm-2 control-label">Paciente</label>
+                              <label for="inputEmail3" class="col-sm-2 control-label" id='modalconsultaquimico2'>Paciente</label>
                               <div class="col-sm-9">
                                  <input type="text" class="form-control" id="ExamenQuimicaPaciente" disabled="disabled">
                               </div>
                            </div>
                            <div class="form-group">
-                              <label for="inputEmail3" class="col-sm-2 control-label">Medico</label>
+                              <label for="inputEmail3" class="col-sm-2 control-label" id='modalconsultaquimico3'>Medico</label>
                               <div class="col-sm-9">
                                  <input type="text" class="form-control" id="ExamenQuimicaMedico" disabled="disabled">
                               </div>
                            </div>
                            <div class="form-group">
-                              <label for="inputEmail3" class="col-sm-2 control-label">Examen</label>
+                              <label for="inputEmail3" class="col-sm-2 control-label" id='modalconsultaquimico4'>Examen</label>
                               <div class="col-sm-9">
                                  <input type="text" class="form-control" id="ExamenQuimicaNombreExamen" disabled="disabled">
                               </div>
                            </div>
                            <div class="form-group">
-                              <label for="inputEmail3" class="col-sm-2 control-label">Fecha</label>
+                              <label for="inputEmail3" class="col-sm-2 control-label" id='modalconsultaquimico5'>Fecha</label>
                               <div class="col-sm-9">
                                  <input type="text" class="form-control" id="ExamenQuimicaFecha" disabled="disabled">
                               </div>
                            </div>
                            <div class="form-group">
-                              <label for="inputEmail3" class="col-sm-2 control-label">Glucosa</label>
+                              <label for="inputEmail3" class="col-sm-2 control-label" id='modalconsultaquimico6'>Glucosa</label>
                               <div class="col-sm-2">
                                  <input type="text" class="form-control" id="ExamenQuimicaGlucosa" disabled="disabled">
                               </div>
                               <label for="inputEmail3" class="col-sm-2 control-label">70 - 110 mg/dl</label>
-                              <label for="inputEmail3" class="col-sm-2 control-label">Glucosa Post</label>
+                              <label for="inputEmail3" class="col-sm-2 control-label" id='modalconsultaquimico7'>Glucosa Post</label>
                               <div class="col-sm-3">
                                  <input type="text" class="form-control" id="ExamenQuimicaGlucosaPost" disabled="disabled">
                               </div>
                            </div>
                            <div class="form-group">
-                              <label for="inputEmail3" class="col-sm-2 control-label">Colesterol Total</label>
+                              <label for="inputEmail3" class="col-sm-2 control-label" id='modalconsultaquimico8'>Colesterol Total</label>
                               <div class="col-sm-2">
                                  <input type="text" class="form-control" id="ExamenQuimicaColesterolTotal" disabled="disabled">
                               </div>
                               <label for="inputEmail3" class="col-sm-2 control-label">Hasta 200 mg/dl</label>
-                              <label for="inputEmail3" class="col-sm-2 control-label">Triglicerido</label>
+                              <label for="inputEmail3" class="col-sm-2 control-label" id='modalconsultaquimico9'>Triglicerido</label>
                               <div class="col-sm-1">
                                  <input type="text" class="form-control" id="ExamenQuimicaTriglicerido" disabled="disabled">
                               </div>
                               <label for="inputEmail3" class="col-sm-2 control-label">Hasta 150 mg/dl</label>
                            </div>
                            <div class="form-group">
-                              <label for="inputEmail3" class="col-sm-2 control-label">Acido Urico</label>
+                              <label for="inputEmail3" class="col-sm-2 control-label" id='modalconsultaquimico10'>Acido Urico</label>
                               <div class="col-sm-2">
                                  <input type="text" class="form-control" id="ExamenQuimicaAcidoUrico" disabled="disabled">
                               </div>
                               <label for="inputEmail3" class="col-sm-2 control-label">M: 2.0 – 6.0 mg/dl H: 3.4 – 7.0 mg/dl</label>
-                              <label for="inputEmail3" class="col-sm-2 control-label">Creatinina</label>
+                              <label for="inputEmail3" class="col-sm-2 control-label" id='modalconsultaquimico11'>Creatinina</label>
                               <div class="col-sm-1">
                                  <input type="text" class="form-control" id="ExamenQuimicaCreatinina" disabled="disabled">
                               </div>
                               <label for="inputEmail3" class="col-sm-2 control-label">0.6 - 1.2 mg/dl</label>
                            </div>
                            <div class="form-group">
-                              <label for="inputEmail3" class="col-sm-2 control-label">Nitrogeno Ureico</label>
+                              <label for="inputEmail3" class="col-sm-2 control-label" id='modalconsultaquimico12'>Nitrogeno Ureico</label>
                               <div class="col-sm-2">
                                  <input type="text" class="form-control" id="ExamenQuimicaNitrogenoUreico" disabled="disabled">
                               </div>
                               <label for="inputEmail3" class="col-sm-2 control-label">7.0 - 21.0 mg/dl</label>
-                              <label for="inputEmail3" class="col-sm-2 control-label">Urea</label>
+                              <label for="inputEmail3" class="col-sm-2 control-label" id='modalconsultaquimico13'>Urea</label>
                               <div class="col-sm-1">
                                  <input type="text" class="form-control" id="ExamenQuimicaUrea" disabled="disabled">
                               </div>
@@ -2017,7 +2059,7 @@ $label = '';
                            </div>
                         </div>
                         <div class="modal-footer">
-                           <button type="button" class="btn btn-danger pull-left" id="btn-cerrarmodal" data-dismiss="modal" >Cerrar</button>
+                              <button type="button" class="btn btn-danger"  data-dismiss="modal" id='modalconsultaquimico14'>Cerrar</button>
                         </div>
                      </form>
                   </div>
@@ -2031,8 +2073,8 @@ $label = '';
                   <div class="modal-header">
                      <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
                      <i class="fa fa-h-square modal-icon"></i>
-                     <h4 class="modal-title">REPORTE DE PROCEDIMIENTOS</h4>
-                     <small>FICHA DE PROCEDIMIENTOS</small>
+                     <h4 class="modal-title" id='modalcargaprocedimiento1'>REPORTE DE PROCEDIMIENTOS</h4>
+                     <small id='modalcargaprocedimiento2'>FICHA DE PROCEDIMIENTOS</small>
                   </div>
                   <div class="modal-body">
                      <form class="form-horizontal"  id="demo-form1" data-parsley-validate="">
@@ -2043,7 +2085,7 @@ $label = '';
                         <div class="form-group">
                            <div class="col-sm-1"></div>
                            <div class="col-sm-3">
-                              <label for="inputEmail3" class="control-label">Paciente</label>
+                              <label for="inputEmail3" class="control-label" id='modalcargaprocedimiento3'>Paciente</label>
                            </div>
                            <div class="col-sm-7">
                               <div class="input-group">
@@ -2055,7 +2097,7 @@ $label = '';
                         </div>
                         <div class="form-group">
                            <div class="col-sm-1"></div>
-                           <div class="col-sm-3"><label for="inputEmail3" class="control-label">Enfermera</label></div>
+                           <div class="col-sm-3"><label for="inputEmail3" class="control-label" id='modalcargaprocedimiento4'>Enfermera</label></div>
                            <div class="col-sm-7">
                               <div class="input-group">
                                  <div class="input-group-addon"><i class="fa fa-medkit"></i></div>
@@ -2066,7 +2108,7 @@ $label = '';
                         </div>
                         <div class="form-group">
                            <div class="col-sm-1"></div>
-                           <div class="col-sm-3"><label for="inputEmail3" class="control-label">Modulo</label></div>
+                           <div class="col-sm-3"><label for="inputEmail3" class="control-label" id='modalcargaprocedimiento5'>Modulo</label></div>
                            <div class="col-sm-7">
                               <div class="input-group">
                                  <div class="input-group-addon"><i class="fa fa-bookmark-o"></i></div>
@@ -2077,7 +2119,7 @@ $label = '';
                         </div>
                         <div class="form-group">
                            <div class="col-sm-1"></div>
-                           <div class="col-sm-3"><label for="inputEmail3" class="control-label">Fecha</label></div>
+                           <div class="col-sm-3"><label for="inputEmail3" class="control-label" id='modalcargaprocedimiento6'>Fecha</label></div>
                            <div class="col-sm-7">
                               <div class="input-group">
                                  <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
@@ -2088,7 +2130,7 @@ $label = '';
                         </div>
                         <div class="form-group">
                            <div class="col-sm-1"></div>
-                           <div class="col-sm-3"><label for="inputEmail3" class="control-label">Observaciones</label></div>
+                           <div class="col-sm-3"><label for="inputEmail3" class="control-label" id='modalcargaprocedimiento7'>Observaciones</label></div>
                            <div class="col-sm-7">
                               <div class="input-group">
                                  <div class="input-group-addon"><i class="fa fa-search"></i></div>
@@ -2098,7 +2140,7 @@ $label = '';
                            <div class="col-sm-1"></div>
                         </div>
                         <div class="modal-footer">
-                           <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+                           <button type="button" class="btn btn-danger" data-dismiss="modal" id='modalcargaprocedimiento8'>Cerrar</button>
                         </div>
                      </form>
                   </div>
@@ -2115,29 +2157,35 @@ $label = '';
                       <div class="modal-header">
                            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
                            <i class="fa fa-stethoscope modal-icon"></i>
-                           <h4 class="modal-title">ASIGNACION DE EXAMENES MEDICOS</h4>
-                           <small>ASIGNACION DE EXAMENES: <?php echo $idpersona; ?></small>
+                           <h4 class="modal-title" id='modalasignarexamen1'>ASIGNACION DE EXAMENES MEDICOS</h4>
+                           <small id='modalasignarexamen2'>ASIGNACION DE EXAMENES: <?php echo $idpersona; ?></small>
                         </div>
                         <div class="modal-body ">
                            <div class="form-group">
-                              <label for="inputEmail3" class="col-sm-2 control-label">Examenes</label>
+                              <label for="inputEmail3" class="col-sm-2 control-label" id='modalasignarexamen3'>Examenes</label>
                               <div class="col-sm-9">
                                  <div class="input-group">
                                     <div class="input-group-addon">
                                        <i class="fa fa-user"></i>
                                     </div>
                                     <select class="form-control select2" style="width: 100%;"  name="cboTipoExamen">
-                                    <?php
-                                       while ($row = $resultadotipoexamen->fetch_assoc()) {
-                                           echo "<option value = '" . $row['IdTipoExamen'] . "'>" . $row['NombreExamen'] . "</option>";
-                                       }
+                                          <?php
+                                          if($_SESSION['IdIdioma'] == 1){
+                                                while ($row = $resultadotipoexamen->fetch_assoc()) {
+                                                 echo "<option value = '" . $row['IdTipoExamen'] . "'>" . $row['NombreExamen'] . "</option>";
+                                             }
+                                          }else{
+                                            while ($row = $resultadotipoexamen->fetch_assoc()) {
+                                                 echo "<option value = '" . $row['IdTipoExamen'] . "'>" . $row['DescripcionExamen'] . "</option>";
+                                             }
+                                          }
                                        ?>
                                     </select>
                                  </div>
                               </div>
                            </div>
-                           <div class="form-group">
-                              <label for="inputEmail3" class="col-sm-2 control-label">Indicaciones</label>
+                           <div class="form-group" >
+                              <label for="inputEmail3" class="col-sm-2 control-label" id='modalasignarexamen4'>Indicaciones</label>
                               <div class="col-sm-9">
                                  <div class="input-group">
                                     <div class="input-group-addon">
@@ -2176,10 +2224,10 @@ $label = '';
                               
                            </div>
                            <div class="col-sm-2">
-                           <button type="button" class="btn btn-danger" id="btn-cerrarmodal" data-dismiss="modal" >Cerrar</button>
+                           <button type="button" class="btn btn-danger" id="btn-cerrarmodal" data-dismiss="modal"  id='modalasignarexamen5'>Cerrar</button>
                            </div>
                            <div class="col-sm-2">
-                              <button type="submit" class="btn btn-primary" name="guardarIndicador" >Guardar Cambios</button>
+                              <button type="submit" class="btn btn-primary" name="guardarIndicador"  id='modalasignarexamen6'>Guardar Cambios</button>
                            </div>
                         </div>
                      </form>
@@ -2300,6 +2348,21 @@ $label = '';
 
                                                             }
                                                              
+                                                             ?>
+                                                          </select>
+                                                      </div>
+                                                   </div>
+                                                </div>
+                                                <div class="form-group">
+                                                   <div class="col-sm-3"><label for="inputEmail3" class="control-label" id='modaltabnuevaconsultamedica8'></label></div>
+                                                   <div class="col-sm-9">
+                                                      <div class="input-group">
+                                                         <div class="input-group-addon"><i class="fa fa-comment-o"></i></div>
+                                                         <select class="form-control select2" style="width: 100%;"  name="cboEnfermedad">
+                                                          <?php
+                                                              while ($row = $resultadotablaenfermedadICD->fetch_assoc()) {
+                                                                 echo "<option value = '" . $row['IdCodigoICD'] . "'>" . $row['NombreCodigo'] . "</option>";
+                                                             }
                                                              ?>
                                                           </select>
                                                       </div>
@@ -3000,6 +3063,129 @@ $label = '';
        $("#modaltabnuevoexameneslab4").text('Indication');
        $("#modaltabnuevoexameneslab5").text("Close");
        $("#modaltabnuevoexameneslab6").text('Save Changes');
+
+
+      // MODAL CARGAR EXAMEN HEMOGRAMA
+       $("#modalconsultahemograma1").text('CBC - Complete Blood Count Report');
+       $("#modalconsultahemograma2").text('Results of Exam');
+       $("#modalconsultahemograma3").text("Patient's Name");
+       $("#modalconsultahemograma4").text('Physician');
+       $("#modalconsultahemograma5").text('Date');
+       $("#modalconsultahemograma6").text('Page 1');
+       $("#modalconsultahemograma7").text('Page 2');
+       $("#modalconsultahemograma8").text('Red blood cell count');
+       $("#modalconsultahemograma9").text('Hemoglobin');
+       $("#modalconsultahemograma10").text('Hematocrit');
+       $("#modalconsultahemograma11").text('MCV');
+       $("#modalconsultahemograma12").text('MCH');
+       $("#modalconsultahemograma13").text("MCHC");
+       $("#modalconsultahemograma14").text('Leukocytes');
+       $("#modalconsultahemograma15").text("Neutrophils");
+       $("#modalconsultahemograma16").text('Lymphocytes');
+       $("#modalconsultahemograma17").text('Monocytes');
+       $("#modalconsultahemograma18").text('Eusenophil');
+       $("#modalconsultahemograma19").text('Basophil');
+       $("#modalconsultahemograma20").text('Platelets');
+       $("#modalconsultahemograma21").text('Eritrosedimentation');
+       $("#modalconsultahemograma21").text('Other');
+       $("#modalconsultahemograma22").text('Segmented Neutrophils ');
+       $("#modalconsultahemograma23").text('Close');
+
+
+        // MODAL CARGAR EXAMEN HECES
+       $("#modalconsultaheces1").text('Stool Analysis Report');
+       $("#modalconsultaheces2").text('Results of Exam');
+       $("#modalconsultaheces3").text("Patient's Name");
+       $("#modalconsultaheces4").text('Physician');
+       $("#modalconsultaheces5").text('Date');
+       $("#modalconsultaheces6").text('Page 1');
+       $("#modalconsultaheces7").text('Page 2');
+       $("#modalconsultaheces8").text('Color');
+       $("#modalconsultaheces9").text('Consistency');
+       $("#modalconsultaheces10").text('Mucous');
+       $("#modalconsultaheces11").text('Hematies');
+       $("#modalconsultaheces12").text('Leukocytes');
+       $("#modalconsultaheces13").text("Undigested food");
+       $("#modalconsultaheces14").text('Macroscopics');
+       $("#modalconsultaheces15").text("Microscopics");
+       $("#modalconsultaheces16").text('Bacterial Flora');
+       $("#modalconsultaheces17").text('Other');
+       $("#modalconsultaheces18").text('Pactives');
+       $("#modalconsultaheces19").text('Ova & Parasites');
+       $("#modalconsultaheces20").text('Close');
+
+
+
+        // MODAL CARGAR EXAMEN QUIMICO
+       $("#modalconsultaquimico1").text('Quimic Exam');
+       $("#modalconsultaquimico2").text('Results of Exam');
+       $("#modalconsultaquimico3").text("Patient's Name");
+       $("#modalconsultaquimico4").text('Physician');
+       $("#modalconsultaquimico5").text('Date');
+       $("#modalconsultaquimico6").text('Glucose');
+       $("#modalconsultaquimico7").text('Glucose tolerance');
+       $("#modalconsultaquimico8").text('Total Cholesterol');
+       $("#modalconsultaquimico9").text('Triglycerides');
+       $("#modalconsultaquimico10").text('Uric Acid');
+       $("#modalconsultaquimico11").text('Creatinine');
+       $("#modalconsultaquimico12").text('Uric Nitrogen');
+       $("#modalconsultaquimico13").text("Urea");
+       $("#modalconsultaquimico14").text("Close");
+
+
+
+      // MODAL CARGAR EXAMEN ORINA
+       $("#modalconsultaorina1").text('Urinalys');
+       $("#modalconsultaorina2").text('Results of Exam');
+       $("#modalconsultaorina3").text("Patient's Name");
+       $("#modalconsultaorina4").text('Physician');
+       $("#modalconsultaorina5").text('Date');
+       $("#modalconsultaorina6").text('Page 1');
+       $("#modalconsultaorina7").text('Page 2');
+       $("#modalconsultaorina8").text('Color');
+       $("#modalconsultaorina9").text('Appearance');
+       $("#modalconsultaorina10").text('Density');
+       $("#modalconsultaorina11").text('pH');
+       $("#modalconsultaorina12").text('Protein');
+       $("#modalconsultaorina13").text("Glucose");
+       $("#modalconsultaorina14").text('Blood');
+       $("#modalconsultaorina15").text("Ketones");
+       $("#modalconsultaorina16").text('Urobilinogen');
+       $("#modalconsultaorina17").text('Bilirubin');
+       $("#modalconsultaorina18").text('Close');
+
+
+       // MODAL CARGAR EXAMEN QUIMICO
+       $("#modalconsultavarios1").text('Various Exam');
+       $("#modalconsultavarios2").text('Results of Exam');
+       $("#modalconsultavarios3").text("Patient's Name");
+       $("#modalconsultavarios4").text('Physician');
+       $("#modalconsultavarios5").text('Date');
+       $("#modalconsultavarios6").text('Result');
+       $("#modalconsultavarios7").text("Close");
+
+
+        // MODAL CARGAR PROCEDIMIENTO
+       $("#modalcargaprocedimiento1").text('Report of Procedure');
+       $("#modalcargaprocedimiento2").text('Procedure Sheet');
+       $("#modalcargaprocedimiento3").text("Patient's Name");
+       $("#modalcargaprocedimiento4").text('Physician');
+       $("#modalcargaprocedimiento5").text('Type of visit');
+       $("#modalcargaprocedimiento6").text('Date');
+       $("#modalcargaprocedimiento7").text("Observation");
+       $("#modalcargaprocedimiento8").text("Close");
+
+
+        // MODAL ASIGNAR EXAMENES MEDICOS
+       $("#modalasignarexamen1").text("Laboratory Exam's");
+       $("#modalasignarexamen2").text('Exams');
+       $("#modalasignarexamen3").text("Type of Exam");
+       $("#modalasignarexamen4").text('Indication');
+       $("#modalasignarexamen5").text('Close');
+       $("#modalasignarexamen6").text('Save Changes');
+
+
+
       
   <?php } ?>
    

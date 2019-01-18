@@ -21,7 +21,7 @@ require_once("../include/database.php");
 
       public function getSubmenu($id){
              $menu = $this->_db->query("
-                select distinct me.DescripcionMenuDetalle, m.IdMenu, me.Url, me.Icono from menuusuario mu
+                select distinct me.DescripcionMenuDetalle, me.DescripcionMenuDetalleIng, m.IdMenu, me.Url, me.Icono from menuusuario mu
                 inner join menudetalle me on mu.IdMenuDetalle = me.IdMenuDetalle
                 inner join menu m on me.IdMenu = m.IdMenu
                 inner join usuario u on mu.IdUsuario = u.IdUsuario
