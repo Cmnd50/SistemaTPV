@@ -43,7 +43,7 @@ class EnfermeriaprocedimientoSearch extends Persona
     {
         $query = Persona::find()
         ->where([
-                '=','IdEstado', 4]);
+                '=','IdEstado', 1]);
 
         // add conditions that should always apply here
 

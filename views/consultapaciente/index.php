@@ -67,6 +67,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 return $model->getFullName();
                             },
                          ],
+                         'Dui',
                              [
                             'attribute' => 'Categoria',
                              'options' => ['style' => 'width:100px;'],

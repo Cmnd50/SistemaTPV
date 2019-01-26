@@ -245,7 +245,7 @@
                       INNER JOIN consulta c on c.IdConsulta = r.IdConsulta
                       WHERE  p.IdPersona =$idpersonaid
                       ORDER BY c.IdConsulta DESC";
-    $resultadotablahistoricomedicamentos = $mysqli->query($queryhistoricomedicamentos);
+    $resultadotablahistoricomedicamentos = $mysq li->query($queryhistoricomedicamentos);
    
     $querytablaprocedimientos = "SELECT ep.IdEnfermeriaProcedimiento As 'ID', CONCAT(p.Nombres,' ',p.Apellidos) As 'Paciente',
                     CONCAT(u.Nombres,' ',u.Apellidos) As 'Medico', m.NombreModulo As 'Modulo',m.Descripcion As 'Moduloing', ep.FechaProcedimiento As 'Fecha',

@@ -119,7 +119,8 @@ $this->params['breadcrumbs'][] = $this->title;
                                       <div class="col-sm-5">
                                         <div class="input-group">
                                           <div class="input-group-addon"><i class="fa fa-credit-card"></i></div>
-                                          <input type="text" class="form-control" data-mask="99999999-9" name="txtDui" id="txtDui"  >
+                                          <input type="text" class="form-control" data-mask="99999999-9" name="txtDui" id="username"  >
+                                          <center><div id="Info"></div></center>
                                         </div>
                                       </div>
                                     </div>
@@ -365,6 +366,26 @@ $this->params['breadcrumbs'][] = $this->title;
         $("#test").html(data);
 
     });
+
+
+  $('#username').blur(function(){ 
+    $('#Info').html('<img src="loader.gif" alt="" />').fadeOut(1000);
+
+    var username = $(this).val();   
+    var dataString = 'username='+username;
+    
+    $.ajax({
+            type: "POST",
+            url: "../../views/persona/check.php",
+             data: dataString,
+            success: function
+
+            (data) {
+        $('#Info').fadeIn(1000).html(data);
+        //alert(data);
+            }
+        });
+    });              
 
       $.post( "../../views/persona/test.php", { IdFactor: 2})
       .done(function( data ) {

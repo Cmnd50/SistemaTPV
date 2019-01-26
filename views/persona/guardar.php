@@ -45,7 +45,16 @@ session_start();
     $IdPais = $_POST['txtIdPais'];
 
 
-    $insertexpediente = "INSERT INTO persona
+    $query = "select Dui from persona where Dui = '".$Dui."'";
+    $results = $mysqli->query( $query) or die('ok');
+
+    if($results->fetch_assoc() > 0) // not available
+    {  
+        echo '<script>window.location="../../web/persona/index"</script>';  
+
+    } else{ 
+
+           $insertexpediente = "INSERT INTO persona
                         (
                              Nombres,Apellidos,FechaNacimiento,Direccion
                             ,Correo,IdGeografia,Genero,IdEstadoCivil
@@ -260,8 +269,5 @@ session_start();
 
     }
 
-
     header('Location: ../../web/persona/view?id='.$last_id);
-
-// header('Location: ../../web/persona/index);
-?>
+    }

@@ -29,6 +29,7 @@ use kartik\select2\Select2;
         ],
     ]);
     ?>
+    <?= $form->field($model, 'Dui') ?>
 <div class="form-group">
           <?php if($_SESSION['IdIdioma'] == 1) {?>
                       <?= Html::submitButton('Buscar', ['class' => 'btn btn-success']) ?>

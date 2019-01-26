@@ -27,6 +27,7 @@ use kartik\select2\Select2;
         ],
     ]);
     ?>
+<?= $form->field($model, 'Dui') ?>
 <div class="form-group">
     <?= Html::submitButton('Buscar', ['class' => 'btn btn-success']) ?>
 </div> 
