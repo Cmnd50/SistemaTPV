@@ -14,6 +14,11 @@ session_start();
                        . "VALUES ('$persona',now(),'$motivo','$user','$modulo',1)";
     $resultadoinsertmovimiento = $mysqli->query($insertexpediente);
 
+    $insertestado = "update persona set IdEstado = 4 where IdPersona = $persona";
+    $resultadoestado = $mysqli->query($insertestado);
+
+    echo $insertestado;
+
     header('Location: ../../web/enfermeriaprocedimiento/medical?id='.$persona);
 
     
