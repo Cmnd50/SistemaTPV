@@ -11,6 +11,8 @@
    
    $idpersonaid = $model->IdPersona;
    $idusuarioid = $_SESSION['IdUsuario'];
+   $enfermeria = $_SESSION['user'];
+   $dates = date('Y-m-d');
 
    
   
@@ -130,7 +132,11 @@
                                           FROM codigoicd";
     $resultadotablaenfermedadICD = $mysqli->query($querytablaenfermedadICD);
    
-   
+     $queryusuarioenfe = "SELECT u.IdUsuario as 'IdUsuario', CONCAT(u.Nombres,  ' ', u.Apellidos) as 'NombreCompletoEnf', p.Descripcion
+        from usuario u
+        inner join puesto = p on u.IdPuesto = p.IdPuesto
+        where  u.Activo = 1 and u.InicioSesion = '$enfermeria'";
+    $resultadousuarioenfe = $mysqli->query($queryusuarioenfe);
   
    
     $querytablaprocedimientos = "SELECT ep.IdEnfermeriaProcedimiento As 'ID', CONCAT(p.Nombres,' ',p.Apellidos) As 'Paciente',
@@ -141,10 +147,45 @@
                       INNER JOIN usuario u ON u.IdUsuario = ep.IdUsuario
                       INNER JOIN modulo m ON m.IdModulo = ep.IdModulo
                       INNER JOIN motivoprocedimiento mp ON mp.IdMotivoProcedimiento = ep.IdMotivoProcedimiento
-                      WHERE p.IdPersona = '$idpersonaid'
+                      WHERE p.IdPersona = '$idpersonaid' 
                       order by ep.IdEnfermeriaProcedimiento DESC";
-   
     $resultadotablaprocedimientos = $mysqli->query($querytablaprocedimientos);
+
+
+    $querytablaconsultaprocedimientodeldia = "SELECT ep.IdEnfermeriaProcedimiento As 'ID', CONCAT(p.Nombres,' ',p.Apellidos) As 'Paciente',
+          CONCAT(u.Nombres,' ',u.Apellidos) As 'Medico', m.NombreModulo As 'Modulo', ep.FechaProcedimiento As 'Fecha', 
+            mp.Nombre As 'Motivo', ep.Observaciones As 'Observaciones', ep.Estado As 'Estado'   
+            FROM enfermeriaprocedimiento ep
+            INNER JOIN persona p ON p.IdPersona = ep.IdPersona
+            INNER JOIN usuario u ON u.IdUsuario = ep.IdUsuario
+            INNER JOIN modulo m ON m.IdModulo = ep.IdModulo
+            INNER JOIN motivoprocedimiento mp ON mp.IdMotivoProcedimiento = ep.IdMotivoProcedimiento
+            WHERE p.IdPersona = '$idpersonaid' and FechaProcedimiento = '$dates'
+            order by ep.IdEnfermeriaProcedimiento DESC";
+   
+    $resultadotablaconsultaprocedimientodeldia = $mysqli->query($querytablaconsultaprocedimientodeldia);
+
+
+    $querytablaconsultatabla = "SELECT ep.IdEnfermeriaProcedimiento As 'ID', CONCAT(p.Nombres,' ',p.Apellidos) As 'Paciente',
+          CONCAT(u.Nombres,' ',u.Apellidos) As 'Medico', m.NombreModulo As 'Modulo', ep.FechaProcedimiento As 'Fecha', 
+            mp.Nombre As 'Motivo', ep.Observaciones As 'Observaciones', ep.Estado As 'Estado'   
+            FROM enfermeriaprocedimiento ep
+            INNER JOIN persona p ON p.IdPersona = ep.IdPersona
+            INNER JOIN usuario u ON u.IdUsuario = ep.IdUsuario
+            INNER JOIN modulo m ON m.IdModulo = ep.IdModulo
+            INNER JOIN motivoprocedimiento mp ON mp.IdMotivoProcedimiento = ep.IdMotivoProcedimiento
+            WHERE p.IdPersona = '$idpersonaid' and FechaProcedimiento = '$dates'
+            order by ep.IdEnfermeriaProcedimiento DESC";
+   
+    $resultadotablaconsultatabla = $mysqli->query($querytablaconsultatabla);
+
+
+    $queryselectprocedimiento = "SELECT * FROM motivoprocedimiento";
+    $resultadoselectprocedimiento = $mysqli->query($queryselectprocedimiento);
+
+     $querymodulo = "SELECT * from modulo where NombreModulo = 'Enfermeria' order by NombreModulo asc";
+    $resultadomodulo = $mysqli->query($querymodulo);
+
    
 $label = '';
    if($_SESSION['IdIdioma'] == 1){
@@ -191,11 +232,44 @@ $label = '';
                   <li class=""><a data-toggle="tab" href="#tab-HISTORIAL" id='tabgeneral3'></a></li>
                   <li class="pull-right">
                   <?php if ($_SESSION['IdIdioma'] == 1 ){ ?>
-                    <button type="button" class="btn  btn-danger dim"   data-toggle="modal" data-target="#modalGuardarDiagnostico">Ingresar Diagnostico<i class="fa fa-heart"></i></button>   
+                  <?php
+                      $queryvalidacionprocedimientodiario = "SELECT ep.IdEnfermeriaProcedimiento As 'ID', CONCAT(p.Nombres,' ',p.Apellidos) As 'Paciente',
+                        CONCAT(u.Nombres,' ',u.Apellidos) As 'Medico', m.NombreModulo As 'Modulo', ep.FechaProcedimiento As 'Fecha', 
+                          mp.Nombre As 'Motivo', ep.Observaciones As 'Observaciones', ep.Estado As 'Estado'   
+                          FROM enfermeriaprocedimiento ep
+                          INNER JOIN persona p ON p.IdPersona = ep.IdPersona
+                          INNER JOIN usuario u ON u.IdUsuario = ep.IdUsuario
+                          INNER JOIN modulo m ON m.IdModulo = ep.IdModulo
+                          INNER JOIN motivoprocedimiento mp ON mp.IdMotivoProcedimiento = ep.IdMotivoProcedimiento
+                          WHERE p.IdPersona = '$idpersonaid' and FechaProcedimiento = '$dates'
+                          order by ep.IdEnfermeriaProcedimiento DESC";
+                      $resultqueryvalidacionprocedimientodiario = $mysqli->query($queryvalidacionprocedimientodiario);
+                      if(mysqli_num_rows($resultqueryvalidacionprocedimientodiario)==0){?>
+                    <button type="button" class="btn  btn-danger dim"   data-toggle="modal" data-target="#modalConsulta">Ingresar Diagnostico  <i class="fa fa-heart"></i></button>
+                    <?php } else{?>
+                        <button type="button" class="btn  btn-danger dim"   data-toggle="modal" data-target="#modalConsulta">Ingresar Diagnostico  <i class="fa fa-heart"></i></button>
+                        <?php }?>   
+
                      <button type="button" class="btn  btn-info dim"  data-toggle="modal" data-target="#modalGuardarExamenes"> Ingresa Examen <i class="fa fa-bars"></i></button>
                  <?php } else {
                   ?>
-                    <button type="button" class="btn  btn-danger dim"   data-toggle="modal" data-target="#modalGuardarDiagnostico"> Enter Data<i class="fa fa-heart"></i></button>   
+                  <?php
+                      $queryvalidacionprocedimientodiario = "SELECT ep.IdEnfermeriaProcedimiento As 'ID', CONCAT(p.Nombres,' ',p.Apellidos) As 'Paciente',
+                        CONCAT(u.Nombres,' ',u.Apellidos) As 'Medico', m.NombreModulo As 'Modulo', ep.FechaProcedimiento As 'Fecha', 
+                          mp.Nombre As 'Motivo', ep.Observaciones As 'Observaciones', ep.Estado As 'Estado'   
+                          FROM enfermeriaprocedimiento ep
+                          INNER JOIN persona p ON p.IdPersona = ep.IdPersona
+                          INNER JOIN usuario u ON u.IdUsuario = ep.IdUsuario
+                          INNER JOIN modulo m ON m.IdModulo = ep.IdModulo
+                          INNER JOIN motivoprocedimiento mp ON mp.IdMotivoProcedimiento = ep.IdMotivoProcedimiento
+                          WHERE p.IdPersona = '$idpersonaid' and FechaProcedimiento = '$dates'
+                          order by ep.IdEnfermeriaProcedimiento DESC";
+                      $resultqueryvalidacionprocedimientodiario = $mysqli->query($queryvalidacionprocedimientodiario);
+                      if(mysqli_num_rows($resultqueryvalidacionprocedimientodiario)==0){?>
+                    <button type="button" class="btn  btn-danger dim"  data-toggle="modal" data-target="#modalConsulta">Enter Data  <i class="fa fa-heart"></i></button>
+                    <?php } else{?>
+                        <button type="button" class="btn  btn-danger dim" style="display: none;"  data-toggle="modal" data-target="#modalConsulta">Enter Data  <i class="fa fa-heart"></i></button>
+                        <?php }?>    
                      <button type="button" class="btn  btn-info dim"  data-toggle="modal" data-target="#modalGuardarExamenes"> LAB <i class="fa fa-bars"></i></button>
                   <?php } ?>
                                      
@@ -299,6 +373,51 @@ $label = '';
                                           </div>
                                           </div>
                                     </div>
+                                   <div class="box">
+                                    <div class="box-header with-border">
+                                    <br><br>
+                                       <h4 class="box-title">PROCEDIMIENTO DE HOY</h4>
+                                    </div>
+                                    <!-- /.box-header -->
+                                    <div class="box-body">
+                                       <table id="example2" class="table table-bordered table-hover">
+                                          <?php
+                                             echo"<thead>";
+                                             echo"<tr>";
+                                             echo"<th>Fecha</th>";
+                                             echo"<th>Nombre de Paciente</th>";
+                                             echo"<th>Nombre de Medico</th>";
+                                             echo"<th>Nombre de Especialidad</th>";
+                                             echo"<th>Motivo</th>";
+                                             echo"<th style = 'width:150px'>Accion</th>";
+                                             echo"</tr>";
+                                             echo"</thead>";
+                                             echo"<tbody>";
+                                             while ($row = $resultadotablaconsultaprocedimientodeldia->fetch_assoc()) {
+                                             
+                                                 $idSignosVitales = $row['ID'];
+                                                 echo"<tr>";
+                                                 echo"<td>" . $row['Fecha'] . "</td>";
+                                                 echo"<td>" . $row['Paciente'] . "</td>";
+                                                 echo"<td>" . $row['Medico'] . "</td>";
+                                                 echo"<td>" . $row['Modulo'] . "</td>";
+                                                 echo"<td>" . $row['Motivo'] . "</td>";
+                                                 if ($row['Estado'] == 1) {
+                                                     echo "<td>" .
+                                                     "<span id='btn" . $idSignosVitales . "' style='width:140px' class='btn btn-success btn-mdl'>+ Procedimiento</span>" .
+                                                     "</td>";
+                                                 } else {
+                                                     echo "<td>" .
+                                                     "<span id='btn" . $idSignosVitales . "' style='width:140px' class='btn btn-warning btn-mdls'>Ver Consulta</span>" .
+                                                     "</td>";
+                                                 }
+                                                 echo"</tr>";
+                                                 echo"</body>  ";
+                                             }
+                                             ?>
+                                       </table>
+                                    </div>
+                                 </div>
                                  </div>
                                  <div id="EXPRESPON" class="tab-pane">
                                     <div class="panel-body">
@@ -1860,6 +1979,85 @@ $label = '';
                </div>
             </div>
          </div>
+          
+        <!-- MODAL PARA GUARDAR NUEVO PROCEDIMIENTO -->
+        <div class="modal inmodal" id="modalConsulta" tabindex="-1" role="dialog"  aria-hidden="true">
+                     <div class="modal-dialog">
+                        <div class="modal-content animated fadeIn">
+                           <div class="modal-header">
+                              <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                              <i class="fa fa-h-square modal-icon"></i>
+                              <h4 class="modal-title">Nuevo Procedimiento</h4>
+                              <small>Ingrese los datos requeridos.</small>
+                           </div>
+                           <div class="modal-body">
+                              <form class="form-horizontal" action="../../views/enfermeriaprocedimiento/guardarprocedimiento.php" role="form" method="POST">
+                                 <div class="form-group">
+                                    <div class="col-sm-1"></div>
+                                    <div class="col-sm-3"><label for="inputEmail3" class="control-label">Fecha</label></div>
+                                    <div class="col-sm-7"><input  value="<?php echo $date ?>" class="form-control" name="txtFecha" disabled="disabled"></div>
+                                    <div class="col-sm-1"></div>
+                                 </div>
+                                 <div class="form-group">
+                                    <div class="col-sm-1"></div>
+                                    <div class="col-sm-3"><label for="inputEmail3" class="control-label">Enfermera</label></div>
+                                    <div class="col-sm-7">
+                                       <select class="form-control select2" disabled="disabled" style="width: 100%;" name="cboUsuario">
+                                       <?php
+                                          while ($row = $resultadousuarioenfe->fetch_assoc()) {
+                                            echo "<option value = '".$row['IdUsuario']."'>".$row['NombreCompletoEnf']."</option>";
+                                          }
+                                          ?>
+                                       </select>
+                                    </div>
+                                    <div class="col-sm-1"></div>
+                                 </div>
+                                 <div class="form-group">
+                                    <div class="col-sm-1"></div>
+                                    <div class="col-sm-3"><label for="inputEmail3" class="control-label">Paciente</label></div>
+                                    <div class="col-sm-7"><input type="text" value="<?php echo $nombres. " " .$apellidos ?>" class="form-control"  disabled="disabled" >
+                                       <input type="hidden" name="txtPaciente" value="<?php echo $idpersonaid ?>">  
+                                    </div>
+                                    <div class="col-sm-1"></div>
+                                 </div>
+                                 <div class="form-group">
+                                    <div class="col-sm-1"></div>
+                                    <div class="col-sm-3"><label for="inputEmail3" class="control-label">Modulo</label></div>
+                                    <div class="col-sm-7">
+                                       <select class="form-control select2" style="width: 100%;" name="cboModulo">
+                                       <?php
+                                          while ($row = $resultadomodulo->fetch_assoc()) {
+                                              echo "<option value = '" . $row['IdModulo'] . "'>" . $row['NombreModulo'] . "</option>";
+                                          }
+                                          ?>
+                                       </select>
+                                    </div>
+                                    <div class="col-sm-1"></div>
+                                 </div>
+                                 <div class="form-group">
+                                    <div class="col-sm-1"></div>
+                                    <div class="col-sm-3"><label for="inputEmail3" class="control-label">Procedimiento</label></div>
+                                    <div class="col-sm-7">
+                                       <select class="form-control select2" style="width: 100%;" name="cboMotivo">
+                                       <?php
+                                          while ($row = $resultadoselectprocedimiento->fetch_assoc()) {
+                                              echo "<option value = '" . $row['IdMotivoProcedimiento'] . "'>" . $row['Nombre'] . "</option>";
+                                          }
+                                          ?>
+                                       </select>
+                                    </div>
+                                    <div class="col-sm-1"></div>
+                                 </div>
+
+                                 <div class="modal-footer">
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+                                    <button type="submit" class="btn btn-primary" name="guardarConsulta" >Guardar Cambios</button>
+                                 </div>
+                              </form>
+                           </div>
+                        </div>
+                     </div>
+        </div>
       
       </div>
    </div>

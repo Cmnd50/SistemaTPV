@@ -68,7 +68,7 @@
             INNER JOIN usuario u ON u.IdUsuario = ep.IdUsuario
             INNER JOIN modulo m ON m.IdModulo = ep.IdModulo
             INNER JOIN motivoprocedimiento mp ON mp.IdMotivoProcedimiento = ep.IdMotivoProcedimiento
-            WHERE p.IdPersona = '$id'
+            WHERE p.IdPersona = '$id' 
             order by ep.IdEnfermeriaProcedimiento DESC";
    
     $resultadotablaconsulta = $mysqli->query($querytablaconsulta);
