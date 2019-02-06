@@ -14,10 +14,6 @@
    $enfermeria = $_SESSION['user'];
    $dates = date('Y-m-d');
 
-
-
-  
-   
     // CONSULTA PARA CARGAR EL CBO DE LOS EXAMENES
     $querytipoexamen = "SELECT IdTipoExamen, NombreExamen, DescripcionExamen FROM tipoexamen";
     $resultadotipoexamen = $mysqli->query($querytipoexamen);
@@ -177,12 +173,35 @@
    
     $resultadotablaconsultatabla = $mysqli->query($querytablaconsultatabla);
 
+    $queryobteneridenfermedadprocedimiento = "SELECT ep.IdEnfermeriaProcedimiento As 'ID'  
+            FROM enfermeriaprocedimiento ep
+            INNER JOIN persona p ON p.IdPersona = ep.IdPersona
+            INNER JOIN usuario u ON u.IdUsuario = ep.IdUsuario
+            INNER JOIN modulo m ON m.IdModulo = ep.IdModulo
+            INNER JOIN motivoprocedimiento mp ON mp.IdMotivoProcedimiento = ep.IdMotivoProcedimiento
+            WHERE p.IdPersona = '$idpersonaid' and FechaProcedimiento = '$dates'
+            order by ep.IdEnfermeriaProcedimiento DESC";
+   
+    $resultadoobteneridenfermedadprocedimiento = $mysqli->query($queryobteneridenfermedadprocedimiento);
+    while ($test = $resultadoobteneridenfermedadprocedimiento->fetch_assoc()) {
+      $IdEnfermeriaProcedimiento = $test['ID'];
+    }
+
 
     $queryselectprocedimiento = "SELECT * FROM motivoprocedimiento";
     $resultadoselectprocedimiento = $mysqli->query($queryselectprocedimiento);
 
     $querymodulo = "SELECT * from modulo where NombreModulo = 'Enfermeria' order by NombreModulo asc";
     $resultadomodulo = $mysqli->query($querymodulo);
+
+
+        // CONSULTA PARA CARGAR LA TABLA DE LAS EXAMENES ASIGNADOS AL PACIENTE
+    $querytablaexameneslabasignados = "SELECT LE.IdListaExamen as 'IdListaExamen',TE.NombreExamen AS 'NombreExamen', TE.DescripcionExamen AS 'NombreExamening', CONCAT(US.Nombres,' ', US.Apellidos) As 'Medico', LE.Indicacion as 'Indicacion'  
+                                        FROM listaexamen LE
+                                        INNER JOIN TipoExamen TE on LE.IdTipoExamen = TE.IdTipoExamen
+                                        INNER JOIN Usuario US on LE.IdUsuario = US.IdUsuario
+                                        WHERE LE.Activo = 1 and LE.IdUsuario =  '$idusuarioid' and LE.IdEnfermeriaProcedimiento = 10";
+    $resultadotablaexameneslabasignados = $mysqli->query($querytablaexameneslabasignados);
 
    
 $label = '';
@@ -226,7 +245,8 @@ $label = '';
          <div class="form-horizontal">
             <div class="tabs-container">
                <ul class="nav nav-tabs">
-                  <li class="active"><a data-toggle="tab" href="#tab-EXPEDIENTE" id='tabgeneral2'></a></li>
+                  <li class="active"><a data-toggle="tab" href="#tab-CONSULTA" id='tabgeneral1'></a></li>
+                  <li class=""><a data-toggle="tab" href="#tab-EXPEDIENTE" id='tabgeneral2'></a></li>
                   <li class=""><a data-toggle="tab" href="#tab-HISTORIAL" id='tabgeneral3'></a></li>
                   <li class="pull-right">
                   <?php if ($_SESSION['IdIdioma'] == 1 ){ ?>
@@ -263,19 +283,133 @@ $label = '';
                           WHERE p.IdPersona = '$idpersonaid' and FechaProcedimiento = '$dates'
                           order by ep.IdEnfermeriaProcedimiento DESC";
                       $resultqueryvalidacionprocedimientodiario = $mysqli->query($queryvalidacionprocedimientodiario);
-                      if(mysqli_num_rows($resultqueryvalidacionprocedimientodiario)==0){?>
+                      if(mysqli_num_rows($resultqueryvalidacionprocedimientodiario)==1){?>
                     <button type="button" class="btn  btn-danger dim"  data-toggle="modal" data-target="#modalConsulta">Enter Data  <i class="fa fa-heart"></i></button>
                     <?php } else{?>
                         <button type="button" class="btn  btn-danger dim" style="display: none;"  data-toggle="modal" data-target="#modalConsulta">Enter Data  <i class="fa fa-heart"></i></button>
                         <?php }?>    
                      <button type="button" class="btn  btn-info dim"  data-toggle="modal" data-target="#modalGuardarExamenes"> LAB <i class="fa fa-bars"></i></button>
+                     <button type="button" class="btn  btn-info dim"  data-toggle="modal" data-target="#modalGuardarExamenes"> REF <i class="fa fa-bars"></i></button>
+                     <button type="button" class="btn  btn-info dim"  data-toggle="modal" data-target="#modalGuardarExamenes"> X <i class="fa fa-bars"></i></button>
                   <?php } ?>
                                      
                   </li>
                </ul>
                <div class="tab-content">
                   <div class="tab-content">
-                     <div id="tab-EXPEDIENTE" class="tab-pane active">
+                    <div id="tab-CONSULTA" class="tab-pane active">
+                        <div class="panel-body">
+                                        <div class="box-header with-border">
+                                           <h4 class="box-title" id='tablaprocedimientohoy1'>PROCEDIMIENTO DE HOY</h4>
+                                        </div>
+                                        <!-- /.box-header -->
+                                        <div class="box-body">
+                                           <table id="example2" class="table table-bordered table-hover">
+                                              <?php
+                                                 echo"<thead>";
+                                                 echo"<tr>";
+                                                 echo"<th id='tablaprocedimientohoy2'>Fecha</th>";
+                                                 echo"<th id='tablaprocedimientohoy3'>Nombre de Paciente</th>";
+                                                 echo"<th id='tablaprocedimientohoy4'>Nombre de Medico</th>";
+                                                 echo"<th id='tablaprocedimientohoy5'>Nombre de Especialidad</th>";
+                                                 echo"<th id='tablaprocedimientohoy6'>Motivo</th>";
+                                                 echo"<th style = 'width:150px' id='tablaprocedimientohoy7'>Accion</th>";
+                                                 echo"</tr>";
+                                                 echo"</thead>";
+                                                 echo"<tbody>";
+                                                 while ($row = $resultadotablaconsultaprocedimientodeldia->fetch_assoc()) {
+                                                 
+                                                     $idSignosVitales = $row['ID'];
+                                                     echo"<tr>";
+                                                     echo"<td>" . $row['Fecha'] . "</td>";
+                                                     echo"<td>" . $row['Paciente'] . "</td>";
+                                                     echo"<td>" . $row['Medico'] . "</td>";
+                                                     if($_SESSION['IdIdioma']==1){
+                                                       echo"<td>" . $row['Modulo'] . "</td>";
+                                                     }
+                                                     else{
+                                                      echo"<td>" . $row['ModuloIngles'] . "</td>";
+                                                     }
+                                                    
+                                                     echo"<td>" . $row['Motivo'] . "</td>";
+                                                     if($_SESSION['IdIdioma'] == 1){
+                                                        if ($row['Estado'] == 1) {
+                                                           echo "<td>" .
+                                                           "<span id='btn" . $idSignosVitales . "' style='width:140px' class='btn btn-success btn-mdles'>+ Procedimiento</span>" .
+                                                           "</td>";
+                                                       } else {
+                                                           echo "<td>" .
+                                                           "<span id='btn" . $idSignosVitales . "' style='width:140px' class='btn btn-warning btn-mdls'>Ver Consulta</span>" .
+                                                           "</td>";
+                                                       }
+                                                     }else{
+                                                      if ($row['Estado'] == 1) {
+                                                           echo "<td>" .
+                                                           "<span id='btn" . $idSignosVitales . "' style='width:140px' class='btn btn-success btn-mdles'>+ Procedure</span>" .
+                                                           "</td>";
+                                                       } else {
+                                                           echo "<td>" .
+                                                           "<span id='btn" . $idSignosVitales . "' style='width:140px' class='btn btn-warning btn-mdls'>See Procedure</span>" .
+                                                           "</td>";
+                                                       }
+                                                     }
+                                                     
+
+
+                                                     echo"</tr>";
+                                                     echo"</body>  ";
+                                                 }
+                                                 ?>
+                                           </table>
+                                  </div>
+                                  </br>
+                                   <div class="box-header with-border">
+                                          <h4 class="box-title" id='tblexamenasignado'></h4>
+                                   </div>
+                                   <div class="box-body">
+                                          <table id="example2" class="table table-bordered table-hover">
+                                             <?php
+                                                echo"<thead>";
+                                                echo"<tr>";
+                                                echo"<th style = 'width:150px' id='tblexamenasignadoexamen'>Tipo de Examen</th>";
+                                                echo"<th id='tblexamenasignadomedico'>Medico</th>";
+                                                echo"<th id='tblexamenasignadoindicacion'>Indicacion</th>";
+                                                echo"<th style = 'width:150px' id='tblexamenasignadoaccion'>Accion</th>";
+                                                echo"</tr>";
+                                                echo"</thead>";
+                                                echo"<tbody>";
+                                                if($_SESSION['IdIdioma'] == 1){
+                                                      while ($row = $resultadotablaexameneslabasignados->fetch_assoc()) {
+                                                        $idexamenasignado = $row['IdListaExamen'];
+                                                        echo"<tr>";
+                                                        echo"<td>" . $row['NombreExamen'] . "</td>";
+                                                        echo"<td>" . $row['Medico'] . "</td>";
+                                                        echo"<td>" . $row['Indicacion'] . "</td>";
+                                                        echo "<td><a style='width:140px'  class='btn  btn-danger dim' href='../../views/enfermeriaprocedimiento/eliminarexamenasignado.php?did=".$idexamenasignado."'>Eliminar</a></td>";
+                                                        echo"</tr>";
+                                                        echo"</body>  ";
+                                                    }
+                                                }
+                                                else{
+                                                   while ($row = $resultadotablaexameneslabasignados->fetch_assoc()) {
+                                                    $idexamenasignado = $row['IdListaExamen'];
+                                                    echo"<tr>";
+                                                    echo"<td>" . $row['NombreExamening'] . "</td>";
+                                                    echo"<td>" . $row['Medico'] . "</td>";
+                                                    echo"<td>" . $row['Indicacion'] . "</td>";
+                                                    echo "<td><a style='width:140px'  class='btn  btn-danger dim' href='../../views/enfermeriaprocedimiento/eliminarexamenasignado.php?did=".$idexamenasignado."'>Delete</a></td>";
+                                                    echo"</tr>";
+                                                    echo"</body>  ";
+                                                }
+                                                }
+                                               
+                                                ?>
+                                          </table>
+                                           </div>
+
+                        </div>
+                     </div>
+                     <div id="tab-EXPEDIENTE" class="tab-pane">
                         <div class="panel-body">
                            <div class="tabs-container">
                               <ul class="nav nav-tabs">
@@ -371,72 +505,7 @@ $label = '';
                                           </div>
                                           </div>
                                     </div>
-                                   <div class="box">
-                                    <div class="box-header with-border">
-                                    <br><br>
-                                       <h4 class="box-title" id='tablaprocedimientohoy1'>PROCEDIMIENTO DE HOY</h4>
-                                    </div>
-                                    <!-- /.box-header -->
-                                    <div class="box-body">
-                                       <table id="example2" class="table table-bordered table-hover">
-                                          <?php
-                                             echo"<thead>";
-                                             echo"<tr>";
-                                             echo"<th id='tablaprocedimientohoy2'>Fecha</th>";
-                                             echo"<th id='tablaprocedimientohoy3'>Nombre de Paciente</th>";
-                                             echo"<th id='tablaprocedimientohoy4'>Nombre de Medico</th>";
-                                             echo"<th id='tablaprocedimientohoy5'>Nombre de Especialidad</th>";
-                                             echo"<th id='tablaprocedimientohoy6'>Motivo</th>";
-                                             echo"<th style = 'width:150px' id='tablaprocedimientohoy7'>Accion</th>";
-                                             echo"</tr>";
-                                             echo"</thead>";
-                                             echo"<tbody>";
-                                             while ($row = $resultadotablaconsultaprocedimientodeldia->fetch_assoc()) {
-                                             
-                                                 $idSignosVitales = $row['ID'];
-                                                 echo"<tr>";
-                                                 echo"<td>" . $row['Fecha'] . "</td>";
-                                                 echo"<td>" . $row['Paciente'] . "</td>";
-                                                 echo"<td>" . $row['Medico'] . "</td>";
-                                                 if($_SESSION['IdIdioma']==1){
-                                                   echo"<td>" . $row['Modulo'] . "</td>";
-                                                 }
-                                                 else{
-                                                  echo"<td>" . $row['ModuloIngles'] . "</td>";
-                                                 }
-                                                
-                                                 echo"<td>" . $row['Motivo'] . "</td>";
-                                                 if($_SESSION['IdIdioma'] == 1){
-                                                    if ($row['Estado'] == 1) {
-                                                       echo "<td>" .
-                                                       "<span id='btn" . $idSignosVitales . "' style='width:140px' class='btn btn-success btn-mdles'>+ Procedimiento</span>" .
-                                                       "</td>";
-                                                   } else {
-                                                       echo "<td>" .
-                                                       "<span id='btn" . $idSignosVitales . "' style='width:140px' class='btn btn-warning btn-mdls'>Ver Consulta</span>" .
-                                                       "</td>";
-                                                   }
-                                                 }else{
-                                                  if ($row['Estado'] == 1) {
-                                                       echo "<td>" .
-                                                       "<span id='btn" . $idSignosVitales . "' style='width:140px' class='btn btn-success btn-mdles'>+ Procedure</span>" .
-                                                       "</td>";
-                                                   } else {
-                                                       echo "<td>" .
-                                                       "<span id='btn" . $idSignosVitales . "' style='width:140px' class='btn btn-warning btn-mdls'>See Procedure</span>" .
-                                                       "</td>";
-                                                   }
-                                                 }
-                                                 
 
-
-                                                 echo"</tr>";
-                                                 echo"</body>  ";
-                                             }
-                                             ?>
-                                       </table>
-                                    </div>
-                                 </div>
                                  </div>
                                  <div id="EXPRESPON" class="tab-pane">
                                     <div class="panel-body">
@@ -737,8 +806,9 @@ $label = '';
                              <div class="tab-content">
                                 <div id="tab-1" class="tab-pane active">
                                    <div class="panel-body">
-                                      <div class="form-group hidden">
+                                      <div class="form-group">
                                          <div class="col-sm-5"><input type="text"  name="txtIdConsulta" id="idconsulta" value=""></div>
+                                         <div class="col-sm-5"><input type="text"  name="txtIdProcedimiento" id="idindicadorprocedimiento" value=""></div>
                                       </div>
                                       <div class="form-group">
                                          <div class="col-sm-5"><input type="text" hidden="hidden" name="txtid" value="<?php echo $idpersonaid?>">  </div>
@@ -1619,7 +1689,7 @@ $label = '';
             <div class="modal-dialog modal-md">
                <div class="modal-content animated fadeIn">
                   <div class="modal-content">
-                     <form class="form-horizontal" method="POST" action="../../views/consultamedico/guardarexamen.php"  id="demo-form1" data-parsley-validate="">
+                     <form class="form-horizontal" method="POST" action="../../views/enfermeriaprocedimiento/guardarexamen.php"  id="demo-form1" data-parsley-validate="">
      
                       <div class="modal-header">
                            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
@@ -1665,7 +1735,7 @@ $label = '';
                                  <textarea  type="text" rows="4" class="form-control"   name="txtpersonaID"> <?php echo $idpersonaid ?> </textarea>
                               </div>
                               <div class="hidden">
-                                 <textarea  type="text" rows="4" class="form-control"   name="txtconsultaID">  </textarea>
+                                 <textarea  type="text" rows="4" class="form-control"   name="txtconsultaID"> <?php echo $IdEnfermeriaProcedimiento ?> </textarea>
                               </div>
                               <div class="hidden">
                                  <textarea  type="text" rows="4" class="form-control"   name="txtusuarioID"> <?php echo $idusuarioid ?> </textarea>
@@ -2322,6 +2392,7 @@ $label = '';
                                  </div>
 
                                  <div class="modal-footer">
+                                
                                     <button type="button" class="btn btn-danger" data-dismiss="modal" id='modalnuevoprocedimiento8'>Cerrar</button>
                                     <button type="submit" class="btn btn-primary" name="guardarConsulta"  id='modalnuevoprocedimiento9'>Guardar Cambios</button>
                                  </div>
@@ -2354,9 +2425,11 @@ $label = '';
                    $("#pacientes").val(data.Paciente);
                    $("#idconsulta").val(data.ID);
                    $("#medicos").val(data.Medico);
+                   $("#idindicadorprocedimiento").val(data.IDIndicador);
                    $("#modulos").val(data.Especialidad);
                    $("#fechas").val(data.FechaConsulta);
-                   $("#diagnosticos").val(data.Diagnostico);
+
+                   $("#peso").val(data.Peso);
                    $("#enfermedads").val(data.Enfermedad);
                    $("#comentarioss").val(data.Comentarios);
                    $("#otross").val(data.Otros);
@@ -2366,39 +2439,27 @@ $label = '';
                    } else {
                        $("#unidadpesos").val("Lbs");
                    }
-                   $("#alturas").val(data.Altura);
+                   $("#altura").val(data.Altura);
                    if (data.UnidadAltura == 1) {
                        $("#unidadalturas").val("Mts");
                    } else {
                        $("#unidadalturas").val("Cms");
                    }
-                   $("#temperaturas").val(data.Temperatura);
+                   $("#temperatura").val(data.Temperatura);
                    if (data.UnidadTemperatura == 1) {
                        $("#unidadtemperaturas").val("C");
                    } else {
                        $("#unidadtemperaturas").val("F");
                    }
-                   $("#pulsos").val(data.Pulso);
-                   $("#maxs").val(data.Max);
-                   $("#mins").val(data.Min);
-                   $("#observacioness").val(data.Observaciones);
-   
-                   $("#frs").val(data.FR);
-                   $("#glucotexs").val(data.Glucotex);
-                   $("#ultimamenstruacions").val(data.PeriodoMeunstral);
-                   $("#ultimapaps").val(data.PAP);
-                   $("#pcs").val(data.PC);
-                   $("#pts").val(data.PT);
-                   $("#pas").val(data.PA);
-                   $("#motivos").val(data.Motivo);
-                   $("#estadonutricions").val(data.EstadoNutricional);
-                   $("#alergiass").val(data.Alergias);
-                   $("#cirugiaspreviass").val(data.CirugiasPrevias);
-                   $("#medicamentotomados").val(data.MedicamentosActuales);
-                   $("#plantratamientos").val(data.PlanTratamiento);
-                   $("#fechaproximas").val(data.FechaProxVisita);
-                   $("#examenfisicas").val(data.ExamenFisica);
-   
+                   $("#FR").val(data.FR);
+                   $("#pulso").val(data.Pulso);
+                   $("#max").val(data.Max);
+                   $("#min").val(data.Min);
+                   $("#gluco").val(data.Glucotex);
+                   $("#min").val(data.Min);
+                   $("#observaciones").val(data.Observaciones);
+                   $("#motivo").val(data.Motivo);
+
                    $("#modalSignosVitales").modal("show");
                }
            });
@@ -3166,7 +3227,7 @@ $label = '';
 
 
         // TABLA PROCEDIMIENTOS DE HOY
-       $("#tablaprocedimientohoy1").text('PREVIOUS PROCEDURE');
+       $("#tablaprocedimientohoy1").text("TODAY'S PROCEDURE");
        $("#tablaprocedimientohoy2").text('Date');
        $("#tablaprocedimientohoy3").text("Patient's name");
        $("#tablaprocedimientohoy4").text('Treated by');

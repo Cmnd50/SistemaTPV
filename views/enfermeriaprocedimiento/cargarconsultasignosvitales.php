@@ -16,8 +16,8 @@ session_start();
                     			FROM consulta c
                     			INNER JOIN usuario u ON c.IdUsuario = u.IdUsuario
                     			INNER JOIN persona p ON c.IdPersona = p.IdPersona
-                    			INNER JOIN modulo m ON c.IdModulo = m.IdModulo
-                    			INNER JOIN indicador i ON c.IdConsulta = i.IdConsulta
+                    			LEFT JOIN modulo m ON c.IdModulo = m.IdModulo
+                    			LEFT JOIN indicador i ON c.IdConsulta = i.IdConsulta
                                 INNER JOIN enfermedad e ON c.IdEnfermedad = e.IdEnfermedad
 			WHERE c.IdConsulta = $idconsulta";
    $resultadoexpedientesu = $mysqli->query($queryexpedientesu);

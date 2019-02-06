@@ -1429,7 +1429,7 @@ $label = '';
                                                    <div class="col-sm-10">
                                                       <div class="input-group">
                                                          <div class="input-group-addon"><i class="fa fa-comment-o"></i></div>
-                                                         <textarea type="text" rows="2" class="form-control" id="diagnosticos" name="txtDiagnostico" disabled="disabled">  </textarea>
+                                                         <textarea type="text" rows="2" class="form-control" id="diagnosticoss" name="txtDiagnostico" disabled="disabled">  </textarea>
                                                       </div>
                                                    </div>
                                                 </div>
@@ -1438,7 +1438,7 @@ $label = '';
                                                    <div class="col-sm-10">
                                                       <div class="input-group">
                                                          <div class="input-group-addon"><i class="fa fa-comment-o"></i></div>
-                                                         <textarea type="text" rows="2" class="form-control" id="comentarioss" name="txtComentarios" disabled="disabled">  </textarea>
+                                                         <textarea type="text" rows="2" class="form-control" id="comentariosss" name="txtComentarios" disabled="disabled">  </textarea>
                                                       </div>
                                                    </div>
                                                 </div>
@@ -1451,7 +1451,7 @@ $label = '';
                                                    <div class="col-sm-10">
                                                       <div class="input-group">
                                                          <div class="input-group-addon"><i class="fa fa-comment-o"></i></div>
-                                                         <textarea type="text" rows="2" class="form-control" id="otross" name="txtOtros" disabled="disabled">  </textarea>
+                                                         <textarea type="text" rows="2" class="form-control" id="otrosss" name="txtOtros" disabled="disabled">  </textarea>
                                                       </div>
                                                    </div>
                                                 </div>
@@ -1460,7 +1460,7 @@ $label = '';
                                                    <div class="col-sm-10">
                                                       <div class="input-group">
                                                          <div class="input-group-addon"><i class="fa fa-comment-o"></i></div>
-                                                         <textarea type="text" rows="2" id="plantratamientos" class="form-control"  disabled="disabled">  </textarea>
+                                                         <textarea type="text" rows="2" id="plantratamientoss" class="form-control"  disabled="disabled">  </textarea>
                                                       </div>
                                                    </div>
                                                 </div>
@@ -1469,7 +1469,7 @@ $label = '';
                                                    <div class="col-sm-10">
                                                       <div class="input-group">
                                                          <div class="input-group-addon"><i class="fa fa-comment-o"></i></div>
-                                                         <textarea type="text" rows="1" id="fechaproximas" class="form-control"  disabled="disabled">  </textarea>
+                                                         <textarea type="text" rows="1" id="fechaproximass" class="form-control"  disabled="disabled">  </textarea>
                                                       </div>
                                                    </div>
                                                 </div>
@@ -2453,10 +2453,10 @@ $label = '';
                    $("#medicos").val(data.Medico);
                    $("#modulos").val(data.Especialidad);
                    $("#fechas").val(data.FechaConsulta);
-                   $("#diagnosticos").val(data.Diagnostico);
+                   $("#diagnosticoss").val(data.Diagnostico);
                    $("#enfermedads").val(data.Enfermedad);
-                   $("#comentarioss").val(data.Comentarios);
-                   $("#otross").val(data.Otros);
+                   $("#comentariosss").val(data.Comentarios);
+                   $("#otrosss").val(data.Otros);
                    $("#pesos").val(data.Peso);
                    if (data.UnidadPeso == 1) {
                        $("#unidadpesos").val("Kg");
@@ -2492,8 +2492,8 @@ $label = '';
                    $("#alergiass").val(data.Alergias);
                    $("#cirugiaspreviass").val(data.CirugiasPrevias);
                    $("#medicamentotomados").val(data.MedicamentosActuales);
-                   $("#plantratamientos").val(data.PlanTratamiento);
-                   $("#fechaproximas").val(data.FechaProxVisita);
+                   $("#plantratamientoss").val(data.PlanTratamiento);
+                   $("#fechaproximass").val(data.FechaProxVisita);
                    $("#examenfisicas").val(data.ExamenFisica);
    
                    $("#modalCargarConsulta").modal("show");
