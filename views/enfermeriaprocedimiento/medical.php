@@ -127,7 +127,7 @@
                       INNER JOIN usuario u ON u.IdUsuario = ep.IdUsuario
                       INNER JOIN modulo m ON m.IdModulo = ep.IdModulo
                       INNER JOIN motivoprocedimiento mp ON mp.IdMotivoProcedimiento = ep.IdMotivoProcedimiento
-                      WHERE p.IdPersona = '$idpersonaid' 
+                      WHERE p.IdPersona = '$idpersonaid' and ep.Estado = 2
                       order by ep.IdEnfermeriaProcedimiento DESC";
     $resultadotablaprocedimientos = $mysqli->query($querytablaprocedimientos);
    
@@ -188,6 +188,14 @@
                                         INNER JOIN Usuario US on LE.IdUsuario = US.IdUsuario
                                         WHERE LE.Activo = 1 and LE.IdUsuario =  '$idusuarioid' and LE.IdEnfermeriaProcedimiento = $IdEnfermeriaProcedimiento";
     $resultadotablaexameneslabasignados = $mysqli->query($querytablaexameneslabasignados);
+
+            // CONSULTA PARA CARGAR LA TABLA DE LOS RAYOS X ASIGNADOS AL PACIENTE
+    $querytablarayosxasignados = "SELECT LE.IdListaRayosx as 'IdListaRayosx',TE.NombreRayosx AS 'NombreRayosx', TE.DescripcionRayosx AS 'NombreRayosxing', CONCAT(US.Nombres,' ', US.Apellidos) As 'Medico', LE.Indicacion as 'Indicacion'  
+                                        FROM listarayosx LE
+                                        INNER JOIN TipoRayosx TE on LE.IdTipoRayosx = TE.IdTipoRayosx
+                                        INNER JOIN Usuario US on LE.IdUsuario = US.IdUsuario
+                                        WHERE LE.Activo = 1 and LE.IdUsuario =  '$idusuarioid' and LE.IdEnfermeriaProcedimiento = $IdEnfermeriaProcedimiento";
+    $resultadotablarayosxasignados = $mysqli->query($querytablarayosxasignados);
    
    
    $label = '';
@@ -269,7 +277,7 @@
                             WHERE p.IdPersona = '$idpersonaid' and FechaProcedimiento = '$dates'
                             order by ep.IdEnfermeriaProcedimiento DESC";
                         $resultqueryvalidacionprocedimientodiario = $mysqli->query($queryvalidacionprocedimientodiario);
-                        if(mysqli_num_rows($resultqueryvalidacionprocedimientodiario)==1){?>
+                        if(mysqli_num_rows($resultqueryvalidacionprocedimientodiario)==0){?>
                      <button type="button" class="btn  btn-danger dim"  data-toggle="modal" data-target="#modalConsulta">Data  <i class="fa fa-heart"></i></button>
                      <?php } else{?>
                      <button type="button" class="btn  btn-danger dim" style="display: none;"  data-toggle="modal" data-target="#modalConsulta">Enter Data  <i class="fa fa-heart"></i></button>
@@ -298,7 +306,7 @@
                                     echo"<th id='tablaprocedimientohoy4'>Nombre de Medico</th>";
                                     echo"<th id='tablaprocedimientohoy5'>Nombre de Especialidad</th>";
                                     echo"<th id='tablaprocedimientohoy6'>Motivo</th>";
-                                    echo"<th style = 'width:150px' id='tablaprocedimientohoy7'>Accion</th>";
+                                    echo"<th style = 'width:110px' id='tablaprocedimientohoy7'>Accion</th>";
                                     echo"</tr>";
                                     echo"</thead>";
                                     echo"<tbody>";
@@ -320,21 +328,21 @@
                                         if($_SESSION['IdIdioma'] == 1){
                                            if ($row['Estado'] == 1) {
                                               echo "<td>" .
-                                              "<span id='btn" . $idSignosVitales . "' style='width:140px' class='btn btn-success btn-mdles'>+ Procedimiento</span>" .
+                                              "<span id='btn" . $idSignosVitales . "' style='width:100px' class='btn btn-success btn-mdles'>+ Procedimiento</span>" .
                                               "</td>";
                                           } else {
                                               echo "<td>" .
-                                              "<span id='btn" . $idSignosVitales . "' style='width:140px' class='btn btn-warning btn-mdls'>Ver Consulta</span>" .
+                                              "<span id='btn" . $idSignosVitales . "' style='width:100px' class='btn btn-warning btn-mdls'>Ver Consulta</span>" .
                                               "</td>";
                                           }
                                         }else{
                                          if ($row['Estado'] == 1) {
                                               echo "<td>" .
-                                              "<span id='btn" . $idSignosVitales . "' style='width:140px' class='btn btn-success btn-mdles'>+ Procedure</span>" .
+                                              "<span id='btn" . $idSignosVitales . "' style='width:100px' class='btn btn-success btn-mdles'>+ Procedure</span>" .
                                               "</td>";
                                           } else {
                                               echo "<td>" .
-                                              "<span id='btn" . $idSignosVitales . "' style='width:140px' class='btn btn-warning btn-mdls'>See Procedure</span>" .
+                                              "<span id='btn" . $idSignosVitales . "' style='width:100px' class='btn btn-warning btn-mdls'>See Procedure</span>" .
                                               "</td>";
                                           }
                                         }
@@ -353,10 +361,10 @@
                                  <?php
                                     echo"<thead>";
                                     echo"<tr>";
-                                    echo"<th style = 'width:150px' id='tblexamenasignadoexamen'>Tipo de Examen</th>";
+                                    echo"<th style = 'width:110px' id='tblexamenasignadoexamen'>Tipo de Examen</th>";
                                     echo"<th id='tblexamenasignadomedico'>Medico</th>";
                                     echo"<th id='tblexamenasignadoindicacion'>Indicacion</th>";
-                                    echo"<th style = 'width:150px' id='tblexamenasignadoaccion'>Accion</th>";
+                                    echo"<th style = 'width:110px' id='tblexamenasignadoaccion'>Accion</th>";
                                     echo"</tr>";
                                     echo"</thead>";
                                     echo"<tbody>";
@@ -367,7 +375,7 @@
                                             echo"<td>" . $row['NombreExamen'] . "</td>";
                                             echo"<td>" . $row['Medico'] . "</td>";
                                             echo"<td>" . $row['Indicacion'] . "</td>";
-                                            echo "<td><a style='width:140px'  class='btn  btn-danger dim' href='../../views/enfermeriaprocedimiento/eliminarexamenasignado.php?did=".$idexamenasignado."'>Eliminar</a></td>";
+                                            echo "<td><a style='width:100px'  class='btn  btn-danger dim' href='../../views/enfermeriaprocedimiento/eliminarexamenasignado.php?did=".$idexamenasignado."'>Eliminar</a></td>";
                                             echo"</tr>";
                                             echo"</body>  ";
                                         }
@@ -379,7 +387,7 @@
                                         echo"<td>" . $row['NombreExamening'] . "</td>";
                                         echo"<td>" . $row['Medico'] . "</td>";
                                         echo"<td>" . $row['Indicacion'] . "</td>";
-                                        echo "<td><a style='width:140px'  class='btn  btn-danger dim' href='../../views/enfermeriaprocedimiento/eliminarexamenasignado.php?did=".$idexamenasignado."'>Delete</a></td>";
+                                        echo "<td><a style='width:100px'  class='btn  btn-danger dim' href='../../views/enfermeriaprocedimiento/eliminarexamenasignado.php?did=".$idexamenasignado."'>Delete</a></td>";
                                         echo"</tr>";
                                         echo"</body>  ";
                                     }
@@ -397,13 +405,37 @@
                                  <?php
                                     echo"<thead>";
                                     echo"<tr>";
-                                    echo"<th style = 'width:150px' id='tblrayosasignadoexamen'>Tipo de Examen</th>";
+                                    echo"<th style = 'width:110px' id='tblrayosasignadoexamen'>Tipo de Examen</th>";
                                     echo"<th id='tblrayosasignadomedico'>Medico</th>";
                                     echo"<th id='tblrayosxasignadoindicacion'>Indicacion</th>";
-                                    echo"<th style = 'width:150px' id='tblrayosxasignadoaccion'>Accion</th>";
+                                    echo"<th style = 'width:110px' id='tblrayosxasignadoaccion'>Accion</th>";
                                     echo"</tr>";
                                     echo"</thead>";
                                     echo"<tbody>";
+                                    if($_SESSION['IdIdioma'] == 1){
+                                          while ($row = $resultadotablarayosxasignados->fetch_assoc()) {
+                                            $idexamenasignado = $row['IdListaRayosx'];
+                                            echo"<tr>";
+                                            echo"<td>" . $row['NombreRayosx'] . "</td>";
+                                            echo"<td>" . $row['Medico'] . "</td>";
+                                            echo"<td>" . $row['Indicacion'] . "</td>";
+                                            echo "<td><a style='width:100px'  class='btn  btn-danger dim' href='../../views/enfermeriaprocedimiento/eliminarrayosxasignado.php?did=".$idexamenasignado."'>Eliminar</a></td>";
+                                            echo"</tr>";
+                                            echo"</body>  ";
+                                        }
+                                    }
+                                    else{
+                                       while ($row = $resultadotablarayosxasignados->fetch_assoc()) {
+                                        $idexamenasignado = $row['IdListaRayosx'];
+                                        echo"<tr>";
+                                        echo"<td>" . $row['NombreRayosxing'] . "</td>";
+                                        echo"<td>" . $row['Medico'] . "</td>";
+                                        echo"<td>" . $row['Indicacion'] . "</td>";
+                                        echo "<td><a style='width:100px'  class='btn  btn-danger dim' href='../../views/enfermeriaprocedimiento/eliminarrayosxasignado.php?did=".$idexamenasignado."'>Delete</a></td>";
+                                        echo"</tr>";
+                                        echo"</body>  ";
+                                    }
+                                    }
                                     
                                     ?>
                               </table>
@@ -621,7 +653,7 @@
                                                 echo"<th id='tab2historialconsultabla2'></th>";
                                                 echo"<th id='tab2historialconsultabla3'></th>";
                                                 echo"<th id='tab2historialconsultabla4'></th>";
-                                                echo"<th style = 'width:150px' id='tab2historialconsultabla5'></th>";
+                                                echo"<th style = 'width:110px' id='tab2historialconsultabla5'></th>";
                                                 echo"</tr>";
                                                 echo"</thead>";
                                                 echo"<tbody>";
@@ -635,12 +667,12 @@
                                                       echo"<td>" . $row['Especialidad'] . "</td>";
                                                          if($_SESSION['IdIdioma'] == 1){
                                                             echo "<td>".
-                                                                   "<span id='btn".$idSignosVitales."' style='width:140px' class='btn  btn-success btn-mdl'> Ver Consulta</span>".
+                                                                   "<span id='btn".$idSignosVitales."' style='width:100px' class='btn  btn-success btn-mdl'> Ver Consulta</span>".
                                                                    "</td>";
                                                             }
                                                          else{
                                                             echo "<td>".
-                                                                   "<span id='btn".$idSignosVitales."' style='width:140px' class='btn  btn-success btn-mdl'> See Visits </span>".
+                                                                   "<span id='btn".$idSignosVitales."' style='width:100px' class='btn  btn-success btn-mdl'> See Visits </span>".
                                                                    "</td>";
                                                          }
                                                 
@@ -669,7 +701,7 @@
                                                 echo"<th id='tab2historialexamabla3'>Nombre de Paciente</th>";
                                                 echo"<th id='tab2historialexamabla4'>Nombre de Medico</th>";
                                                 echo"<th id='tab2historialexamabla5'>Examen</th>";
-                                                echo"<th style = 'width:150px' id='tab2historialexamabla6'>Accion</th>";
+                                                echo"<th style = 'width:110px' id='tab2historialexamabla6'>Accion</th>";
                                                 echo"</tr>";
                                                 echo"</thead>";
                                                 echo"<tbody>";
@@ -682,12 +714,12 @@
                                                     echo"<td>" . $row['Examen'] . "</td>";
                                                      if($_SESSION['IdIdioma'] == 1){
                                                             echo "<td>" .
-                                                    "<span id='btn" . $IdListaExamen . "' style='width:140px' class='btn btn-md btn-warning btn-mdlrex'>Ver Resultados</span>" .
+                                                    "<span id='btn" . $IdListaExamen . "' style='width:100px' class='btn btn-md btn-warning btn-mdlrex'>Ver Resultados</span>" .
                                                     "</td>";
                                                             }
                                                          else{
                                                             echo "<td>" .
-                                                    "<span id='btn" . $IdListaExamen . "' style='width:140px' class='btn btn-md btn-warning btn-mdlrex'>See Results</span>" .
+                                                    "<span id='btn" . $IdListaExamen . "' style='width:100px' class='btn btn-md btn-warning btn-mdlrex'>See Results</span>" .
                                                     "</td>";
                                                          }
                                                     echo"</tr>";
@@ -713,7 +745,7 @@
                                                 echo"<th id='tab2historialprocetabla4'>Nombre de Medico</th>";
                                                 echo"<th id='tab2historialprocetabla5'>Nombre de Especialidad</th>";
                                                 echo"<th id='tab2historialprocetabla6'>Motivo</th>";
-                                                echo"<th style = 'width:150px' id='tab2historialprocetabla7'>Accion</th>";
+                                                echo"<th style = 'width:110px' id='tab2historialprocetabla7'>Accion</th>";
                                                 echo"</tr>";
                                                 echo"</thead>";
                                                 echo"<tbody>";
@@ -728,11 +760,11 @@
                                                     echo"<td>" . $row['Motivo'] . "</td>";
                                                     if($_SESSION['IdIdioma'] == 1){
                                                             echo "<td>" .
-                                                    "<span id='btn" . $idSignosVitales . "' style='width:140px' class='btn btn-md btn-warning btn-proce'>Ver Consulta</span>" .
+                                                    "<span id='btn" . $idSignosVitales . "' style='width:100px' class='btn btn-md btn-warning btn-proce'>Ver Consulta</span>" .
                                                     "</td>";}
                                                          else{
                                                             echo "<td>" .
-                                                    "<span id='btn" . $idSignosVitales . "' style='width:140px' class='btn btn-md btn-warning btn-proce'>See Visit</span>" .
+                                                    "<span id='btn" . $idSignosVitales . "' style='width:100px' class='btn btn-md btn-warning btn-proce'>See Visit</span>" .
                                                     "</td>";
                                                          }
                                                     echo"</tr>";
@@ -747,11 +779,11 @@
                                                     echo"<td>" . $row['Motivo'] . "</td>";
                                                     if($_SESSION['IdIdioma'] == 1){
                                                             echo "<td>" .
-                                                    "<span id='btn" . $idSignosVitales . "' style='width:140px' class='btn btn-md btn-warning btn-proce'>Ver Consulta</span>" .
+                                                    "<span id='btn" . $idSignosVitales . "' style='width:100px' class='btn btn-md btn-warning btn-proce'>Ver Consulta</span>" .
                                                     "</td>";}
                                                          else{
                                                             echo "<td>" .
-                                                    "<span id='btn" . $idSignosVitales . "' style='width:140px' class='btn btn-md btn-warning btn-proce'>See Visit</span>" .
+                                                    "<span id='btn" . $idSignosVitales . "' style='width:100px' class='btn btn-md btn-warning btn-proce'>See Visit</span>" .
                                                     "</td>";
                                                          }
                                                     echo"</tr>";
@@ -803,7 +835,7 @@
                            <div class="tab-content">
                               <div id="tab-1" class="tab-pane active">
                                  <div class="panel-body">
-                                    <div class="form-group">
+                                    <div class="form-group hidden">
                                        <div class="col-sm-5"><input type="text"  name="txtIdConsulta" id="idconsulta" value=""></div>
                                        <div class="col-sm-5"><input type="text"  name="txtIdProcedimiento" id="idindicadorprocedimiento" value=""></div>
                                     </div>
@@ -2394,16 +2426,16 @@
             <div class="modal-dialog modal-md">
                <div class="modal-content animated fadeIn">
                   <div class="modal-content">
-                     <form class="form-horizontal" method="POST" action="../../views/enfermeriaprocedimiento/guardarexamen.php"  id="demo-form1" data-parsley-validate="">
+                     <form class="form-horizontal" method="POST" action="../../views/enfermeriaprocedimiento/guardarrayosx.php"  id="demo-form1" data-parsley-validate="">
                         <div class="modal-header">
                            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                           <i class="fa fa-stethoscope modal-icon"></i>
-                           <h4 class="modal-title" id='modalasignarexamen1'>ASIGNACION DE EXAMENES MEDICOS</h4>
-                           <small id='modalasignarexamen2'>ASIGNACION DE EXAMENES: <?php echo $idpersona; ?></small>
+                           <i class="fa fa-times modal-icon"></i>
+                           <h4 class="modal-title" id='modalasignarrayosx1'>ASIGNACION DE EXAMENES MEDICOS</h4>
+                           <small id='modalasignarrayosx2'>ASIGNACION DE EXAMENES: <?php echo $idpersona; ?></small>
                         </div>
                         <div class="modal-body ">
                            <div class="form-group">
-                              <label for="inputEmail3" class="col-sm-2 control-label" id='modalasignarexamen3'>Examenes</label>
+                              <label for="inputEmail3" class="col-sm-2 control-label" id='modalasignarrayosx3'>Examenes</label>
                               <div class="col-sm-9">
                                  <div class="input-group">
                                     <div class="input-group-addon">
@@ -2426,7 +2458,7 @@
                               </div>
                            </div>
                            <div class="form-group" >
-                              <label for="inputEmail3" class="col-sm-2 control-label" id='modalasignarexamen4'>Indicaciones</label>
+                              <label for="inputEmail3" class="col-sm-2 control-label" id='modalasignarrayosx4'>Indicaciones</label>
                               <div class="col-sm-9">
                                  <div class="input-group">
                                     <div class="input-group-addon">
@@ -2464,10 +2496,10 @@
                            <div class="col-sm-3">
                            </div>
                            <div class="col-sm-2">
-                              <button type="button" class="btn btn-danger" id="btn-cerrarmodal" data-dismiss="modal"  id='modalasignarexamen5'>Cerrar</button>
+                              <button type="button" class="btn btn-danger" id="btn-cerrarmodal" data-dismiss="modal"  id='modalasignarrayosx5'>Cerrar</button>
                            </div>
                            <div class="col-sm-2">
-                              <button type="submit" class="btn btn-primary" name="guardarIndicador"  id='modalasignarexamen6'>Guardar Cambios</button>
+                              <button type="submit" class="btn btn-primary" name="guardarIndicador"  id='modalasignarrayosx6'>Guardar Cambios</button>
                            </div>
                         </div>
                      </form>
@@ -3318,12 +3350,12 @@
    
    
     // MODAL PARA AGREGAR LA RAYOS X A LA CONSULTA MEDICA DEL DIA
-       $("#modaltabnuevoexameneslab1").text('ASSIGNMENT OF LABORATORY EXAMS');
-       $("#modaltabnuevoexameneslab2").text('LABORATORY EXAMS');
-       $("#modaltabnuevoexameneslab3").text("Exams");
-       $("#modaltabnuevoexameneslab4").text('Indication');
-       $("#modaltabnuevoexameneslab5").text("Close");
-       $("#modaltabnuevoexameneslab6").text('Save Changes');
+       $("#modalasignarrayosx1").text('ASSIGNMENT OF X-RAYS');
+       $("#modalasignarrayosx2").text('X-RAYS EXAMS');
+       $("#modalasignarrayosx3").text("Image");
+       $("#modalasignarrayosx4").text('Indication');
+       $("#modalasignarrayosx5").text("Close");
+       $("#modalasignarrayosx6").text('Save Changes');
    
       
    <?php } ?>

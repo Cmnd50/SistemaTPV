@@ -9,7 +9,7 @@
       $observacion = $_POST['txtObservaciones'];
 
 
-      $insertexpediente = "UPDATE enfermeriaprocedimiento SET Estado=2, Observaciones='$observacion' WHERE IdEnfermeriaProcedimiento='$id'";
+      $insertexpediente = "UPDATE enfermeriaprocedimiento SET Estado=2,  WHERE IdEnfermeriaProcedimiento='$id'";
       $resultadoinsertmovimiento = $mysqli->query($insertexpediente);
 
        $insertexpediente2 = "UPDATE persona SET IdEstado=1 WHERE IdPersona='$idpersona'";
