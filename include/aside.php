@@ -19,11 +19,17 @@
 
 <link href="../template/css/plugins/fullcalendar/fullcalendar.css" rel="stylesheet">
 <link href="../template/css/plugins/fullcalendar/fullcalendar.print.css" rel='stylesheet' media='print'>
-
+<link href="../template/css/plugins/morris/morris-0.4.3.min.css" rel="stylesheet">
 <script src="../template/js/plugins/fullcalendar/moment.js"></script>
 <script src="../template/js/plugins/fullcalendar/fullcalendar.js"></script>
 <script src="../template/js/plugins/jquery-ui/jquery-ui.min.js" type="text/javascript"></script>
 <script src="../template/js/es.js" type="text/javascript"></script>
+
+<script src="../template/js/plugins/metisMenu/jquery.metisMenu.js"></script>
+<script src="../template/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+
+<script src="../template/js/plugins/morris/raphael-2.1.0.min.js"></script>
+<script src="../template/js/plugins/morris/morris.js"></script>
 
 <nav class="navbar-default navbar-static-side" role="navigation">
     <div class="sidebar-collapse">

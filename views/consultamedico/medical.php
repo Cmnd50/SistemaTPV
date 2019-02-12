@@ -1145,8 +1145,8 @@ $label = '';
                   <div class="modal-header">
                      <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
                      <i class="fa fa-stethoscope modal-icon"></i>
-                     <h4 class="modal-title">FICHA GENERAL DE CONSULTA</h4>
-                     <small>FICHA DE CONSULTA</small>
+                     <h4 class="modal-title" id='modaltabconsultamedicatitulo1'>FICHA GENERAL DE CONSULTA</h4>
+                     <small id='modaltabconsultamedicatitulo2'>FICHA DE CONSULTA</small>
                   </div>
                   <div class="modal-body">
                      <div class="tabs-container">
@@ -1531,7 +1531,6 @@ $label = '';
                               <li class="active"><a data-toggle="tab" href="#MDLHEMOGRAMA1" id='modalconsultahemograma6'>FICHA 1</a></li>
                               <li class=""><a data-toggle="tab" href="#MDLHEMOGRAMA2" id='modalconsultahemograma7'>FICHA 2</a></li>
                            </ul>
-                  <form class="form-horizontal">
                   <div class="tab-content">
                   <div id="MDLHEMOGRAMA1" class="tab-pane active">
                   <div class="panel-body">
@@ -1689,7 +1688,6 @@ $label = '';
                               <li class="active"><a data-toggle="tab" href="#MDLHECES1" id='modalconsultaheces6'>FICHA 1</a></li>
                               <li class=""><a data-toggle="tab" href="#MDLHECES2" id='modalconsultaheces7'>FICHA 2</a></li>
                            </ul>
-                  <form class="form-horizontal">
                   <div class="tab-content">
                   <div id="MDLHECES1" class="tab-pane active">
                   <div class="panel-body">
@@ -1863,7 +1861,6 @@ $label = '';
                               <li class="active"><a data-toggle="tab" href="#MDLORINA1" id='modalconsultaorina6'>FICHA 1</a></li>
                               <li class=""><a data-toggle="tab" href="#MDLORINA2" id='modalconsultaorina7'>FICHA 2</a></li>
                            </ul>
-                  <form class="form-horizontal">
                   <div class="tab-content">
                   <div id="MDLORINA1" class="tab-pane active">
                   <div class="panel-body">
@@ -2433,9 +2430,6 @@ $label = '';
 
    $(document).ready(function () {
 
-   
-
-   
        $(".btn-mdls").click(function () {
            var id = $(this).attr("id").replace("btn", "");
            var myData = {"id": id};
@@ -2805,6 +2799,8 @@ $label = '';
 
        
        // MODAL HISTORICO DE CONSULTA
+       $("#modaltabconsultamedicatitulo1").text('FICHA GENERAL DE CONSULTA');
+       $("#modaltabconsultamedicatitulo2").text('FICHA DE CONSULTA');
        $("#modaltabconsultamedica1").text('FICHA DE CONSULTA');
        $("#modaltabconsultamedica2").text('DATOS GENERALES');
        $("#modaltabconsultamedica3").text('USO GINECOLOGICO');
@@ -3000,6 +2996,8 @@ $label = '';
        $("#tab2historialprocetabla7").text('Action');
 
        // MODAL HISTORICO DE CONSULTA
+       $("#modaltabconsultamedicatitulo1").text('PREVIOUS VISITS');
+       $("#modaltabconsultamedicatitulo2").text('PREVIOUS VISITS');
        $("#modaltabconsultamedica1").text('DATE OF VISIT');
        $("#modaltabconsultamedica2").text('GENERAL INFO');
        $("#modaltabconsultamedica3").text('OB-GYN INFO');
