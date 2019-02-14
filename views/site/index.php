@@ -23,11 +23,13 @@ include '../include/dbconnect.php';
 if(!isset($_SESSION))
     {
         session_start();
+
     }
 
 if (!empty($_SESSION['user']))
   {
 
+          
           $queryfichaconsulta = "SELECT  count(c.FechaConsulta) as 'Listado', (SELECT count(p.Genero) FROM persona p INNER JOIN consulta c on c.IdPersona = p.IdPersona WHERE p.Genero = 'MASCULINO' and c.FechaConsulta = curdate()) as 'Hombre',
             (SELECT count(p.Genero) FROM persona p INNER JOIN consulta c on c.IdPersona = p.IdPersona WHERE p.Genero = 'FEMENINO' and c.FechaConsulta = curdate() ) as 'Mujer'
             FROM

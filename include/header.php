@@ -1,3 +1,8 @@
+<?php
+date_default_timezone_set('america/el_salvador');
+$fechas = date('Y-m-d G:i:s');
+
+?>
 <div id="page-wrapper" class="gray-bg">
     <div class="row border-bottom">
     <nav class="navbar navbar-static-top  " role="navigation" style="margin-bottom: 0">
@@ -11,7 +16,7 @@
               <span class="m-r-sm text-muted welcome-message">Bienvenidos Sistema TPV</span>
           <?php } else{
             ?>
-              <span class="m-r-sm text-muted welcome-message">Welcome Sistema TPV</span>  
+              <span class="m-r-sm text-muted welcome-message">Welcome Sistema TPV <?php echo $fechas ?> </span>  
             <?php } ?>
           
           </li>

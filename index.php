@@ -4,13 +4,15 @@
 <?php
 session_start();
 include 'include/dbconnect.php';
+date_default_timezone_set('america/el_salvador');
+$fechas = date('Y-m-d G:i:s');
 
 if(isset($_POST['btn-login']))
 {
 $InicioSesion = $_POST['InicioSesion'];
 $Clave = $_POST['Clave'];
 $queryusuario = "
-SELECT a.IdUsuario, a.InicioSesion, b.IdPuesto, b.Descripcion as 'NombrePuesto', concat(a.Nombres, ' ', a.Apellidos) as NombreCompleto, a.Idioma as 'Idioma'
+SELECT a.IdUsuario, a.InicioSesion, b.IdPuesto, b.Descripcion as 'NombrePuesto', concat(a.Nombres, ' ', a.Apellidos) as NombreCompleto, a.Idioma as 'Idioma', a.Estado as 'Estado'
 FROM usuario as a
 inner join puesto as b on b.IdPuesto = a.IdPuesto
 WHERE InicioSesion='$InicioSesion' and Clave = md5('$Clave') and Activo = 1";
@@ -20,12 +22,54 @@ while ($row = $resultado_usuario->fetch_assoc()) {
        $_SESSION['user'] = $row['InicioSesion'];
        $_SESSION['IdPuesto'] = $row['IdPuesto'];
        $_SESSION['IdIdioma'] = $row['Idioma'];
-
+       $_SESSION['Estado'] = $row['Estado'];
              }
+
+if(mysqli_num_rows($resultado_usuario)==0){
+      $IdEnfermeriaProcedimiento = 0;
+    }
+    else{
+      $IdUsuario = $_SESSION['IdUsuario'];
+    }
+
+
 
       if(!empty($_SESSION['user']))
       {
-      header("Location: web/site/index");
+        if(  $_SESSION['Estado'] == 'Desconectado'){
+        $updateestadouser = "UPDATE usuario SET Estado = 'Conectado', HoraInicioSesion = '$fechas'  where IdUsuario = '$IdUsuario'";
+        $resultadoupdate = $mysqli->query($updateestadouser);
+
+        //echo $updateestadouser;
+        header("Location: web/site/index");
+        }
+        else{
+                 ?>
+       <script>
+         $(function () {
+             // Display a error toast, with a title
+             toastr.options = {
+               "closeButton": true,
+               "debug": false,
+               "progressBar": true,
+               "preventDuplicates": true,
+               "positionClass": "toast-top-right",
+               "onclick": null,
+               "showDuration": "100",
+               "hideDuration": "1000",
+               "timeOut": "2000",
+               "extendedTimeOut": "100",
+               "showEasing": "swing",
+               "hideEasing": "linear",
+               "showMethod": "fadeIn",
+               "hideMethod": "fadeOut"
+             }
+             toastr.error('El usuario ha iniciado sesion en otro equipo!')
+         });
+     </script>
+                 <?php
+        }
+         
       }
       else
       {
