@@ -1,8 +1,9 @@
 <?php
+ require_once 'logouttiempo.php';
 date_default_timezone_set('america/el_salvador');
 $fechas = date('Y-m-d G:i:s');
-
 ?>
+<script>setTimeout('document.location.reload()',20000); </script> <!-- TIEMPO EN MILISEGUNDOS PARA QUE LA PÁG SE RECARGUE TRAS INACTIVIDAD-->
 <div id="page-wrapper" class="gray-bg">
     <div class="row border-bottom">
     <nav class="navbar navbar-static-top  " role="navigation" style="margin-bottom: 0">
