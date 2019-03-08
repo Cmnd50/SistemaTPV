@@ -1,9 +1,8 @@
 <?php
- require_once 'logouttiempo.php';
+
 date_default_timezone_set('america/el_salvador');
 $fechas = date('Y-m-d G:i:s');
 ?>
-<script>setTimeout('document.location.reload()',20000); </script> <!-- TIEMPO EN MILISEGUNDOS PARA QUE LA PÁG SE RECARGUE TRAS INACTIVIDAD-->
 <div id="page-wrapper" class="gray-bg">
     <div class="row border-bottom">
     <nav class="navbar navbar-static-top  " role="navigation" style="margin-bottom: 0">
@@ -29,5 +28,39 @@ $fechas = date('Y-m-d G:i:s');
       </ul>
 
   </nav>
-
 </div>
+<script src="../template/js/jquery-3.2.1.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+var timeoutInMiliseconds = 60000;
+var timeoutId; 
+
+
+  
+function startTimer() { 
+    // window.setTimeout returns an Id that can be used to start and stop a timer
+    timeoutId = window.setTimeout(doInactive, timeoutInMiliseconds)
+}
+  
+function doInactive() {
+   alert("Esta es una alerta");
+   window.location = '../../include/logouttiempo.php';
+}
+
+function resetTimer() { 
+    window.clearTimeout(timeoutId)
+    startTimer();
+}
+ 
+function setupTimers () {
+    document.addEventListener("mousemove", resetTimer, false);
+    document.addEventListener("mousedown", resetTimer, false);
+    document.addEventListener("keypress", resetTimer, false);
+    document.addEventListener("touchmove", resetTimer, false);
+     
+    startTimer();
+}
+
+window.onload=setupTimers;
+ 
+
+</script> 

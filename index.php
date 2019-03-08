@@ -145,4 +145,4 @@ if(mysqli_num_rows($resultado_usuario)==0){
 
 </body>
 </html>
-<script>setTimeout('document.location.reload()',20000); </script>
+<script>setTimeout ("window.location='index'", 20000); </script>
