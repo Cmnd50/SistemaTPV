@@ -29,9 +29,8 @@ $fechas = date('Y-m-d G:i:s');
 
   </nav>
 </div>
-<script src="../template/js/jquery-3.2.1.min.js" type="text/javascript"></script>
 <script type="text/javascript">
-var timeoutInMiliseconds = 60000;
+var timeoutInMiliseconds = 6000000;
 var timeoutId; 
 
 
@@ -42,7 +41,6 @@ function startTimer() {
 }
   
 function doInactive() {
-   alert("Esta es una alerta");
    window.location = '../../include/logouttiempo.php';
 }
 

@@ -14,5 +14,5 @@ $resultadoupdate = $mysqli->query($updateestadouser);
     session_destroy();              
     //Redirigimos pagina.
     header("Location: ../index");
-   ?>
+?>
 

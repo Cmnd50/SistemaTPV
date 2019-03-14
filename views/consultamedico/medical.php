@@ -2351,21 +2351,6 @@ $label = '';
                                                    </div>
                                                 </div>
                                                 <div class="form-group">
-                                                   <div class="col-sm-3"><label for="inputEmail3" class="control-label" id='modaltabnuevaconsultamedica8'></label></div>
-                                                   <div class="col-sm-9">
-                                                      <div class="input-group">
-                                                         <div class="input-group-addon"><i class="fa fa-comment-o"></i></div>
-                                                         <select class="form-control select2" style="width: 100%;"  name="cboEnfermedad">
-                                                          <?php
-                                                              while ($row = $resultadotablaenfermedadICD->fetch_assoc()) {
-                                                                 echo "<option value = '" . $row['IdCodigoICD'] . "'>" . $row['NombreCodigo'] . "</option>";
-                                                             }
-                                                             ?>
-                                                          </select>
-                                                      </div>
-                                                   </div>
-                                                </div>
-                                                <div class="form-group">
                                                    <div class="col-sm-3"><label for="inputEmail3" class="control-label" id='modaltabnuevaconsultamedica9'></label></div>
                                                    <div class="col-sm-9">
                                                       <div class="input-group">

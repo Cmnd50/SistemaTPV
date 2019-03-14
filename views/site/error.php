@@ -7,21 +7,17 @@
 
 use yii\helpers\Html;
 
-$this->title = $name;
 ?>
-<div class="site-error">
+    <div class="middle-box text-center animated fadeInDown">
+        <h1>404</h1>
+        <h3 class="font-bold">Pagina no Encontrada</h3>
 
-    <h1><?= Html::encode($this->title) ?></h1>
-
-    <div class="alert alert-danger">
-        <?= nl2br(Html::encode($message)) ?>
+        <div class="error-desc">
+            
+            Lo sentimos, pero la página que estás buscando ha sido encontrada. Intente verificar la URL para ver si hay errores, luego presione el botón de actualización en su navegador o intente encontrar algo más en nuestra aplicación.
+            <form class="form-inline m-t" role="form">
+                
+            </form>
+        </div>
     </div>
 
-    <p>
-        The above error occurred while the Web server was processing your request.
-    </p>
-    <p>
-        Please contact us if you think this is a server error. Thank you.
-    </p>
-
-</div>

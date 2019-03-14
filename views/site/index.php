@@ -232,41 +232,100 @@ $this->title = 'Sistema TPV';
 <div class="col-lg-6">
                 <div class="ibox float-e-margins">
                     <div class="ibox-title">
-                        <h5>Area Chart Example <small>With custom colors.</small></h5>
+                        <h5>Visitas en Clinica <small>Visitas mensuales</small></h5>
                     </div>
                     <div class="ibox-content" style="position: relative">
                         <div id="morris-area-chart"></div>
                     </div>
                 </div>
             </div>
+
+            <div class="col-lg-6">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>Visitas en Clinica <small>Visitas mensuales</small></h5>
+                    </div>
+                    <div class="ibox-content" style="position: relative">
+                        <div id="morris-area-chart2"></div>
+                    </div>
+                </div>
+            </div>
     </div>
 </div>
+<?php 
+$querybar = "SELECT 
+      CASE WHEN per.Genero = 'Masculino' THEN COUNT(per.Genero) ELSE 0 END as 'CountMasculino', 
+      CASE WHEN per.Genero = 'Femenino' THEN COUNT(per.Genero) ELSE 0 END as 'CountFemenino',
+      CONCAT(CASE MONTH(con.FechaConsulta) 
+      WHEN 1 THEN 'Ene'WHEN 2 THEN  'Feb' WHEN 3 THEN 'Mar' WHEN 4 THEN 'Abr' WHEN 5 THEN 'May'
+      WHEN 6 THEN 'Jun' WHEN 7 THEN 'Jul' WHEN 8 THEN 'Ago' WHEN 9 THEN 'Sep' 
+      WHEN 10 THEN 'Oct' WHEN 11 THEN 'Nov' WHEN 12 THEN 'Dic'
+      END,' ',YEAR(con.FechaConsulta)) as 'Mes'
+      FROM consulta con
+      INNER JOIN persona per on per.IdPersona = con.IdPersona
+      GROUP BY CASE MONTH(con.FechaConsulta) 
+      WHEN 1 THEN 'Enero'WHEN 2 THEN  'Febrero' WHEN 3 THEN 'Marzo' WHEN 4 THEN 'Abril' WHEN 5 THEN 'Mayo'
+      WHEN 6 THEN 'Junio' WHEN 7 THEN 'Julio' WHEN 8 THEN 'Agosto' WHEN 9 THEN 'Septiembre' 
+      WHEN 10 THEN 'Octubre' WHEN 11 THEN 'Noviembre' WHEN 12 THEN 'Diciembre'
+      END
+      ORDER BY con.FechaConsulta DESC LIMIT 3";
+$resultbar = $mysqli->query($querybar);
+$chartbar_data = '';
+while($row = mysqli_fetch_array($resultbar))
+{
+ $chartbar_data .= "{ Mes:'".$row["Mes"]."', CountMasculino:".$row["CountMasculino"].", CountFemenino:".$row["CountFemenino"]."}, ";
+}
+$chartbar_data = substr($chartbar_data, 0, -2);
 
+
+$queryline = "SELECT 
+      (CASE WHEN per.Genero = 'Masculino' THEN COUNT(per.Genero) ELSE 0 END +
+      CASE WHEN per.Genero = 'Femenino' THEN COUNT(per.Genero) ELSE 0 END) as 'Conteo',
+      mo.NombreModulo as 'Especialidad',
+      CONCAT(CASE MONTH(con.FechaConsulta) 
+      WHEN 1 THEN 'Ene'WHEN 2 THEN  'Feb' WHEN 3 THEN 'Mar' WHEN 4 THEN 'Abr' WHEN 5 THEN 'May'
+      WHEN 6 THEN 'Jun' WHEN 7 THEN 'Jul' WHEN 8 THEN 'Ago' WHEN 9 THEN 'Sep' 
+      WHEN 10 THEN 'Oct' WHEN 11 THEN 'Nov' WHEN 12 THEN 'Dic'
+      END,' ',YEAR(con.FechaConsulta)) as 'Mes'
+      FROM consulta con
+      INNER JOIN persona per on per.IdPersona = con.IdPersona
+      INNER JOIN modulo mo on mo.IdModulo = con.IdModulo
+      WHERE con.activo = 0
+      GROUP BY MONTH(con.FechaConsulta) 
+      ORDER BY con.FechaConsulta DESC
+      LIMIT 12";
+$resultline = $mysqli->query($queryline);
+$chartline_data = '';
+while($row = mysqli_fetch_array($resultline))
+{
+ $chartline_data .= "{ Mes:'".$row["Mes"]."', Conteo:".$row["Conteo"]." }, ";
+}
+$chartline_data = substr($chartline_data, 0, -2);
+?>
 
 <script type="text/javascript">
 $(document).ready(function() {
 
       Morris.Bar({
         element: 'morris-area-chart',
-        data: [{ period: '2010 Q1', iphone: 2666, ipad: null, itouch: 2647 },
-            { period: '2010 Q2', iphone: 2778, ipad: 2294, itouch: 2441 },
-            { period: '2010 Q3', iphone: 4912, ipad: 1969, itouch: 2501 },
-            { period: '2010 Q4', iphone: 3767, ipad: 3597, itouch: 5689 },
-            { period: '2011 Q1', iphone: 6810, ipad: 1914, itouch: 2293 },
-            { period: '2011 Q2', iphone: 5670, ipad: 4293, itouch: 1881 },
-            { period: '2011 Q3', iphone: 4820, ipad: 3795, itouch: 1588 },
-            { period: '2011 Q4', iphone: 15073, ipad: 5967, itouch: 5175 },
-            { period: '2012 Q1', iphone: 10687, ipad: 4460, itouch: 2028 },
-            { period: '2012 Q2', iphone: 8432, ipad: 5713, itouch: 1791 } ],
-        xkey: 'period',
-        ykeys: ['iphone', 'ipad', 'itouch'],
-        labels: ['iPhone', 'iPad', 'iPod Touch'],
-        pointSize: 2,
+         data:[<?php echo $chartbar_data; ?>],
+        xkey: 'Mes',
+        ykeys: ['CountMasculino', 'CountFemenino'],
+        labels: ['Hombres', 'Mujeres'],
         hideHover: 'auto',
         resize: true,
-        lineColors: ['#87d6c6', '#54cdb4','#1ab394'],
-        lineWidth:2,
-        pointSize:1,
+        barColors: ['#1ab394', '#87d6c6'],
+    });
+
+    Morris.Bar({
+        element: 'morris-area-chart2',
+        data: [<?php echo $chartline_data; ?>],
+        xkey: 'Mes',
+        ykeys: ['Conteo', 'Especialidad'],
+        labels: ['Pacientes', 'Especialidad'],
+        hideHover: 'auto',
+        resize: true,
+        lineColors: ['#54cdb4','#1ab394'],
     });
 
    <?php if ($_SESSION['IdIdioma'] == 1){ ?>

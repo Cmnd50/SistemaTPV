@@ -23,4 +23,7 @@ session_start();
                           EstadoNutricional='$estadonutricional',CirugiasPrevias='$cirugiasprevias',MedicamentosActuales='$medicamentosactuales',ExamenFisica='$examenfisica',
                           PlanTratamiento='$plantratamiento',FechaProxVisita='$fechaproxvisita',Alergias='$alergias'  WHERE IdConsulta='$id'";
       $resultadoinsertmovimiento = $mysqli->query($insertexpediente);
-      header('Location: ../../web/consultamedico/medical?id='.$id);
+
+      //echo $insertexpediente;
+      
+     header('Location: ../../web/consultamedico/medical?id='.$id);

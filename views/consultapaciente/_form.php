@@ -23,7 +23,7 @@ use kartik\select2\Select2;
     <?php echo $form->field($model, 'IdEstado')->widget(Select2::classname(), [
         'data' => ArrayHelper::map(Estado::find()->limit(3)->offset(1)->all(), 'IdEstado','NombreEstado'),
         'language' => 'es',
-        'options' => ['placeholder' => ' Selecione ...'],
+        'options' => ['placeholder' => ' Seleccione ...'],
         'pluginOptions' => [
             'allowClear' => true
         ],]);
