@@ -1138,6 +1138,10 @@ $label = '';
                <button type="submit" class="btn btn-success dim" id='btnfinalizarconsulta'></button>
             </form>
          </center>
+
+
+
+         
          <!-- MODAL CARGAR CONSULTA -->
          <div class="modal inmodal" id="modalCargarConsulta" tabindex="-1" role="dialog"  aria-hidden="true">
             <div class="modal-dialog modal-lg">
@@ -1490,284 +1494,282 @@ $label = '';
             </div>
          </div>
          <!-- MODAL PARA EXAMEN HEMOGRAMA -->
-         <div class="modal inmodal" id="modalCargarExamenHemograma" tabindex="-1" role="dialog"  aria-hidden="true">
-            <div class="modal-dialog modal-lg">
-               <div class="modal-content">
-                  <form class="form-horizontal"  role="form"  id="demo-form1" data-parsley-validate="">
-                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                        <i class="fa fa-gittip modal-icon"></i>
-                        <h4 class="modal-title" id='modalconsultahemograma1'>EXAMEN HEMOGRAMA</h4>
-                        <small id='modalconsultahemograma2'></small> <small><label id="ExamenHemogramaFechas"></label> </small>
-                     </div>
-                     <div class="modal-body ">
-                        <div class="form-group">
-                           <div class="col-sm-2" ><label for="inputEmail3"  class="control-label" id='modalconsultahemograma3'>Paciente</label></div>
-                           <div class="col-sm-4">
-                              <div class="input-group">
-                                 <div class="input-group-addon"><i class="fa fa-user"></i></div>
-                                 <input type="text" class="form-control" disabled="disabled" id="ExamenHemogramaPaciente" name="txtPaciente" disabled="disabled">
-                              </div>
-                           </div>
-                           <div class="col-sm-2"><label for="inputEmail3" class="control-label" id='modalconsultahemograma4'>Medico</label></div>
-                           <div class="col-sm-4">
-                              <div class="input-group">
-                                 <div class="input-group-addon"><i class="fa fa-medkit"></i></div>
-                                 <input type="text" class="form-control" disabled="disabled" id="ExamenHemogramaMedico" name="txtMedico" disabled="disabled">
-                              </div>
-                           </div>
-                        </div>
-                        <div class="form-group">
-                           <div class="col-sm-2"><label for="inputEmail3" class="control-label" id='modalconsultahemograma5'>Fecha</label></div>
-                           <div class="col-sm-10">
-                              <div class="input-group">
-                                 <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
-                                 <input type="text" class="form-control" disabled="disabled" id="ExamenHemogramaFecha" name="txtfecha" disabled="disabled">
-                              </div>
-                           </div>
-                        </div>
-                        <div class="tabs-container">
-                           <ul class="nav nav-tabs">
-                              <li class="active"><a data-toggle="tab" href="#MDLHEMOGRAMA1" id='modalconsultahemograma6'>FICHA 1</a></li>
-                              <li class=""><a data-toggle="tab" href="#MDLHEMOGRAMA2" id='modalconsultahemograma7'>FICHA 2</a></li>
-                           </ul>
-                  <div class="tab-content">
-                  <div id="MDLHEMOGRAMA1" class="tab-pane active">
-                  <div class="panel-body">
-                  <div class="form-group">
-                  <label for="inputEmail3" class="col-sm-2 control-label" id='modalconsultahemograma8'>Globulos Rojos</label>
-                  <div class="col-sm-2">
-                  <input type="text" class="form-control" id="ExamenHemogramaGlobulosRojos" disabled="disabled">
-                  </div>
-                  <label for="inputEmail3" class="col-sm-1 control-label"><small>X mm3</small></label>
-                  <label for="inputEmail3" class="col-sm-2 control-label" id='modalconsultahemograma9'>Hemoglobina</label>
-                  <div class="col-sm-2">
-                  <input type="text" class="form-control" id="ExamenHemogramaHemoglobina" disabled="disabled">
-                  </div>
-                  <label for="inputEmail3" class="col-sm-1 control-label"><small>Gr/dl</small></label>
-                  </div>
-                  <div class="form-group">
-                  <label for="inputEmail3" class="col-sm-2 control-label" id='modalconsultahemograma10'>Hematocrito</label>
-                  <div class="col-sm-2">
-                  <input type="text" class="form-control" id="ExamenHemogramaHematocrito" disabled="disabled">
-                  </div>
-                  <label for="inputEmail3" class="col-sm-1 control-label"><small>%</small></label>
-                  <label for="inputEmail3" class="col-sm-2 control-label" id='modalconsultahemograma11'>VGM</label>
-                  <div class="col-sm-2">
-                  <input type="text" class="form-control" id="ExamenHemogramaVgm" disabled="disabled">
-                  </div>
-                  <label for="inputEmail3" class="col-sm-1 control-label"><small>Micras cubicas</small></label>
-                  </div>
-                  <div class="form-group">
-                  <label for="inputEmail3" class="col-sm-2 control-label" id='modalconsultahemograma12'>HCM</label>
-                  <div class="col-sm-2">
-                  <input type="text" class="form-control" id="ExamenHemogramaHcm" disabled="disabled">
-                  </div>
-                  <label for="inputEmail3" class="col-sm-1 control-label"><small>Micro microgramos</small></label>
-                  <label for="inputEmail3" class="col-sm-2 control-label" id='modalconsultahemograma13'>CHCM</label>
-                  <div class="col-sm-2">
-                  <input type="text" class="form-control" id="ExamenHemogramaChcm" disabled="disabled">
-                  </div>
-                  <label for="inputEmail3" class="col-sm-1 control-label"><small>%</small></label>
-                  </div>
-                  <div class="form-group">
-                  <label for="inputEmail3" class="col-sm-2 control-label" id='modalconsultahemograma14'>Leucocitos</label>
-                  <div class="col-sm-2">
-                  <input type="text" class="form-control" id="ExamenHemogramaLeucocitos" disabled="disabled">
-                  </div>
-                  <label for="inputEmail3" class="col-sm-1 control-label"><small>X mm3</small></label>
-                  <label for="inputEmail3" class="col-sm-2 control-label" id='modalconsultahemograma15'>Neutrofilos en Banda</label>
-                  <div class="col-sm-2">
-                  <input type="text" class="form-control" id="ExamenHemogramaNeutrofilos" disabled="disabled">
-                  </div>
-                  <label for="inputEmail3" class="col-sm-1 control-label"><small>%</small></label>
-                  </div>
-                  </div>
-                  </div>
-                  <div id="MDLHEMOGRAMA2" class="tab-pane">
-                  <div class="panel-body">
-                  <div class="form-group">
-                  <label for="inputEmail3" class="col-sm-2 control-label" id='modalconsultahemograma16'>Linfocitos</label>
-                  <div class="col-sm-2">
-                  <input type="text" class="form-control" id="ExamenHemogramaLinfocitos" disabled="disabled">
-                  </div>
-                  <label for="inputEmail3" class="col-sm-1 control-label"><small>%</small></label>
-                  <label for="inputEmail3" class="col-sm-2 control-label">Monocitos</label>
-                  <div class="col-sm-2">
-                  <input type="text" class="form-control" id="ExamenHemogramaMonocitos" disabled="disabled">
-                  </div>
-                  <label for="inputEmail3" class="col-sm-1 control-label"><small>%</small></label>
-                  </div>
-                  <div class="form-group">
-                  <label for="inputEmail3" class="col-sm-2 control-label" id='modalconsultahemograma17'>Eosinofilos</label>
-                  <div class="col-sm-2">
-                  <input type="text" class="form-control" id="ExamenHemogramaEosinofilos" disabled="disabled">
-                  </div>
-                  <label for="inputEmail3" class="col-sm-1 control-label"><small>%</small></label>
-                  <label for="inputEmail3" class="col-sm-2 control-label" id='modalconsultahemograma18'>Basofilos</label>
-                  <div class="col-sm-2">
-                  <input type="text" class="form-control" id="ExamenHemogramaBasofilos" disabled="disabled">
-                  </div>
-                  <label for="inputEmail3" class="col-sm-1 control-label"><small>%</small></label>
-                  </div>
-                  <div class="form-group">
-                  <label for="inputEmail3" class="col-sm-2 control-label" id='modalconsultahemograma19'>Plaquetas</label>
-                  <div class="col-sm-2">
-                  <input type="text" class="form-control" id="ExamenHemogramaPlaquetas" disabled="disabled">
-                  </div>
-                  <label for="inputEmail3" class="col-sm-1 control-label"><small>X mm3</small></label>
-                  <label for="inputEmail3" class="col-sm-2 control-label" id='modalconsultahemograma20'>Eritro Sedimentacion</label>
-                  <div class="col-sm-2">
-                  <input type="text" class="form-control" id="ExamenHemogramaEritrosedimentacion" disabled="disabled">
-                  </div>
-                  <label for="inputEmail3" class="col-sm-1 control-label"><small>mm/h</small></label>
-                  </div>
-                  <div class="form-group">
-                  <label for="inputEmail3" class="col-sm-2 control-label" id='modalconsultahemograma21'>Otros</label>
-                  <div class="col-sm-3">
-                  <input type="text" class="form-control" id="ExamenHemogramaOtros" disabled="disabled">
-                  </div>
-                  <label for="inputEmail3" class="col-sm-2 control-label" id='modalconsultahemograma22'>Neutrofilos Segmentados</label>
-                  <div class="col-sm-2">
-                  <input type="text" class="form-control" id="ExamenHemogramaNeutrofilosSegmentados" disabled="disabled">
-                  </div>
-                  <label for="inputEmail3" class="col-sm-1 control-label"><small>X mm3</small></label>
-                  </div>
-                  </div>
-                  </div>
-                  </div>
-                  </form>
-                  </div>
-                  </div>
-                  <div class="modal-footer">
-                     <button type="button" class="btn btn-danger"  data-dismiss="modal" id='modalconsultahemograma23'>Cerrar</button>
-                  </div>
-                  </form>
-               </div>
-            </div>
-         </div>
+          <div class="modal inmodal" id="modalCargarExamenHemograma" tabindex="-1" role="dialog"  aria-hidden="true">
+             <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                   <form class="form-horizontal"  role="form"  id="demo-form1" data-parsley-validate="">
+                      <div class="modal-header">
+                         <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                         <i class="fa fa-gittip modal-icon"></i>
+                         <h4 class="modal-title" id='modalconsultahemograma1'>EXAMEN HEMOGRAMA</h4>
+                         <small id='modalconsultahemograma2'></small> <small><label id="ExamenHemogramaFechas"></label> </small>
+                      </div>
+                      <div class="modal-body ">
+                         <div class="form-group">
+                            <div class="col-sm-2" ><label for="inputEmail3"  class="control-label" id='modalconsultahemograma3'>Paciente</label></div>
+                            <div class="col-sm-4">
+                               <div class="input-group">
+                                  <div class="input-group-addon"><i class="fa fa-user"></i></div>
+                                  <input type="text" class="form-control" disabled="disabled" id="ExamenHemogramaPaciente" name="txtPaciente" disabled="disabled">
+                               </div>
+                            </div>
+                            <div class="col-sm-2"><label for="inputEmail3" class="control-label" id='modalconsultahemograma4'>Medico</label></div>
+                            <div class="col-sm-4">
+                               <div class="input-group">
+                                  <div class="input-group-addon"><i class="fa fa-medkit"></i></div>
+                                  <input type="text" class="form-control" disabled="disabled" id="ExamenHemogramaMedico" name="txtMedico" disabled="disabled">
+                               </div>
+                            </div>
+                         </div>
+                         <div class="form-group">
+                            <div class="col-sm-2"><label for="inputEmail3" class="control-label" id='modalconsultahemograma5'>Fecha</label></div>
+                            <div class="col-sm-10">
+                               <div class="input-group">
+                                  <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
+                                  <input type="text" class="form-control" disabled="disabled" id="ExamenHemogramaFecha" name="txtfecha" disabled="disabled">
+                               </div>
+                            </div>
+                         </div>
+                         <div class="tabs-container">
+                            <ul class="nav nav-tabs">
+                               <li class="active"><a data-toggle="tab" href="#MDLHEMOGRAMA1" id='modalconsultahemograma6'>FICHA 1</a></li>
+                               <li class=""><a data-toggle="tab" href="#MDLHEMOGRAMA2" id='modalconsultahemograma7'>FICHA 2</a></li>
+                            </ul>
+                            <div class="tab-content">
+                               <div id="MDLHEMOGRAMA1" class="tab-pane active">
+                                  <div class="panel-body">
+                                     <div class="form-group">
+                                        <label for="inputEmail3" class="col-sm-2 control-label" id='modalconsultahemograma8'>Globulos Rojos</label>
+                                        <div class="col-sm-2">
+                                           <input type="text" class="form-control" id="ExamenHemogramaGlobulosRojos" disabled="disabled">
+                                        </div>
+                                        <label for="inputEmail3" class="col-sm-1 control-label"><small>X mm3</small></label>
+                                        <label for="inputEmail3" class="col-sm-2 control-label" id='modalconsultahemograma9'>Hemoglobina</label>
+                                        <div class="col-sm-2">
+                                           <input type="text" class="form-control" id="ExamenHemogramaHemoglobina" disabled="disabled">
+                                        </div>
+                                        <label for="inputEmail3" class="col-sm-1 control-label"><small>Gr/dl</small></label>
+                                     </div>
+                                     <div class="form-group">
+                                        <label for="inputEmail3" class="col-sm-2 control-label" id='modalconsultahemograma10'>Hematocrito</label>
+                                        <div class="col-sm-2">
+                                           <input type="text" class="form-control" id="ExamenHemogramaHematocrito" disabled="disabled">
+                                        </div>
+                                        <label for="inputEmail3" class="col-sm-1 control-label"><small>%</small></label>
+                                        <label for="inputEmail3" class="col-sm-2 control-label" id='modalconsultahemograma11'>VGM</label>
+                                        <div class="col-sm-2">
+                                           <input type="text" class="form-control" id="ExamenHemogramaVgm" disabled="disabled">
+                                        </div>
+                                        <label for="inputEmail3" class="col-sm-1 control-label"><small>Micras cubicas</small></label>
+                                     </div>
+                                     <div class="form-group">
+                                        <label for="inputEmail3" class="col-sm-2 control-label" id='modalconsultahemograma12'>HCM</label>
+                                        <div class="col-sm-2">
+                                           <input type="text" class="form-control" id="ExamenHemogramaHcm" disabled="disabled">
+                                        </div>
+                                        <label for="inputEmail3" class="col-sm-1 control-label"><small>Micro microgramos</small></label>
+                                        <label for="inputEmail3" class="col-sm-2 control-label" id='modalconsultahemograma13'>CHCM</label>
+                                        <div class="col-sm-2">
+                                           <input type="text" class="form-control" id="ExamenHemogramaChcm" disabled="disabled">
+                                        </div>
+                                        <label for="inputEmail3" class="col-sm-1 control-label"><small>%</small></label>
+                                     </div>
+                                     <div class="form-group">
+                                        <label for="inputEmail3" class="col-sm-2 control-label" id='modalconsultahemograma14'>Leucocitos</label>
+                                        <div class="col-sm-2">
+                                           <input type="text" class="form-control" id="ExamenHemogramaLeucocitos" disabled="disabled">
+                                        </div>
+                                        <label for="inputEmail3" class="col-sm-1 control-label"><small>X mm3</small></label>
+                                        <label for="inputEmail3" class="col-sm-2 control-label" id='modalconsultahemograma15'>Neutrofilos en Banda</label>
+                                        <div class="col-sm-2">
+                                           <input type="text" class="form-control" id="ExamenHemogramaNeutrofilos" disabled="disabled">
+                                        </div>
+                                        <label for="inputEmail3" class="col-sm-1 control-label"><small>%</small></label>
+                                     </div>
+                                  </div>
+                               </div>
+                               <div id="MDLHEMOGRAMA2" class="tab-pane">
+                                  <div class="panel-body">
+                                     <div class="form-group">
+                                        <label for="inputEmail3" class="col-sm-2 control-label" id='modalconsultahemograma16'>Linfocitos</label>
+                                        <div class="col-sm-2">
+                                           <input type="text" class="form-control" id="ExamenHemogramaLinfocitos" disabled="disabled">
+                                        </div>
+                                        <label for="inputEmail3" class="col-sm-1 control-label"><small>%</small></label>
+                                        <label for="inputEmail3" class="col-sm-2 control-label">Monocitos</label>
+                                        <div class="col-sm-2">
+                                           <input type="text" class="form-control" id="ExamenHemogramaMonocitos" disabled="disabled">
+                                        </div>
+                                        <label for="inputEmail3" class="col-sm-1 control-label"><small>%</small></label>
+                                     </div>
+                                     <div class="form-group">
+                                        <label for="inputEmail3" class="col-sm-2 control-label" id='modalconsultahemograma17'>Eosinofilos</label>
+                                        <div class="col-sm-2">
+                                           <input type="text" class="form-control" id="ExamenHemogramaEosinofilos" disabled="disabled">
+                                        </div>
+                                        <label for="inputEmail3" class="col-sm-1 control-label"><small>%</small></label>
+                                        <label for="inputEmail3" class="col-sm-2 control-label" id='modalconsultahemograma18'>Basofilos</label>
+                                        <div class="col-sm-2">
+                                           <input type="text" class="form-control" id="ExamenHemogramaBasofilos" disabled="disabled">
+                                        </div>
+                                        <label for="inputEmail3" class="col-sm-1 control-label"><small>%</small></label>
+                                     </div>
+                                     <div class="form-group">
+                                        <label for="inputEmail3" class="col-sm-2 control-label" id='modalconsultahemograma19'>Plaquetas</label>
+                                        <div class="col-sm-2">
+                                           <input type="text" class="form-control" id="ExamenHemogramaPlaquetas" disabled="disabled">
+                                        </div>
+                                        <label for="inputEmail3" class="col-sm-1 control-label"><small>X mm3</small></label>
+                                        <label for="inputEmail3" class="col-sm-2 control-label" id='modalconsultahemograma20'>Eritro Sedimentacion</label>
+                                        <div class="col-sm-2">
+                                           <input type="text" class="form-control" id="ExamenHemogramaEritrosedimentacion" disabled="disabled">
+                                        </div>
+                                        <label for="inputEmail3" class="col-sm-1 control-label"><small>mm/h</small></label>
+                                     </div>
+                                     <div class="form-group">
+                                        <label for="inputEmail3" class="col-sm-2 control-label" id='modalconsultahemograma21'>Otros</label>
+                                        <div class="col-sm-3">
+                                           <input type="text" class="form-control" id="ExamenHemogramaOtros" disabled="disabled">
+                                        </div>
+                                        <label for="inputEmail3" class="col-sm-2 control-label" id='modalconsultahemograma22'>Neutrofilos Segmentados</label>
+                                        <div class="col-sm-2">
+                                           <input type="text" class="form-control" id="ExamenHemogramaNeutrofilosSegmentados" disabled="disabled">
+                                        </div>
+                                        <label for="inputEmail3" class="col-sm-1 control-label"><small>X mm3</small></label>
+                                     </div>
+                                  </div>
+                               </div>
+                            </div>
+                         </div>
+                      </div>
+                      <div class="modal-footer">
+                         <button type="button" class="btn btn-danger"  data-dismiss="modal" id='modalconsultahemograma23'>Cerrar</button>
+                      </div>
+                   </form>
+                </div>
+             </div>
+          </div>
          <!-- MODAL PARA CARGAR EXAMEN HECES -->
-         <div class="modal inmodal" id="modalCargarExamenHeces" tabindex="-1" role="dialog"  aria-hidden="true">
-            <div class="modal-dialog modal-lg">
-               <div class="modal-content">
-                  <form class="form-horizontal"  role="form"  id="demo-form1" data-parsley-validate="">
-                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                        <i class="fa fa-gittip modal-icon"></i>
-                        <h4 class="modal-title" id='modalconsultaheces1'>EXAMEN HECES</h4>
-                        <small id='modalconsultaheces2'></small>RESULTADOS DE EXAMENES DE FECHA:<small> <label id="ExamenHecesFechas"></label> </small>
-                     </div>
-                     <div class="modal-body ">
-                        <div class="form-group">
-                           <div class="col-sm-2"><label for="inputEmail3"  class="control-label" id='modalconsultaheces3'>Paciente</label></div>
-                           <div class="col-sm-4">
-                              <div class="input-group">
-                                 <div class="input-group-addon"><i class="fa fa-user"></i></div>
-                                 <input type="text" class="form-control" disabled="disabled" id="ExamenHecesPaciente" name="txtPaciente" disabled="disabled">
-                              </div>
-                           </div>
-                           <div class="col-sm-2"><label for="inputEmail3" class="control-label" id='modalconsultaheces4'>Medico</label></div>
-                           <div class="col-sm-4">
-                              <div class="input-group">
-                                 <div class="input-group-addon"><i class="fa fa-medkit"></i></div>
-                                 <input type="text" class="form-control" disabled="disabled" id="ExamenHecesMedico" name="txtMedico" disabled="disabled">
-                              </div>
-                           </div>
-                        </div>
-                        <div class="form-group">
-                           <div class="col-sm-2"><label for="inputEmail3" class="control-label" id='modalconsultaheces5'>Fecha</label></div>
-                           <div class="col-sm-10">
-                              <div class="input-group">
-                                 <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
-                                 <input type="text" class="form-control" disabled="disabled" id="ExamenHecesFecha" name="txtfecha" disabled="disabled">
-                              </div>
-                           </div>
-                        </div>
-                        <div class="tabs-container">
-                           <ul class="nav nav-tabs">
-                              <li class="active"><a data-toggle="tab" href="#MDLHECES1" id='modalconsultaheces6'>FICHA 1</a></li>
-                              <li class=""><a data-toggle="tab" href="#MDLHECES2" id='modalconsultaheces7'>FICHA 2</a></li>
-                           </ul>
-                  <div class="tab-content">
-                  <div id="MDLHECES1" class="tab-pane active">
-                  <div class="panel-body">
-                  <div class="form-group">
-                  <label for="inputEmail3" class="col-sm-2 control-label" id='modalconsultaheces8'>Color</label>
-                  <div class="col-sm-3">
-                  <input type="text" class="form-control" id="ExamenHecesColor" disabled="disabled">
-                  </div>
-                  <label for="inputEmail3" class="col-sm-2 control-label" id='modalconsultaheces9'>Consistencia</label>
-                  <div class="col-sm-4">
-                  <input type="text" class="form-control" id="ExamenHecesConsistencia" disabled="disabled">
-                  </div>
-                  </div>
-                  <div class="form-group">
-                  <label for="inputEmail3" class="col-sm-2 control-label" id='modalconsultaheces10'>Mucus</label>
-                  <div class="col-sm-3">
-                  <input type="text" class="form-control" id="ExamenHecesMucus" disabled="disabled">
-                  </div>
-                  <label for="inputEmail3" class="col-sm-2 control-label" id='modalconsultaheces11'>Hematies</label>
-                  <div class="col-sm-4">
-                  <input type="text" class="form-control" id="ExamenHecesHematies" disabled="disabled">
-                  </div>
-                  </div>
-                  <div class="form-group">
-                  <label for="inputEmail3" class="col-sm-2 control-label" id='modalconsultaheces12'>Leucocitos</label>
-                  <div class="col-sm-3">
-                  <input type="text" class="form-control" id="ExamenHecesLeucocitos" disabled="disabled">
-                  </div>
-                  <label for="inputEmail3" class="col-sm-2 control-label" id='modalconsultaheces13'>Restos Alimenticios</label>
-                  <div class="col-sm-4">
-                  <input type="text" class="form-control" id="ExamenHecesRestosAlimenticios" disabled="disabled">
-                  </div>
-                  </div>
-                  </div>
-                  </div>
-                  <div id="MDLHECES2" class="tab-pane">
-                  <div class="panel-body">
-                  <div class="form-group">
-                  <label for="inputEmail3" class="col-sm-2 control-label" id='modalconsultaheces14'>Macroscopios</label>
-                  <div class="col-sm-3">
-                  <input type="text" class="form-control" id="ExamenHecesMacrocopios" disabled="disabled">
-                  </div>
-                  <label for="inputEmail3" class="col-sm-2 control-label" id='modalconsultaheces15'>Microscopios</label>
-                  <div class="col-sm-4">
-                  <input type="text" class="form-control" id="ExamenHecesMicroscopicos" disabled="disabled">
-                  </div>
-                  </div>
-                  <div class="form-group">
-                  <label for="inputEmail3" class="col-sm-2 control-label" id='modalconsultaheces16'>Flora Bacteriana</label>
-                  <div class="col-sm-3">
-                  <input type="text" class="form-control" id="ExamenHecesFlora" disabled="disabled">
-                  </div>
-                  <label for="inputEmail3" class="col-sm-2 control-label" id='modalconsultaheces1'>Otros</label>
-                  <div class="col-sm-4">
-                  <input type="text" class="form-control" id="ExamenHecesOtros" disabled="disabled">
-                  </div>
-                  </div>
-                  <div class="form-group">
-                  <label for="inputEmail3" class="col-sm-2 control-label" id='modalconsultaheces17'>PActivos</label>
-                  <div class="col-sm-3">
-                  <input type="text" class="form-control" id="ExamenHecesPActivos" disabled="disabled">
-                  </div>
-                  <label for="inputEmail3" class="col-sm-2 control-label" id='modalconsultaheces18'>PQuistes</label>
-                  <div class="col-sm-4">
-                  <input type="text" class="form-control" id="ExamenHecesPQuistes" disabled="disabled">
-                  </div>
-                  </div>
-                  </div>
-                  </div>
-                  </div>
-                  </form>
-                  </div>
-                  </div>
-                  <div class="modal-footer">
-                     <button type="button" class="btn btn-danger"  data-dismiss="modal" id='modalconsultaheces19'>Cerrar</button>
-                  </div>
-                  </form>
-               </div>
-            </div>
-         </div>
+          <div class="modal inmodal" id="modalCargarExamenHeces" tabindex="-1" role="dialog"  aria-hidden="true">
+             <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                   <form class="form-horizontal"  role="form"  id="demo-form1" data-parsley-validate="">
+                      <div class="modal-header">
+                         <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                         <i class="fa fa-gittip modal-icon"></i>
+                         <h4 class="modal-title" id='modalconsultaheces1'>EXAMEN HECES</h4>
+                         <small id='modalconsultaheces2'></small>RESULTADOS DE EXAMENES DE FECHA:<small> <label id="ExamenHecesFechas"></label> </small>
+                      </div>
+                      <div class="modal-body ">
+                         <div class="form-group">
+                            <div class="col-sm-2"><label for="inputEmail3"  class="control-label" id='modalconsultaheces3'>Paciente</label></div>
+                            <div class="col-sm-4">
+                               <div class="input-group">
+                                  <div class="input-group-addon"><i class="fa fa-user"></i></div>
+                                  <input type="text" class="form-control" disabled="disabled" id="ExamenHecesPaciente" name="txtPaciente" disabled="disabled">
+                               </div>
+                            </div>
+                            <div class="col-sm-2"><label for="inputEmail3" class="control-label" id='modalconsultaheces4'>Medico</label></div>
+                            <div class="col-sm-4">
+                               <div class="input-group">
+                                  <div class="input-group-addon"><i class="fa fa-medkit"></i></div>
+                                  <input type="text" class="form-control" disabled="disabled" id="ExamenHecesMedico" name="txtMedico" disabled="disabled">
+                               </div>
+                            </div>
+                         </div>
+                         <div class="form-group">
+                            <div class="col-sm-2"><label for="inputEmail3" class="control-label" id='modalconsultaheces5'>Fecha</label></div>
+                            <div class="col-sm-10">
+                               <div class="input-group">
+                                  <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
+                                  <input type="text" class="form-control" disabled="disabled" id="ExamenHecesFecha" name="txtfecha" disabled="disabled">
+                               </div>
+                            </div>
+                         </div>
+                         <div class="tabs-container">
+                            <ul class="nav nav-tabs">
+                               <li class="active"><a data-toggle="tab" href="#MDLHECES1" id='modalconsultaheces6'>FICHA 1</a></li>
+                               <li class=""><a data-toggle="tab" href="#MDLHECES2" id='modalconsultaheces7'>FICHA 2</a></li>
+                            </ul>
+                            <div class="tab-content">
+                               <div id="MDLHECES1" class="tab-pane active">
+                                  <div class="panel-body">
+                                     <div class="form-group">
+                                        <label for="inputEmail3" class="col-sm-2 control-label" id='modalconsultaheces8'>Color</label>
+                                        <div class="col-sm-3">
+                                           <input type="text" class="form-control" id="ExamenHecesColor" disabled="disabled">
+                                        </div>
+                                        <label for="inputEmail3" class="col-sm-2 control-label" id='modalconsultaheces9'>Consistencia</label>
+                                        <div class="col-sm-4">
+                                           <input type="text" class="form-control" id="ExamenHecesConsistencia" disabled="disabled">
+                                        </div>
+                                     </div>
+                                     <div class="form-group">
+                                        <label for="inputEmail3" class="col-sm-2 control-label" id='modalconsultaheces10'>Mucus</label>
+                                        <div class="col-sm-3">
+                                           <input type="text" class="form-control" id="ExamenHecesMucus" disabled="disabled">
+                                        </div>
+                                        <label for="inputEmail3" class="col-sm-2 control-label" id='modalconsultaheces11'>Hematies</label>
+                                        <div class="col-sm-4">
+                                           <input type="text" class="form-control" id="ExamenHecesHematies" disabled="disabled">
+                                        </div>
+                                     </div>
+                                     <div class="form-group">
+                                        <label for="inputEmail3" class="col-sm-2 control-label" id='modalconsultaheces12'>Leucocitos</label>
+                                        <div class="col-sm-3">
+                                           <input type="text" class="form-control" id="ExamenHecesLeucocitos" disabled="disabled">
+                                        </div>
+                                        <label for="inputEmail3" class="col-sm-2 control-label" id='modalconsultaheces13'>Restos Alimenticios</label>
+                                        <div class="col-sm-4">
+                                           <input type="text" class="form-control" id="ExamenHecesRestosAlimenticios" disabled="disabled">
+                                        </div>
+                                     </div>
+                                  </div>
+                               </div>
+                               <div id="MDLHECES2" class="tab-pane">
+                                  <div class="panel-body">
+                                     <div class="form-group">
+                                        <label for="inputEmail3" class="col-sm-2 control-label" id='modalconsultaheces14'>Macroscopios</label>
+                                        <div class="col-sm-3">
+                                           <input type="text" class="form-control" id="ExamenHecesMacrocopios" disabled="disabled">
+                                        </div>
+                                        <label for="inputEmail3" class="col-sm-2 control-label" id='modalconsultaheces15'>Microscopios</label>
+                                        <div class="col-sm-4">
+                                           <input type="text" class="form-control" id="ExamenHecesMicroscopicos" disabled="disabled">
+                                        </div>
+                                     </div>
+                                     <div class="form-group">
+                                        <label for="inputEmail3" class="col-sm-2 control-label" id='modalconsultaheces16'>Flora Bacteriana</label>
+                                        <div class="col-sm-3">
+                                           <input type="text" class="form-control" id="ExamenHecesFlora" disabled="disabled">
+                                        </div>
+                                        <label for="inputEmail3" class="col-sm-2 control-label" id='modalconsultaheces1'>Otros</label>
+                                        <div class="col-sm-4">
+                                           <input type="text" class="form-control" id="ExamenHecesOtros" disabled="disabled">
+                                        </div>
+                                     </div>
+                                     <div class="form-group">
+                                        <label for="inputEmail3" class="col-sm-2 control-label" id='modalconsultaheces17'>PActivos</label>
+                                        <div class="col-sm-3">
+                                           <input type="text" class="form-control" id="ExamenHecesPActivos" disabled="disabled">
+                                        </div>
+                                        <label for="inputEmail3" class="col-sm-2 control-label" id='modalconsultaheces18'>PQuistes</label>
+                                        <div class="col-sm-4">
+                                           <input type="text" class="form-control" id="ExamenHecesPQuistes" disabled="disabled">
+                                        </div>
+                                     </div>
+                                  </div>
+                               </div>
+                            </div>
+                         </div>
+                      </div>
+                      <div class="modal-footer">
+                         <button type="button" class="btn btn-danger"  data-dismiss="modal" id='modalconsultaheces19'>Cerrar</button>
+                      </div>
+                   </form>
+                </div>
+             </div>
+          </div>
          <!-- MODAL PARA CARGAR EXAMEN VARIOS -->
          <div class="example-modal modal fade" id="modalCargarExamenVarios">
             <div class="modal">

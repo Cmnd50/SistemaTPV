@@ -153,6 +153,7 @@ use kartik\file\FileInput;
     ]) ?>
      </div>
  </div>
+
     <div class="form-group" align="right">
         <?= Html::submitButton($model->isNewRecord ? 'Ingresar' : 'Actualizar', ['class' => $model->isNewRecord ? 'btn btn-primary' : 'btn btn-warning']) ?>
     </div>

@@ -54,7 +54,7 @@ foreach ($arrPreguntas as $iP => $vP) {
 			switch ($vP["Ponderacion"]) {
 				case "0":
 				{
-					echo "<select id='selPregunta". $vP["IdPregunta"] . "' name='selPregunta".$vP["IdPregunta"] . "' class='form-control select3' form-control'  onfocus='inFocus(this)' onfocusout='outFocus(this)' multiple='multiple'  >";
+					echo "<select id='selPregunta". $vP["IdPregunta"] . "' name='selPregunta".$vP["IdPregunta"] . "' class='form-control select3'  onfocus='inFocus(this)' onfocusout='outFocus(this)'   >";
 					echo "<option value=''></option>";
 
 					foreach ($arrRespuestas as $iR => $vR) {
@@ -69,7 +69,7 @@ foreach ($arrPreguntas as $iP => $vP) {
 				case "1":
 				{
 					$IdPregunta = 'selPregunta'.$vP["IdPregunta"];
-					echo "<textarea id='$IdPregunta' name='$IdPregunta' class='form-control' row='2'  > 	</textarea>";
+					echo "<textarea id='$IdPregunta' name='$IdPregunta' class='form-control' row='2'></textarea>";
 					break;
 				}
 				case "2":

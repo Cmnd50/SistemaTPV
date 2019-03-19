@@ -67,34 +67,62 @@ $this->params['breadcrumbs'][] = $this->title;
         </p>
       </div>
           <div class="ibox-content">
+ <h3> DATOS GENERALES </h3>
               <table class="table table-hover">
                 <?= DetailView::widget([
                     'model' => $model,
                     'attributes' => [
-                        'IdPersona',
-            'Nombres',
-            'Apellidos',
-            'FechaNacimiento',
-            'Direccion',
-            'Correo',
-            'IdGeografia',
-            'Genero',
-            'IdEstadoCivil',
-            'IdParentesco',
-            'Telefono',
-            'Celular',
-            'Alergias',
-            'Medicamentos',
-            'Enfermedad',
-            'Dui',
-            'TelefonoResponsable',
-            'IdEstado',
-            'Categoria',
-            'NombresResponsable',
-            'ApellidosResponsable',
-            'Parentesco',
-            'DuiResponsable',
-            'IdPais',
+                        'Nombres',
+                        'Apellidos',
+                        'FechaNacimiento',
+                        'Direccion',
+                        'Dui',
+                        'Correo',
+                        [
+                            'attribute' => 'Pais',
+                            'format' => 'raw',
+                            'value' => $Pais,
+                        ],
+                        [
+                            'attribute' => 'Municipio',
+                            'format' => 'raw',
+                            'value' => $Municipio,
+                        ],
+                        [
+                            'attribute' => 'Departamento',
+                            'format' => 'raw',
+                            'value' => $Departamento,
+                        ],
+                        'Genero',
+                        'estadoCivil.Nombre',
+                        'Telefono',
+                        'Celular',
+                    ],
+                ]) ?>
+            </table>
+            <h3>    DATOS MEDICOS </h3>
+              <table class="table table-hover">
+                <?= DetailView::widget([
+                    'model' => $model,
+                    'attributes' => [
+                        'Alergias',
+                        'Medicamentos',
+                        'Enfermedad',
+                    ],
+                ]) ?>
+            </table>
+
+               <h3> DATOS RESPONSABLE</h3>
+            <table class="table table-hover">
+                <?= DetailView::widget([
+                    'model' => $model,
+                    'attributes' => [
+                        'TelefonoResponsable',
+                        'Categoria',
+                        'NombresResponsable',
+                        'ApellidosResponsable',
+                        'Parentesco',
+                        'DuiResponsable',
                     ],
                 ]) ?>
             </table>
