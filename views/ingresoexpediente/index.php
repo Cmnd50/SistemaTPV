@@ -32,7 +32,7 @@ use yii\grid\GridView;
 /* @var $searchModel app\models\IngresoexpedienteSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Personas';
+$this->title = 'Redigitacion de Expedientes';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 </br>
