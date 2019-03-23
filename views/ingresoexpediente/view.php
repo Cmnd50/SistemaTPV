@@ -532,6 +532,26 @@
                }
            });
        });
+
+      $(".btn-mdlimaconsult").click(function () {
+           var id = $(this).attr("id").replace("btn", "");
+           var myData = {"id": id};
+           //alert(myData);
+           $.ajax({
+               url: "../../views/consultamedico/cargarconsultasignosvitales.php",
+               type: "POST",
+               data: myData,
+               dataType: "JSON",
+               beforeSend: function () {
+                   $(this).html("Cargando");
+               },
+               success: function (data) {
+
+   
+                   $("#modalCargarConsultaIma").modal("show");
+               }
+           });
+       });
    
        $(".btn-proce").click(function () {
            var id = $(this).attr("id").replace("btn", "");
