@@ -36,9 +36,9 @@
            $querymodulo = "SELECT * FROM modulo WHERE IdModulo in(3,6,7) order by NombreModulo asc";
       $resultadomodulo = $mysqli->query($querymodulo);
 
-          $querytablaenfermedad = "SELECT IdEnfermedad, CONCAT(CodigoICD,' ',Nombre) AS 'Nombre'
+      $querytablaenfermedad = "SELECT IdEnfermedad, CONCAT(CodigoICD,' ',Nombre) AS 'Nombre'
                                           FROM enfermedad";
-    $resultadotablaenfermedad = $mysqli->query($querytablaenfermedad);
+      $resultadotablaenfermedad = $mysqli->query($querytablaenfermedad);
    
            // CONSULTA PARA CARGAR LA TABLA DE LAS CONSULTAS EN EL EXPEDIENTE DEL PACIENTE
        $querytablaconsulta = "SELECT c.IdConsulta, c.FechaConsulta, CONCAT(u.Nombres,' ', u.Apellidos) As 'Medico',
@@ -62,10 +62,17 @@
                                            ORDER BY le.FechaExamen DESC";
        $resultadotablaexamenes = $mysqli->query($querytablaexamenes);
 
+
+    // CONSULTA PARA CARGAR LA TABLA DE LAS CONSULTAS CARGADAS EN PDF PARA LOS EXPEDIENTE DEL PACIENTE
+       $querytablaconsultasima = "SELECT IdConsulta, FechaConsulta, Consultaimaurl FROM consulta where Consultaimaurl IS NOT NULL and IdPersona = $idpersonaid ORDER BY FechaConsulta DESC";
+       $resultadotablaconsultasima = $mysqli->query($querytablaconsultasima);
+
            // CONSULTA PARA CARGAR EL CBO DE LOS EXAMENES
     $querytipoexamen = "SELECT IdTipoExamen, NombreExamen, DescripcionExamen FROM tipoexamen";
     $resultadotipoexamen = $mysqli->query($querytipoexamen);
    
+
+   // CONSULTA PARA CARGAR LAS ENFERMEDADES
     $querytablaenfermedad2 = "SELECT IdEnfermedad, CONCAT(CodigoICD,' ',Nombre) AS 'Nombre'
                                           FROM enfermedad";
     $resultadotablaenfermedad2 = $mysqli->query($querytablaenfermedad2);
@@ -158,24 +165,31 @@
 <link href="../template/css/plugins/dropzone/basic.css" rel="stylesheet">
 <link href="../template/css/plugins/dropzone/dropzone.css" rel="stylesheet">
 <link href="../template/css/plugins/codemirror/codemirror.css" rel="stylesheet">
+<link href="../template/css/style.css" rel="stylesheet">
 <div class="row">
    <div class="col-md-12">
       <div class="ibox float-e-margins">
          <div class="ibox-title">
-            <h3><?= Html::encode($this->title) ?></h3>
+            <h3><?= Html::encode($this->title) ?></h3> 
+            <center>
+
+                     <button type="button" class="btn  btn-danger dim"   data-toggle="modal" data-target="#modalGuardarDiagnostico">+ CONSULTA<i class="fa fa-heart"></i></button>   
+                     <button type="button" class="btn  btn-default dim"  data-toggle="modal" data-target="#modalGuardarImagenExamen"> + ESCANEO CONSULTAS <i class="fa fa-bars"></i></button>
+                     <button type="button" class="btn  btn-default dim"  data-toggle="modal" data-target="#modalGuardarImagenExamen"> + ESCANEO EXAMENES <i class="fa fa-bars"></i></button>
+                     <button type="button" class="btn  btn-default dim"  data-toggle="modal" data-target="#modalGuardarImagenExamen"> + ESCANEO PROCEDIMIENTOS <i class="fa fa-bars"></i></button>
+                     <button type="button" class="btn  btn-default dim"  data-toggle="modal" data-target="#modalGuardarImagenExamen"> + ESCANEO PEDIATRIA <i class="fa fa-bars"></i></button>
+
+          </center>
          </div>
          <div class="ibox-content">
+
             <div class="tabs-container">
                <ul class="nav nav-tabs">
                   <li class="active"><a data-toggle="tab" href="#tab-1">DATOS GENERALES</a></li>
                   <li class=""><a data-toggle="tab" href="#tab-2">CONSULTAS</a></li>
                   <li class=""><a data-toggle="tab" href="#tab-3">EXAMENES</a></li>
                   <li class=""><a data-toggle="tab" href="#tab-4">PROCEDIMIENTOS</a></li>
-                  <li class="pull-right">
-                     <button type="button" class="btn  btn-danger dim"   data-toggle="modal" data-target="#modalGuardarDiagnostico">+ CONSULTA<i class="fa fa-heart"></i></button>   
-                     <button type="button" class="btn  btn-info dim"  data-toggle="modal" data-target="#modalGuardarExamenes"> LAB <i class="fa fa-bars"></i></button>
-                     <button type="button" class="btn  btn-info dim"  data-toggle="modal" data-target="#modalGuardarImagenExamen"> + ESCANEO <i class="fa fa-bars"></i></button>
-                  </li>
+                  <li class=""><a data-toggle="tab" href="#tab-5">CONSULTAS PDF</a></li>
                </ul>
                <div class="tab-content">
                   <div id="tab-1" class="tab-pane active">
@@ -354,6 +368,39 @@
                         </div>
                      </div>
                   </div>
+                  <div id="tab-5" class="tab-pane">
+                     <div class="panel-body">
+                        <div class="box-header with-border">
+                           <h3 class="box-title" id='tab2historialexamabla1'>CONSULTAS EN PDF</h3>
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body">
+                           <table id="example2" class="table table-bordered table-hover">
+                              <?php
+                                 echo"<thead>";
+                                 echo"<tr>";
+                                 echo"<th id=''>FECHA</th>";
+                                 echo"<th id=''>URL</th>";
+                                 echo"<th style = 'width:150px' id=''>ACCION</th>";
+                                 echo"</tr>";
+                                 echo"</thead>";
+                                 echo"<tbody>";
+                                 while ($row = $resultadotablaconsultasima->fetch_assoc()) {
+                                     $IdConsulta = $row['IdConsulta'];
+                                     echo"<tr>";
+                                     echo"<td>" . $row['FechaConsulta'] . "</td>";
+                                     echo"<td>" . $row['Consultaimaurl'] . "</td>";
+                                     echo "<td>" .
+                                     "<span id='btn" . $IdConsulta . "' style='width:140px' class='btn btn-md btn-success btn-mdlimaconsult'>Ver</span>" .
+                                     "</td>";
+                                     echo"</tr>";
+                                     echo"</body>  ";
+                                 }
+                                 ?>
+                           </table>
+                        </div>
+                     </div>
+                  </div>
                </div>
             </div>
          </div>
@@ -361,42 +408,39 @@
    </div>
 </div>
 
+
+
 <?php include '../views/ingresoexpediente/modal.php'; ?>
-<script src="../template/js/plugins/dropzone/dropzone.js"></script>
-<script src="../template/js/plugins/codemirror/codemirror.js"></script>
-<script src="../template/js/plugins/codemirror/mode/xml/xml.js"></script>
 
+    <script src="../template/js/plugins/metisMenu/jquery.metisMenu.js"></script>
+    <script src="../template/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
 
-    <script>
+    <!-- Custom and plugin javascript -->
+    <script src="../template/js/inspinia.js"></script>
+    <script src="../template/js/plugins/pace/pace.min.js"></script>
 
-    </script>
+    <!-- Jasny -->
+    <script src="../template/js/plugins/jasny/jasny-bootstrap.min.js"></script>
+
+    <!-- DROPZONE -->
+    <script src="../template/js/plugins/dropzone/dropzone.js"></script>
+
+    <!-- CodeMirror -->
+    <script src="../template/js/plugins/codemirror/codemirror.js"></script>
+    <script src="../template/js/plugins/codemirror/mode/xml/xml.js"></script>
+
 <script type="text/javascript">
-   $(document).ready(function () {
 
-            Dropzone.options.dropzoneForm = {
+        Dropzone.options.dropzoneForm = {
             paramName: "file", // The name that will be used to transfer the file
             maxFilesize: 2, // MB
             dictDefaultMessage: "<strong>Drop files here or click to upload. </strong></br> (This is just a demo dropzone. Selected files are not actually uploaded.)"
         };
 
-        $(document).ready(function(){
 
-            var editor_one = CodeMirror.fromTextArea(document.getElementById("code1"), {
-                lineNumbers: true,
-                matchBrackets: true
-            });
+   $(document).ready(function () {
 
-            var editor_two = CodeMirror.fromTextArea(document.getElementById("code2"), {
-                lineNumbers: true,
-                matchBrackets: true
-            });
 
-            var editor_two = CodeMirror.fromTextArea(document.getElementById("code3"), {
-                lineNumbers: true,
-                matchBrackets: true
-            });
-
-       });
 
         $('#data_1 .input-group.date').datepicker({
                 todayBtn: "linked",
