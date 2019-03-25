@@ -1,11 +1,34 @@
 <?php
 use yii\helpers\Html;
 use yii\widgets\DetailView;
+   include '../include/dbconnect.php';
+
+   
+    $IdGeografia = $model->IdGeografia;
+     $IdPais = $model->IdPais;
+     $idpersonaid = $model->IdPersona;
+     $idpersona = $model->IdPersona;
+      
+      $queryobtenermunicipiodepa = "SELECT GEO1.Nombre as 'Municipio', (SELECT Nombre FROM geografia GEO2 where GEO2.IdGeografia = GEO1.IdPadre) as 'Departamento'
+       FROM geografia GEO1 where GEO1.IdGeografia = '$IdGeografia'";
+       //echo  $queryfichaconsulta;
+       $resultadoobtenermunicipiodepa = $mysqli->query($queryobtenermunicipiodepa);
+       while ($test = $resultadoobtenermunicipiodepa->fetch_assoc()) {
+           $Municipio = $test['Municipio'];
+           $Departamento = $test['Departamento'];
+       }
+   
+      $queryobtenerpais = "SELECT NombrePais FROM pais where IdPais = '$IdPais'";
+       //echo  $queryfichaconsulta;
+       $resultadoobtenerpais = $mysqli->query($queryobtenerpais);
+       while ($test = $resultadoobtenerpais->fetch_assoc()) {
+           $Pais = $test['NombrePais'];
+       }
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Persona */
 
-$this->title = $model->IdPersona;
+$this->title = $model->fullname;
 $this->params['breadcrumbs'][] = ['label' => 'Personas', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>

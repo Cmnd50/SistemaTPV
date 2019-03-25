@@ -126,7 +126,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                       <div class="col-sm-5">
                                         <div class="input-group">
                                           <div class="input-group-addon"><i class="fa fa-credit-card"></i></div>
-                                          <input type="text" class="form-control" data-mask="99999999-9" name="txtDui" id="username"  >
+                                          <input type="text" class="form-control" data-mask="99999999-9-9" required="" name="txtDui" id="username"  >
                                           <center><div id="Info"></div></center>
                                         </div>
                                       </div>

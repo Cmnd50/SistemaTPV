@@ -51,7 +51,7 @@
                                             ORDER BY c.FechaConsulta DESC";
        $resultadotablaconsulta = $mysqli->query($querytablaconsulta);
    
-           // CONSULTA PARA CARGAR LA TABLA DE LOS EXAMENES FINALIZADOS EN EL EXPEDIENTE DEL PACIENTE
+       // CONSULTA PARA CARGAR LA TABLA DE LOS EXAMENES FINALIZADOS EN EL EXPEDIENTE DEL PACIENTE
        $querytablaexamenes = "SELECT le.IdListaExamen As 'IdListaExamen', c.IdConsulta As 'Consulta', le.FechaExamen As 'Fecha', CONCAT(u.Nombres,' ', u.Apellidos) As 'Medico', CONCAT(p.Nombres,' ', p.Apellidos) As 'Paciente', te.IdTipoExamen As IdTipoExamen, te.NombreExamen As 'Examen', le.Activo
                                  FROM listaexamen le
                                  INNER JOIN usuario u ON le.IdUsuario = u.IdUsuario
@@ -63,11 +63,16 @@
        $resultadotablaexamenes = $mysqli->query($querytablaexamenes);
 
 
-    // CONSULTA PARA CARGAR LA TABLA DE LAS CONSULTAS CARGADAS EN PDF PARA LOS EXPEDIENTE DEL PACIENTE
+    // CONSULTA PARA CARGAR LA TABLA DE LAS CONSULTAS CARGADAS EN PDF PARA LOS EXPEDIENTES DEL PACIENTE
        $querytablaconsultasima = "SELECT IdConsulta, FechaConsulta, Consultaimaurl FROM consulta where Consultaimaurl IS NOT NULL and IdPersona = $idpersonaid ORDER BY FechaConsulta DESC";
        $resultadotablaconsultasima = $mysqli->query($querytablaconsultasima);
 
-           // CONSULTA PARA CARGAR EL CBO DE LOS EXAMENES
+
+      // CONSULTA PARA CARGAR LA TABLA DE LOS PROCEDIMIENTOS CARGADOS EN PDF PARA LOS EXPEDIENTES DEL PACIENTE
+       $querytablaprocedimientoima = "SELECT IdEnfermeriaProcedimiento, FechaProcedimiento, Procedimientoimaurl FROM enfermeriaprocedimiento where Procedimientoimaurl IS NOT NULL and IdPersona = $idpersonaid ORDER BY FechaProcedimiento DESC";
+       $resultadotablaprocedimientoima = $mysqli->query($querytablaprocedimientoima);
+
+   // CONSULTA PARA CARGAR EL CBO DE LOS EXAMENES
     $querytipoexamen = "SELECT IdTipoExamen, NombreExamen, DescripcionExamen FROM tipoexamen";
     $resultadotipoexamen = $mysqli->query($querytipoexamen);
    
@@ -176,7 +181,7 @@
                      <button type="button" class="btn  btn-danger dim"   data-toggle="modal" data-target="#modalGuardarDiagnostico">+ CONSULTA<i class="fa fa-heart"></i></button>   
                      <button type="button" class="btn  btn-default dim"  data-toggle="modal" data-target="#modalGuardarImagenExamen"> + ESCANEO CONSULTAS <i class="fa fa-bars"></i></button>
                      <button type="button" class="btn  btn-default dim"  data-toggle="modal" data-target="#modalGuardarImagenExamen"> + ESCANEO EXAMENES <i class="fa fa-bars"></i></button>
-                     <button type="button" class="btn  btn-default dim"  data-toggle="modal" data-target="#modalGuardarImagenExamen"> + ESCANEO PROCEDIMIENTOS <i class="fa fa-bars"></i></button>
+                     <button type="button" class="btn  btn-default dim"  data-toggle="modal" data-target="#modalCargarProcedimientoIma"> + ESCANEO PROCEDIMIENTOS <i class="fa fa-bars"></i></button>
                      <button type="button" class="btn  btn-default dim"  data-toggle="modal" data-target="#modalGuardarImagenExamen"> + ESCANEO PEDIATRIA <i class="fa fa-bars"></i></button>
 
           </center>
@@ -190,6 +195,7 @@
                   <li class=""><a data-toggle="tab" href="#tab-3">EXAMENES</a></li>
                   <li class=""><a data-toggle="tab" href="#tab-4">PROCEDIMIENTOS</a></li>
                   <li class=""><a data-toggle="tab" href="#tab-5">CONSULTAS PDF</a></li>
+                  <li class=""><a data-toggle="tab" href="#tab-6">PROCEDIMIENTOS PDF</a></li>
                </ul>
                <div class="tab-content">
                   <div id="tab-1" class="tab-pane active">
@@ -392,6 +398,39 @@
                                      echo"<td>" . $row['Consultaimaurl'] . "</td>";
                                      echo "<td>" .
                                      "<span id='btn" . $IdConsulta . "' style='width:140px' class='btn btn-md btn-success btn-mdlimaconsult'>Ver</span>" .
+                                     "</td>";
+                                     echo"</tr>";
+                                     echo"</body>  ";
+                                 }
+                                 ?>
+                           </table>
+                        </div>
+                     </div>
+                  </div>
+                  <div id="tab-6" class="tab-pane">
+                     <div class="panel-body">
+                        <div class="box-header with-border">
+                           <h3 class="box-title" id='tab2historialexamabla1'>PROCEDIMIENTOS EN PDF</h3>
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body">
+                           <table id="example2" class="table table-bordered table-hover">
+                              <?php
+                                 echo"<thead>";
+                                 echo"<tr>";
+                                 echo"<th id=''>FECHA</th>";
+                                 echo"<th id=''>URL</th>";
+                                 echo"<th style = 'width:150px' id=''>ACCION</th>";
+                                 echo"</tr>";
+                                 echo"</thead>";
+                                 echo"<tbody>";
+                                 while ($row = $resultadotablaprocedimientoima->fetch_assoc()) {
+                                     $IdEnfermeriaProcedimiento = $row['IdEnfermeriaProcedimiento'];
+                                     echo"<tr>";
+                                     echo"<td>" . $row['FechaProcedimiento'] . "</td>";
+                                     echo"<td>" . $row['Procedimientoimaurl'] . "</td>";
+                                     echo "<td>" .
+                                     "<span id='btn" . $IdEnfermeriaProcedimiento . "' style='width:140px' class='btn btn-md btn-success btn-mdlimaconsult'>Ver</span>" .
                                      "</td>";
                                      echo"</tr>";
                                      echo"</body>  ";
