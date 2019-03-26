@@ -8,6 +8,8 @@
    
      $IdGeografia = $model->IdGeografia;
      $IdPais = $model->IdPais;
+
+
      $idpersonaid = $model->IdPersona;
      $idpersona = $model->IdPersona;
       
@@ -24,10 +26,11 @@
        //echo  $queryfichaconsulta;
        $resultadoobtenerpais = $mysqli->query($queryobtenerpais);
        while ($test = $resultadoobtenerpais->fetch_assoc()) {
-           $Pais = $test['NombrePais'];
-       }
+            $Pais = $test['NombrePais'];
+           }
+ 
 
-          $queryusuario = "SELECT u.IdUsuario, CONCAT(u.Nombres,  ' ', u.Apellidos) as 'NombreCompleto'
+      $queryusuario = "SELECT u.IdUsuario, CONCAT(u.Nombres,  ' ', u.Apellidos) as 'NombreCompleto'
          from usuario u
          inner join puesto = p on u.IdPuesto = p.IdPuesto
          where p.Descripcion = 'Medico' and u.Activo = 1 ";
@@ -182,7 +185,7 @@
                      <button type="button" class="btn  btn-default dim"  data-toggle="modal" data-target="#modalGuardarImagenExamen"> + ESCANEO CONSULTAS <i class="fa fa-bars"></i></button>
                      <button type="button" class="btn  btn-default dim"  data-toggle="modal" data-target="#modalGuardarImagenExamen"> + ESCANEO EXAMENES <i class="fa fa-bars"></i></button>
                      <button type="button" class="btn  btn-default dim"  data-toggle="modal" data-target="#modalCargarProcedimientoIma"> + ESCANEO PROCEDIMIENTOS <i class="fa fa-bars"></i></button>
-                     <button type="button" class="btn  btn-default dim"  data-toggle="modal" data-target="#modalGuardarImagenExamen"> + ESCANEO PEDIATRIA <i class="fa fa-bars"></i></button>
+                     <button type="button" class="btn  btn-default dim"  data-toggle="modal" data-target="#modalCargarPediatriaIma"> + ESCANEO PEDIATRIA <i class="fa fa-bars"></i></button>
 
           </center>
          </div>
@@ -196,6 +199,7 @@
                   <li class=""><a data-toggle="tab" href="#tab-4">PROCEDIMIENTOS</a></li>
                   <li class=""><a data-toggle="tab" href="#tab-5">CONSULTAS PDF</a></li>
                   <li class=""><a data-toggle="tab" href="#tab-6">PROCEDIMIENTOS PDF</a></li>
+                  <li class=""><a data-toggle="tab" href="#tab-7">PEDIATRIA PDF</a></li>
                </ul>
                <div class="tab-content">
                   <div id="tab-1" class="tab-pane active">

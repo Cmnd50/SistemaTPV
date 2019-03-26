@@ -1,11 +1,13 @@
 <?php
-
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use app\models\Persona;
 use yii\helpers\ArrayHelper;
+use kartik\date\DatePicker;
 use kartik\select2\Select2;
-
+use kartik\depdrop\DepDrop;
+use kartik\money\MaskMoney;
+use kartik\file\FileInput;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\ConsultapacienteSearch */
@@ -19,9 +21,10 @@ use kartik\select2\Select2;
         'method' => 'get',
     ]); ?>
 
-<?php echo $form->field($model, 'IdPersona')->widget(Select2::classname(), [
-        'data' => ArrayHelper::map(Persona::find()->where([
-                '=','IdEstado', 4])->all(), 'IdPersona', 'fullName'),
+<div class="form-group">
+  <div class="col-lg-4">
+    <?php echo $form->field($model, 'IdPersona')->widget(Select2::classname(), [
+        'data' => ArrayHelper::map(Persona::find()->all(), 'IdPersona', 'fullName'),
         'language' => 'es',
         'options' => ['placeholder' => ' Selecione ...'],
         'pluginOptions' => [
@@ -29,15 +32,25 @@ use kartik\select2\Select2;
         ],
     ]);
     ?>
-    <?= $form->field($model, 'Dui') ?>
-<div class="form-group">
-          <?php if($_SESSION['IdIdioma'] == 1) {?>
-                      <?= Html::submitButton('Buscar', ['class' => 'btn btn-success']) ?>
-        <?php } else{ ?> 
-                     <?= Html::submitButton('Search', ['class' => 'btn btn-success']) ?>
+ </div>
+ <div class="col-lg-4">
+ <?= $form->field($model, 'Dui')->widget(\yii\widgets\MaskedInput::className(), [
+                'mask' => '99999999-9',
+            ]) ?>
+ </div>
+  <div class="col-lg-4">
+ <?= $form->field($model, 'DuiResponsable')->widget(\yii\widgets\MaskedInput::className(), [
+        'mask' => '99999999-9',
+    ]) ?>
+ </div>
+</div>
 
-        <?php } ?>
+<div class="form-group">
+    <?= Html::submitButton('Buscar', ['class' => 'btn btn-success']) ?>
 </div> 
+
+
+
 
     <?php ActiveForm::end(); ?>
 

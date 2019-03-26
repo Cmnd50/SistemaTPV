@@ -52,20 +52,25 @@ $this->params['breadcrumbs'][] = $this->title;
                       'dataProvider' => $dataProvider,
                       'columns' => [
                         ['class' => 'yii\grid\SerialColumn'],
-                          // 'IdPersona',
-                                'Nombres',
-                                'Apellidos',
-                                'FechaNacimiento',
-                                'Direccion',
-                                 'Genero',
-                                'Categoria',
+                          [
+                            'attribute' => 'IdPersona',
+                            'value' => function ($model) {
+                                return $model->getFullName();
+                            },
+                         ],
+                         'Dui',
+                         [
+                            'attribute' => 'Categoria',
+                             'options' => ['style' => 'width:100px;'],
+                            
+                         ],
                               ['class' => 'yii\grid\ActionColumn',
-                               'options' => ['style' => 'width:100px;'],
-                               'template' => " {view}"
+                               'options' => ['style' => 'width:50px;'],
+                               'template' => "{view}"
                               ],
                           ],
                       ]); ?>
-              </table>
+                                  </table>
           </div>
       </div>
     </div>
