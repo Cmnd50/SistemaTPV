@@ -591,7 +591,7 @@
                success: function (data) {
 
    
-                   $("#modalCargarConsultaIma").modal("show");
+                   $("#modalMostrarConsultaIma").modal("show");
                }
            });
        });

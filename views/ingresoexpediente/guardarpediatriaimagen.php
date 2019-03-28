@@ -33,7 +33,7 @@ while ($test = $resultadoobtenernombrecategoria->fetch_assoc()) {
 
 
 //DARLE FORMATO AL NOMBRE QUE TENDRA EL PDF **************************************
-$NombreArchivo = "/CONSULTA " . str_replace('-','',$fecha).'';
+$NombreArchivo = "Consulta " . str_replace('-','',$fecha).'';
 
 //RUTA DE LA CARPETA DONDE SE ALMACENARAN LOS PDFS DE LAS CONSULTAS SEGUN NOMBRE **************************************
 
@@ -53,7 +53,7 @@ if (!file_exists($carpeta)) {
 	    		mkdir($subcarpeta, 0777, true);
 
     		        $insertconsultaurlima = "INSERT INTO consulta(IdPersona,FechaConsulta, Activo, IdEstado,Status, Consultaimaurl)"
-                       . "VALUES ('$persona','$fecha',0,2,1,'$carpetaGuardar')";
+                       . "VALUES ('$persona','$fecha',0,2,1,'$subcarpeta')";
 					$resultadoinsertconsultaurlima = $mysqli->query($insertconsultaurlima);
 					
 					foreach($_FILES["file"]['tmp_name'] as $key => $tmp_name)
@@ -90,7 +90,7 @@ else{
 	    		mkdir($subcarpeta, 0777, true);
 
 	    		   $insertconsultaurlima = "INSERT INTO consulta(IdPersona,FechaConsulta, Activo, IdEstado,Status, Consultaimaurl)"
-                       . "VALUES ('$persona','$fecha',0,2,1,'$carpetaGuardar')";
+                       . "VALUES ('$persona','$fecha',0,2,1,'$subcarpeta')";
 					$resultadoinsertconsultaurlima = $mysqli->query($insertconsultaurlima);
 
 					foreach($_FILES["file"]['tmp_name'] as $key => $tmp_name)

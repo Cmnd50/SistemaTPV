@@ -32,7 +32,7 @@ while ($test = $resultadoobtenernombre->fetch_assoc()) {
 
 
 //DARLE FORMATO AL NOMBRE QUE TENDRA EL PDF **************************************
-$NombreArchivo = "CONSULTA " . str_replace('-','',$fecha).'';
+$NombreArchivo = "Consulta " . str_replace('-','',$fecha).'';
 
 //RUTA DE LA CARPETA DONDE SE ALMACENARAN LOS PDFS DE LAS CONSULTAS SEGUN NOMBRE **************************************
 $carpeta = 'C:/UQSolutions/'.$nombrecategoria.'/Procedimientos/';
