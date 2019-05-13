@@ -44,19 +44,18 @@ $config = [
             ],
         ],
         'db' => $db,
-
-                    'urlManager' => [
-                   'class' => 'yii\web\UrlManager', //Disable index.php
-                   'showScriptName' => false, //Disable r= routes
-                   'enablePrettyUrl' => true,
-                   'rules' => array(
-                           '<controller:(post|comment)>/create' => '<controller>/create',
-                            '<controller:(post|comment)>/<id:\d+>/<action:(update|delete)>' => '<controller>/<action>',
-                            '<controller:(post|comment)>/<id:\d+>' => '<controller>/view',
-                            '<controller:(post|comment)>s' => '<controller>/index',
-                   ),
-                   ],
-                   
+            'urlManager' => [
+           'class' => 'yii\web\UrlManager', //Disable index.php
+           'showScriptName' => false, //Disable r= routes
+           'enablePrettyUrl' => true,
+           'rules' => array(
+                   '<controller:(post|comment)>/create' => '<controller>/create',
+                    '<controller:(post|comment)>/<id:\d+>/<action:(update|delete)>' => '<controller>/<action>',
+                    '<controller:(post|comment)>/<id:\d+>' => '<controller>/view',
+                    '<controller:(post|comment)>s' => '<controller>/index',
+           ),
+           ],
+           
     ],
     'params' => $params,
 ];

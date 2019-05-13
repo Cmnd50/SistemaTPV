@@ -4,6 +4,7 @@
    
    
    include '../include/dbconnect.php';
+   include '../include/dbconnectsybase.php';
    
    
    /* @var $this yii\web\View */
@@ -129,6 +130,9 @@
       $date = date("Y-m-d H:i:s");
     }
    
+      // CONSULTA PARA CARGAR EL CBO DE LOS EXAMENES
+    $querytiporayosx = "SELECT IdTipoRayosx, NombreRayosx, DescripcionRayosx FROM tiporayosx";
+    $resultadotiporayosx = $mysqli->query($querytiporayosx);
    
     // CONSULTA PARA CARGAR DEPARTAMENTOS EN EL EXPEDIENTE
     $querydepartamentos = "SELECT * FROM geografia WHERE IdGeografia='$geografia'";
@@ -259,6 +263,14 @@
                       order by ep.IdEnfermeriaProcedimiento DESC";
    
     $resultadotablaprocedimientos = $mysqli->query($querytablaprocedimientos);
+
+
+$ListarConsultaProdMT = "SELECT  d.Nombre as 'BODEGA', p.Descripcion as 'PRODUCTO', p.BC as 'BC', e.existencia as 'EXISTENCIA', e.disponible as 'DISPONIBLE'
+FROM prg.existencias e
+INNER JOIN prg.productos p on e.PLUProducto = p.PLUProducto
+INNER JOIN prg.divisiones d on e.PLUDivision = d.PLUDivision
+WHERE p.PLUEmpresa = 2";
+$ResultadoConsultaProdMT = odbc_exec($conn, $ListarConsultaProdMT);
    
 $label = '';
    if($_SESSION['IdIdioma'] == 1){
@@ -304,18 +316,24 @@ $label = '';
                   <li class="active"><a data-toggle="tab" href="#tab-CONSULTA" id='tabgeneral1'></a></li>
                   <li class=""><a data-toggle="tab" href="#tab-EXPEDIENTE" id='tabgeneral2'></a></li>
                   <li class=""><a data-toggle="tab" href="#tab-HISTORIAL" id='tabgeneral3'></a></li>
-                  <li class="pull-right">
-                  <?php if ($_SESSION['IdIdioma'] == 1 ){ ?>
+                  <li class=""><a data-toggle="tab" href="#tab-MEDICAMENTO" id='tabgeneral4'></a></li>
+               </ul>
+               <div class="row">
+               </br>
+               <center>
+               <?php if ($_SESSION['IdIdioma'] == 1 ){ ?>
                     <button type="button" class="btn  btn-danger dim"   data-toggle="modal" data-target="#modalGuardarDiagnostico">Ingresar Diagnostico<i class="fa fa-heart"></i></button>   
                      <button type="button" class="btn  btn-info dim"  data-toggle="modal" data-target="#modalGuardarExamenes"> Ingresa Examen <i class="fa fa-bars"></i></button>
                  <?php } else {
                   ?>
-                    <button type="button" class="btn  btn-danger dim"   data-toggle="modal" data-target="#modalGuardarDiagnostico"> Enter Data<i class="fa fa-heart"></i></button>   
-                     <button type="button" class="btn  btn-info dim"  data-toggle="modal" data-target="#modalGuardarExamenes"> LAB <i class="fa fa-bars"></i></button>
+                    <button type="button" class="btn  btn-danger dim"   data-toggle="modal" data-target="#modalGuardarDiagnostico">Data<i class="fa fa-heart"></i></button>   
+                      <button type="button" class="btn  btn-info dim"  data-toggle="modal" data-target="#modalGuardarExamenes"> LAB <i class="fa fa-bars"></i></button>
+                     <button type="button" class="btn  btn-warning dim"  data-toggle="modal" data-target="#modalGuardarExamenes"> REF <i class="fa fa-folder-o"></i></button>
+                     <button type="button" class="btn  btn-default dim"  data-toggle="modal" data-target="#modalGuardarRayosX"> X-Rays <i class="fa fa-times"></i></button>
+                     <button type="button" class="btn  btn-primary dim"  data-toggle="modal" data-target="#modalRecetas"> Recipe <i class="fa fa-list-ol"></i></button>
                   <?php } ?>
-                                     
-                  </li>
-               </ul>
+                  </center>
+               </div>
                <div class="tab-content">
                   <div class="tab-content">
                      <div id="tab-CONSULTA" class="tab-pane active">
@@ -1123,10 +1141,36 @@ $label = '';
                            </div>
                         </div>
                      </div>
+                     <div id="tab-MEDICAMENTO" class="tab-pane active">
+                        <div class="panel-body">
+                            <h3>MEDICAMENTOS</h3>
+                              <table class="table table-striped">
+                                        <?php
+                                               echo"<thead>";
+                                                   echo"<tr>";
+                                                   echo"<th id=''>DESCRIPCION</th>";
+                                                   echo"<th id=''>EXISTENCIA</th>";
+                                                   echo"</tr>";
+                                               echo"</thead>";
+                                               echo"<tbody>";
+                                               while ($row = odbc_fetch_array($ResultadoConsultaProdMT))
+                                                 {
+                                                    echo"<tr>";
+                                                    echo"<td>".iconv('Windows-1252', "UTF-8",$row['PRODUCTO'])."</td>";
+                                                    echo"<td>".$row['EXISTENCIA']."</td>";
+                                                    echo"</tr>";
+                                                  }
+                                                echo"</tbody>";
+                                               ?>
+                                </table>
+                        </div>
+                     </div>
+
                   </div>
                </div>
             </div>
          </div>
+         </br>
          <center>
             <form class="form-horizontal" action="../../views/consultamedico/finalizarconsulta.php" method="POST" >
                <div class="hidden">
@@ -2409,6 +2453,128 @@ $label = '';
                </div>
             </div>
          </div>
+
+         <!-- MODAL ASIGNAR TOMAS DE RAYOS X -->
+         <div class="modal inmodal" id="modalGuardarRayosX" tabindex="-1" role="dialog"  aria-hidden="true">
+            <div class="modal-dialog modal-md">
+               <div class="modal-content animated fadeIn">
+                  <div class="modal-content">
+                     <form class="form-horizontal" method="POST" action="../../views/consultamedico/guardarrayosx.php"  id="demo-form1" data-parsley-validate="">
+                        <div class="modal-header">
+                           <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                           <i class="fa fa-times modal-icon"></i>
+                           <h4 class="modal-title" id='modalasignarrayosx1'>ASIGNACION DE RAYOS X</h4>
+                           <small id='modalasignarrayosx2'>ASIGNACION DE RAYOS X: <?php echo $idpersona; ?></small>
+                        </div>
+                        <div class="modal-body ">
+                           <div class="form-group">
+                              <label for="inputEmail3" class="col-sm-2 control-label" id='modalasignarrayosx3'>Examenes</label>
+                              <div class="col-sm-9">
+                                 <div class="input-group">
+                                    <div class="input-group-addon">
+                                       <i class="fa fa-user"></i>
+                                    </div>
+                                    <select class="form-control select2" style="width: 100%;"  name="cboTipoExamen">
+                                    <?php
+                                       if($_SESSION['IdIdioma'] == 1){
+                                             while ($row = $resultadotiporayosx->fetch_assoc()) {
+                                              echo "<option value = '" . $row['IdTipoRayosx'] . "'>" . $row['NombreRayosx'] . "</option>";
+                                          }
+                                       }else{
+                                         while ($row = $resultadotiporayosx->fetch_assoc()) {
+                                              echo "<option value = '" . $row['IdTipoRayosx'] . "'>" . $row['DescripcionRayosx'] . "</option>";
+                                          }
+                                       }
+                                       ?>
+                                    </select>
+                                 </div>
+                              </div>
+                           </div>
+                           <div class="form-group" >
+                              <label for="inputEmail3" class="col-sm-2 control-label" id='modalasignarrayosx4'>Indicaciones</label>
+                              <div class="col-sm-9">
+                                 <div class="input-group">
+                                    <div class="input-group-addon">
+                                       <i class="fa fa-user"></i>
+                                    </div>
+                                    <textarea  type="text" rows="4" class="form-control"   name="txtIndicacion"></textarea>
+                                 </div>
+                              </div>
+                              <div class="hidden">
+                                 <textarea  type="text" rows="4" class="form-control"   name="txtpersonaID"> <?php echo $idpersonaid ?> </textarea>
+                              </div>
+                              <div class="hidden">
+                                 <textarea  type="text" rows="4" class="form-control"   name="txtusuarioID"> <?php echo $idusuarioid ?> </textarea>
+                              </div>
+                              <div class="col-sm-9">
+                              </div>
+                           </div>
+                           <div class="form-group">
+                              <label for="inputEmail3" class="col-sm-2 control-label"></label>
+                              <div class="col-sm-9">
+                              </div>
+                           </div>
+                           <div class="form-group">
+                              <label for="inputEmail3" class="col-sm-2 control-label"></label>
+                              <div class="col-sm-9">
+                              </div>
+                           </div>
+                        </div>
+                        <div class="modal-footer">
+                           <div class="col-sm-3">
+                           </div>
+                           <div class="col-sm-3">
+                           </div>
+                           <div class="col-sm-2">
+                              <button type="button" class="btn btn-danger" id="btn-cerrarmodal" data-dismiss="modal"  id='modalasignarrayosx5'>Cerrar</button>
+                           </div>
+                           <div class="col-sm-2">
+                              <button type="submit" class="btn btn-primary" name="guardarIndicador"  id='modalasignarrayosx6'>Guardar Cambios</button>
+                           </div>
+                        </div>
+                     </form>
+                  </div>
+               </div>
+            </div>
+         </div>
+
+
+
+        <!-- MODAL ASIGNAR TOMAS DE RAYOS X -->
+         <div class="modal inmodal" id="modalRecetas" tabindex="-1" role="dialog"  aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+               <div class="modal-content animated fadeIn">
+                  <div class="modal-content">
+                     <form class="form-horizontal" method="POST" action="../../views/consultamedico/guardarrayosx.php"  id="demo-form1" data-parsley-validate="">
+                        <div class="modal-header">
+                           <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                           <i class="fa fa-times modal-icon"></i>
+                           <h4 class="modal-title" id='modalasignarrayosx1'>CONSULTA DE MEDICAMENTOS</h4>
+                           <small id='modalasignarrayosx2'>CONSULTA DE MEDICAMENTOS: <?php echo $idpersona; ?></small>
+                        </div>
+                        <div class="modal-body ">
+                           <div class="form-group">
+
+                           </div>
+                        </div>
+                        <div class="modal-footer">
+                           <div class="col-sm-4">
+                           </div>
+
+                           <div class="col-sm-2">
+                              <button type="button" class="btn btn-danger" id="btn-cerrarmodal" data-dismiss="modal"  id='modalasignarrayosx5'>Cerrar</button>
+                           </div>
+                           <div class="col-sm-2">
+                              <button type="submit" class="btn btn-primary" name="guardarIndicador"  id='modalasignarrayosx6'>Guardar Cambios</button>
+                           </div>
+                        </div>
+                     </form>
+                  </div>
+               </div>
+            </div>
+         </div>
+
+         
       
       </div>
    </div>
@@ -2671,6 +2837,7 @@ $label = '';
        $("#tabgeneral1").text('CONSULTA');
        $("#tabgeneral2").text('EXPEDIENTE');
        $("#tabgeneral3").text('HISTORIAL');
+       $("#tabgeneral4").text('CONSULTA DE MEDICAMENTOS');
        $("#btnfinalizarconsulta").text('FINALIZAR CONSULTA');
 
       // TAB DE INGRESO DE CONSULTA - FICHA DE CONSULTA
@@ -2873,6 +3040,7 @@ $label = '';
        $("#tabgeneral1").text("TODAY'S VISIT");
        $("#tabgeneral2").text('PATIENT/FAM HISTORY');
        $("#tabgeneral3").text('PREVIOUS VISITS');
+       $("#tabgeneral4").text('INVENTORY OF MEDICINES');
        $("#btnfinalizarconsulta").text('FINISH');
 
       // TAB DE INGRESO DE CONSULTA - FICHA DE CONSULTA

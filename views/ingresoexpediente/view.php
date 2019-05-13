@@ -1,6 +1,8 @@
+
 <?php
    use yii\helpers\Html;
    use yii\widgets\DetailView;
+   use yii\grid\GridView;
    
    include '../include/dbconnect.php';
    /* @var $this yii\web\View */
@@ -36,7 +38,7 @@
          where p.Descripcion = 'Medico' and u.Activo = 1 ";
       $resultadousuario = $mysqli->query($queryusuario);
 
-           $querymodulo = "SELECT * FROM modulo WHERE IdModulo in(3,6,7) order by NombreModulo asc";
+      $querymodulo = "SELECT * FROM modulo WHERE IdModulo in(3,6,7) order by NombreModulo asc";
       $resultadomodulo = $mysqli->query($querymodulo);
 
       $querytablaenfermedad = "SELECT IdEnfermedad, CONCAT(CodigoICD,' ',Nombre) AS 'Nombre'
@@ -137,6 +139,7 @@
    ]);?>
 <?php endif; ?>
 <style>
+
    table.detail-view th {
    width: 25%;
    }
@@ -160,6 +163,7 @@
 <link rel="stylesheet" href="../template/parsley/parsley.css">
 <script src="../template/parsley/parsley.min.js"></script>
 <script src="../template/i18n/es.js"></script>
+
 <link href="../template/css/plugins/iCheck/custom.css" rel="stylesheet">
 <link href="../template/css/plugins/chosen/bootstrap-chosen.css" rel="stylesheet">
 <link href="../template/css/plugins/cropper/cropper.min.css" rel="stylesheet">
@@ -385,29 +389,31 @@
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">
-                           <table id="example2" class="table table-bordered table-hover">
+                            <table class="table table-hover">
+                            <!-- https://chrome.google.com/webstore/detail/enable-local-file-links/nikfmfgobenbhmocjaaboihbeocackld/related?hl=en -->
                               <?php
                                  echo"<thead>";
                                  echo"<tr>";
                                  echo"<th id=''>FECHA</th>";
-                                 echo"<th id=''>URL</th>";
+                                 echo"<th id=''>URL</th>"; 
                                  echo"<th style = 'width:150px' id=''>ACCION</th>";
                                  echo"</tr>";
                                  echo"</thead>";
                                  echo"<tbody>";
+
                                  while ($row = $resultadotablaconsultasima->fetch_assoc()) {
-                                     $IdConsulta = $row['IdConsulta'];
+                                     $urlprueba = $row['Consultaimaurl'];
                                      echo"<tr>";
                                      echo"<td>" . $row['FechaConsulta'] . "</td>";
                                      echo"<td>" . $row['Consultaimaurl'] . "</td>";
                                      echo "<td>" .
-                                     "<span id='btn" . $IdConsulta . "' style='width:140px' class='btn btn-md btn-success btn-mdlimaconsult'>Ver</span>" .
+                                     "<a href='file:///". $row['Consultaimaurl'] ."'  target='_blank'>Ver</a>" .
                                      "</td>";
                                      echo"</tr>";
                                      echo"</body>  ";
                                  }
                                  ?>
-                           </table>
+                              </table>
                         </div>
                      </div>
                   </div>
@@ -580,19 +586,11 @@
            var id = $(this).attr("id").replace("btn", "");
            var myData = {"id": id};
            //alert(myData);
-           $.ajax({
-               url: "../../views/consultamedico/cargarconsultasignosvitales.php",
-               type: "POST",
-               data: myData,
-               dataType: "JSON",
-               beforeSend: function () {
-                   $(this).html("Cargando");
-               },
-               success: function (data) {
+
 
    
-                   $("#modalMostrarConsultaIma").modal("show");
-               }
+          $("#modalMostrarConsultaIma").modal("show");
+         
            });
        });
    

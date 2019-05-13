@@ -3,18 +3,16 @@
 namespace app\controllers;
 
 use Yii;
-use app\models\persona;
-use app\models\consulta;
-use app\models\ConsultaSearch;
-use app\models\IngresoexpedienteSearch;
+use app\models\Configuraciongeneral;
+use app\models\ConfiguraciongeneralSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * IngresoexpedienteController implements the CRUD actions for persona model.
+ * ConfiguraciongeneralController implements the CRUD actions for Configuraciongeneral model.
  */
-class IngresoexpedienteController extends Controller
+class ConfiguraciongeneralController extends Controller
 {
     /**
      * {@inheritdoc}
@@ -32,12 +30,12 @@ class IngresoexpedienteController extends Controller
     }
 
     /**
-     * Lists all persona models.
+     * Lists all Configuraciongeneral models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new IngresoexpedienteSearch();
+        $searchModel = new ConfiguraciongeneralSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -47,30 +45,26 @@ class IngresoexpedienteController extends Controller
     }
 
     /**
-     * Displays a single persona model.
+     * Displays a single Configuraciongeneral model.
      * @param integer $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionView($id)
     {
-        $searchModel = new ConsultaSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
         return $this->render('view', [
             'model' => $this->findModel($id),
-            'dataProvider' => $dataProvider,
         ]);
     }
 
     /**
-     * Creates a new persona model.
+     * Creates a new Configuraciongeneral model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new persona();
+        $model = new Configuraciongeneral();
 
         if ($model->load(Yii::$app->request->post())) {
           if ($model->save()) {
@@ -78,7 +72,7 @@ class IngresoexpedienteController extends Controller
             } else {
               Yii::$app->session->setFlash('error', "User created successfully.");
             }
-            return $this->redirect(['view', 'id' => $model->IdPersona]);
+            return $this->redirect(['view', 'id' => $model->IdConfiguracionGeneral]);
         }
 
         return $this->render('create', [
@@ -86,26 +80,8 @@ class IngresoexpedienteController extends Controller
         ]);
     }
 
-   public function actionCrear()
-    {
-        $model = new Persona();
-
-        if ($model->load(Yii::$app->request->post())) {
-          if ($model->save()) {
-            Yii::$app->session->setFlash('success', "User created successfully.");
-            } else {
-              Yii::$app->session->setFlash('error', "User created successfully.");
-            }
-            return $this->redirect(['view', 'id' => $model->IdPersona]);
-        }
-
-        return $this->render('crear', [
-            'model' => $model,
-        ]);
-    }
-
     /**
-     * Updates an existing persona model.
+     * Updates an existing Configuraciongeneral model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -121,7 +97,7 @@ class IngresoexpedienteController extends Controller
             } else {
               Yii::$app->session->setFlash('warning', "User created successfully.");
             }
-            return $this->redirect(['view', 'id' => $model->IdPersona]);
+            return $this->redirect(['view', 'id' => $model->IdConfiguracionGeneral]);
         }
 
         return $this->render('update', [
@@ -130,7 +106,7 @@ class IngresoexpedienteController extends Controller
     }
 
     /**
-     * Deletes an existing persona model.
+     * Deletes an existing Configuraciongeneral model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -144,15 +120,15 @@ class IngresoexpedienteController extends Controller
     }
 
     /**
-     * Finds the persona model based on its primary key value.
+     * Finds the Configuraciongeneral model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return persona the loaded model
+     * @return Configuraciongeneral the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = persona::findOne($id)) !== null) {
+        if (($model = Configuraciongeneral::findOne($id)) !== null) {
             return $model;
         }
 

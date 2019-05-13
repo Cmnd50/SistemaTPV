@@ -286,7 +286,7 @@
                             order by ep.IdEnfermeriaProcedimiento DESC";
                         $resultqueryvalidacionprocedimientodiario = $mysqli->query($queryvalidacionprocedimientodiario);
                         if(mysqli_num_rows($resultqueryvalidacionprocedimientodiario)==0){?>
-                     <button type="button" class="btn  btn-danger dim"  data-toggle="modal" data-target="#modalConsulta">Data  <i class="fa fa-heart"></i></button>
+                     <button type="button" class="btn  btn-danger dim"  data-toggle="modal" data-target="#modalConsulta">Data<i class="fa fa-heart"></i></button>
                      <button type="button" class="btn  btn-info dim" style="display: none; data-toggle="modal" data-target="#modalGuardarExamenes"> LAB <i class="fa fa-bars"></i></button>
                      <button type="button" class="btn  btn-warning dim" style="display: none; data-toggle="modal" data-target="#modalGuardarExamenes"> REF <i class="fa fa-folder-o"></i></button>
                      <button type="button" class="btn  btn-default dim" style="display: none; data-toggle="modal" data-target="#modalGuardarRayosX"> X-Rays <i class="fa fa-times"></i></button>
@@ -295,10 +295,12 @@
                      <button type="button" class="btn  btn-info dim"  data-toggle="modal" data-target="#modalGuardarExamenes"> LAB <i class="fa fa-bars"></i></button>
                      <button type="button" class="btn  btn-warning dim"  data-toggle="modal" data-target="#modalGuardarExamenes"> REF <i class="fa fa-folder-o"></i></button>
                      <button type="button" class="btn  btn-default dim"  data-toggle="modal" data-target="#modalGuardarRayosX"> X-Rays <i class="fa fa-times"></i></button>
+                     
                      <?php }?>    
                      
                      <?php } ?>              
                   </li>
+
                </ul>
                <div class="tab-content">
                   <div class="tab-content">

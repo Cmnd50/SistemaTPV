@@ -1,7 +1,7 @@
 <?php
 
 namespace app\models;
-use yii\helpers\Html;
+
 use Yii;
 
 /**
@@ -26,6 +26,7 @@ use Yii;
  * @property string $PlanTratamiento
  * @property string $FechaProxVisita
  * @property string $Alergias
+ * @property string $Consultaimaurl
  *
  * @property Estado $estado
  * @property Modulo $modulo
@@ -40,8 +41,8 @@ use Yii;
  * @property Examenquimica[] $examenquimicas
  * @property Indicador[] $indicadors
  * @property Listaexamen[] $listaexamens
+ * @property Listarayosx[] $listarayosxes
  * @property Receta[] $recetas
- * @property Usuario[] $usuario
  */
 class Consulta extends \yii\db\ActiveRecord
 {
@@ -62,6 +63,7 @@ class Consulta extends \yii\db\ActiveRecord
             [['IdUsuario', 'IdPersona', 'IdModulo', 'IdEnfermedad', 'Activo', 'IdEstado', 'Status'], 'integer'],
             [['Diagnostico', 'Comentarios', 'Otros', 'EstadoNutricional', 'CirugiasPrevias', 'MedicamentosActuales', 'ExamenFisica', 'PlanTratamiento', 'Alergias'], 'string'],
             [['FechaConsulta', 'FechaProxVisita'], 'safe'],
+            [['Consultaimaurl'], 'string', 'max' => 400],
             [['IdEstado'], 'exist', 'skipOnError' => true, 'targetClass' => Estado::className(), 'targetAttribute' => ['IdEstado' => 'IdEstado']],
             [['IdModulo'], 'exist', 'skipOnError' => true, 'targetClass' => Modulo::className(), 'targetAttribute' => ['IdModulo' => 'IdModulo']],
             [['IdEnfermedad'], 'exist', 'skipOnError' => true, 'targetClass' => Enfermedad::className(), 'targetAttribute' => ['IdEnfermedad' => 'IdEnfermedad']],
@@ -74,12 +76,11 @@ class Consulta extends \yii\db\ActiveRecord
      */
     public function attributeLabels()
     {
-        if($_SESSION['IdIdioma'] == 1){
-             return [
+        return [
             'IdConsulta' => 'Id Consulta',
             'IdUsuario' => 'Id Usuario',
-            'IdPersona' => 'Paciente',
-            'IdModulo' => 'Modulo',
+            'IdPersona' => 'Id Persona',
+            'IdModulo' => 'Id Modulo',
             'Diagnostico' => 'Diagnostico',
             'Comentarios' => 'Comentarios',
             'Otros' => 'Otros',
@@ -95,55 +96,13 @@ class Consulta extends \yii\db\ActiveRecord
             'PlanTratamiento' => 'Plan Tratamiento',
             'FechaProxVisita' => 'Fecha Prox Visita',
             'Alergias' => 'Alergias',
+            'Consultaimaurl' => 'Consultaimaurl',
         ];
-        }
-        else{
-            return [
-            'IdConsulta' => 'Id Consulta',
-            'IdUsuario' => 'Id Usuario',
-            'IdPersona' => 'Patient',
-            'IdModulo' => 'Module',
-            'Diagnostico' => 'Diagnostico',
-            'Comentarios' => 'Comentarios',
-            'Otros' => 'Otros',
-            'IdEnfermedad' => 'Id Enfermedad',
-            'FechaConsulta' => 'Fecha Consulta',
-            'Activo' => 'Activo',
-            'IdEstado' => 'Id Estado',
-            'Status' => 'Status',
-            'EstadoNutricional' => 'Estado Nutricional',
-            'CirugiasPrevias' => 'Cirugias Previas',
-            'MedicamentosActuales' => 'Medicamentos Actuales',
-            'ExamenFisica' => 'Examen Fisica',
-            'PlanTratamiento' => 'Plan Tratamiento',
-            'FechaProxVisita' => 'Fecha Prox Visita',
-            'Alergias' => 'Alergias',
-            ];
-        }
-       
     }
 
     /**
      * @return \yii\db\ActiveQuery
-     *
-     * 
      */
-    
-
-
-    // public function getFullName()
-    //  {
-    //     $personas = Persona::className();
-    //     return $personas->Nombres . ' ' . $personas->Apellidos;
-    //  }
-
-
-    // public function getUsuario()
-    // {
-    //     return $this->hasOne(Estado::className(), ['IdEstado' => 'IdEstado']);
-    // }
-
-
     public function getEstado()
     {
         return $this->hasOne(Estado::className(), ['IdEstado' => 'IdEstado']);
@@ -248,10 +207,16 @@ class Consulta extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
+    public function getListarayosxes()
+    {
+        return $this->hasMany(Listarayosx::className(), ['IdConsulta' => 'IdConsulta']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
     public function getRecetas()
     {
         return $this->hasMany(Receta::className(), ['IdConsulta' => 'IdConsulta']);
     }
-
-
 }

@@ -2,7 +2,9 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-
+use yii\helpers\ArrayHelper;
+use app\models\Puesto;
+use kartik\select2\Select2;
 /* @var $this yii\web\View */
 /* @var $model app\models\Usuario */
 /* @var $form yii\widgets\ActiveForm */
@@ -23,13 +25,17 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'Correo')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'Clave')->textInput(['maxlength' => true]) ?>
+    <?php echo $form->field($model, 'IdPuesto')->widget(Select2::classname(), [
+        'data' => ArrayHelper::map(Puesto::find()->all(), 'idPuesto', 'Descripcion'),
+        'language' => 'es',
+        'options' => ['placeholder' => ' Selecione ...'],
+        'pluginOptions' => [
+            'allowClear' => true
+        ],
+    ]);
+    ?>
 
-    <?= $form->field($model, 'Activo')->textInput() ?>
-
-    <?= $form->field($model, 'IdPuesto')->textInput() ?>
-
-    <?= $form->field($model, 'FechaIngreso')->textInput() ?>
+    <?= $form->field($model, 'Activo')->checkbox() ?>
 
    </div>
     <div class="form-group" align="right">

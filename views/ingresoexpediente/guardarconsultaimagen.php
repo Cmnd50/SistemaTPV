@@ -53,9 +53,9 @@ if (!file_exists($carpeta)) {
 	    	if(!file_exists($subcarpeta)){
 	    		mkdir($subcarpeta, 0777, true);
 
-    		        $insertconsultaurlima = "INSERT INTO consulta(IdPersona,FechaConsulta, Activo, IdEstado,Status, Consultaimaurl)"
-                       . "VALUES ('$persona','$fecha',0,2,1,'$subcarpeta')";
-					$resultadoinsertconsultaurlima = $mysqli->query($insertconsultaurlima);
+    		        		$insertconsultaurlima = "INSERT INTO consulta(IdPersona,FechaConsulta, Activo, IdEstado,Status, Consultaimaurl)"
+                     				  . "VALUES ('$persona','$fecha',0,2,1,'$subcarpeta')";
+									$resultadoinsertconsultaurlima = $mysqli->query($insertconsultaurlima);
 					
 					foreach($_FILES["file"]['tmp_name'] as $key => $tmp_name)
 						{
@@ -73,7 +73,9 @@ if (!file_exists($carpeta)) {
 								
 									$dir=opendir($directorio); //Abrimos el directorio de destino
 									$target_path = $directorio.'/'.$filename; //Indicamos la ruta de destino, así como el nombre del archivo
-								
+									
+							
+
 								//Movemos y validamos que el archivo se haya cargado correctamente
 								//El primer campo es el origen y el segundo el destino
 								if(move_uploaded_file($source, $target_path)) {	
@@ -110,6 +112,12 @@ else{
 								
 									$dir=opendir($directorio); //Abrimos el directorio de destino
 									$target_path = $directorio.'/'.$filename; //Indicamos la ruta de destino, así como el nombre del archivo
+
+									 // $insertconsultaurlima = "INSERT INTO consulta(IdPersona,FechaConsulta, Activo, IdEstado,Status, Consultaimaurl)"
+					  				   // . "VALUES ('$persona','$fecha',0,2,1,'$target_path')";
+										// $resultadoinsertconsultaurlima = $mysqli->query($insertconsultaurlima);
+
+								
 								
 								//Movemos y validamos que el archivo se haya cargado correctamente
 								//El primer campo es el origen y el segundo el destino

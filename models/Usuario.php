@@ -70,7 +70,7 @@ class Usuario extends \yii\db\ActiveRecord
             'Correo' => 'Correo',
             'Clave' => 'Clave',
             'Activo' => 'Activo',
-            'IdPuesto' => 'Id Puesto',
+            'IdPuesto' => 'Puesto',
             'FechaIngreso' => 'Fecha Ingreso',
         ];
     }
