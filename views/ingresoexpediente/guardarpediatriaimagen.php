@@ -6,6 +6,25 @@ $persona = $_POST['txtid'];
 $fecha = $_POST['txtFechaConsulta'];
 
 
+//OBTENER CONFIGURACION GENERAL
+$queryobtenerconfig = "SELECT IpServidora, NombreCarpeta, UnidadServer FROM configuraciongeneral WHERE IdConfiguracionGeneral = 1";
+
+$resultadoobtenerconfig = $mysqli->query($queryobtenerconfig);
+while ($test = $resultadoobtenerconfig->fetch_assoc()) {
+           $ip = $test['IpServidora'];
+           $unidad = $test['UnidadServer'];
+           $nombrecarpeta = $test['NombreCarpeta'];
+       }
+
+
+ //OBTENER ID DEL MODULO
+$queryobtenermodulo = "SELECT IdModulo FROM modulo WHERE NombreModulo = 'Pediatria'";
+
+$resultadoobtenermodulo = $mysqli->query($queryobtenermodulo);
+while ($test = $resultadoobtenermodulo->fetch_assoc()) {
+           $IdModulo = $test['IdModulo'];
+       }      
+
 //OBTENER NOMBRE CON CODIGO **************************************
 $queryobtenernombrecodigo = "SELECT CONCAT(Categoria,'',replace(FechaNacimiento,'-',''),' ',Nombres,' ',Apellidos) AS 'Nombre' FROM persona WHERE IdPersona = '$persona'";
 
@@ -37,24 +56,27 @@ $NombreArchivo = "Consulta " . str_replace('-','',$fecha).'';
 
 //RUTA DE LA CARPETA DONDE SE ALMACENARAN LOS PDFS DE LAS CONSULTAS SEGUN NOMBRE **************************************
 
-$carpeta = 'C:/UQSolutions/'.$nombrecategoria.'/Pediatria/';
+//RUTA DE LA CARPETA DONDE SE ALMACENARAN LOS PDFS DE LAS CONSULTAS SEGUN NOMBRE **************************************
+
+$rutapersona = $nombrecarpeta.'/'.$nombrecategoria;
+$ruta = $nombrecarpeta.'/'.$nombrecategoria.'/Pediatria/'.$NombreArchivo;
+$carpeta = '//'.$ip.'/'.$unidad.'/'.$nombrecarpeta.'/'.$nombrecategoria.'/Pediatria/';
 $subcarpeta = $carpeta . $NombreArchivo;
-$carpetaGuardar = 'C:/UQSolutions/'.$nombrecategoria.'';
 
 //VALIDACION PARA TOMAR EL ARCHIVO PDF **************************************
 
 if (!file_exists($carpeta)) {
     mkdir($carpeta, 0777, true);
 
-	    $insertexpediente2 = "UPDATE persona SET RutaCarpeta='$carpeta'  WHERE IdPersona='$persona'";
+	    $insertexpediente2 = "UPDATE persona SET RutaCarpeta='$rutapersona'  WHERE IdPersona='$persona'";
 	    $resultadoinsertmovimiento2 = $mysqli->query($insertexpediente2);
 
 	    	if(!file_exists($subcarpeta)){
 	    		mkdir($subcarpeta, 0777, true);
 
-    		        $insertconsultaurlima = "INSERT INTO consulta(IdPersona,FechaConsulta, Activo, IdEstado,Status, Consultaimaurl)"
-                       . "VALUES ('$persona','$fecha',0,2,1,'$subcarpeta')";
-					$resultadoinsertconsultaurlima = $mysqli->query($insertconsultaurlima);
+    		        $insertconsultaurlima = "INSERT INTO consulta(IdPersona,IdModulo,FechaConsulta, Activo, IdEstado,Status, Consultaimaurl,IPServer,UnidadServer)"
+                     				  . "VALUES ('$persona','$IdModulo','$fecha',0,2,1,'$ruta','$ip','$unidad')";
+									$resultadoinsertconsultaurlima = $mysqli->query($insertconsultaurlima);
 					
 					foreach($_FILES["file"]['tmp_name'] as $key => $tmp_name)
 						{
@@ -89,9 +111,9 @@ else{
     	if(!file_exists($subcarpeta)){
 	    		mkdir($subcarpeta, 0777, true);
 
-	    		   $insertconsultaurlima = "INSERT INTO consulta(IdPersona,FechaConsulta, Activo, IdEstado,Status, Consultaimaurl)"
-                       . "VALUES ('$persona','$fecha',0,2,1,'$subcarpeta')";
-					$resultadoinsertconsultaurlima = $mysqli->query($insertconsultaurlima);
+	    		   $insertconsultaurlima = "INSERT INTO consulta(IdPersona,IdModulo,FechaConsulta, Activo, IdEstado,Status, Consultaimaurl,IPServer,UnidadServer)"
+                     				  . "VALUES ('$persona','$IdModulo','$fecha',0,2,1,'$ruta','$ip','$unidad')";
+									$resultadoinsertconsultaurlima = $mysqli->query($insertconsultaurlima);
 
 					foreach($_FILES["file"]['tmp_name'] as $key => $tmp_name)
 						{

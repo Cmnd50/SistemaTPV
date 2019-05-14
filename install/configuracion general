@@ -1,0 +1,22 @@
+CREATE TABLE `db_clinica`.`configuraciongeneral` (
+  `IdConfiguracionGeneral` INT NOT NULL AUTO_INCREMENT,
+  `IpServidora` VARCHAR(45) NULL,
+  `NombreCarpeta` VARCHAR(45) NULL,
+  PRIMARY KEY (`IdConfiguracionGeneral`));
+
+
+ALTER TABLE `db_clinica`.`configuraciongeneral` 
+ADD COLUMN `UnidadServer` VARCHAR(45) NULL AFTER `NombreCarpeta`;
+
+ALTER TABLE `db_clinica`.`enfermeriaprocedimiento` 
+ADD COLUMN `IpServer` VARCHAR(45) NULL AFTER `Procedimientoimaurl`,
+ADD COLUMN `UnidadServer` VARCHAR(45) NULL AFTER `IpServer`;
+
+
+INSERT INTO `db_clinica`.`menudetalle` (`IdMenuDetalle`, `IdMenu`, `DescripcionMenuDetalle`, `Url`, `Icono`, `DescripcionMenuDetalleIng`) VALUES ('24', '4', 'CONSULTAS', '../consulta/index', 'fa fa-medkit', 'VISIT\'S');
+INSERT INTO `db_clinica`.`menudetalle` (`IdMenuDetalle`, `IdMenu`, `DescripcionMenuDetalle`, `Url`, `Icono`, `DescripcionMenuDetalleIng`) VALUES ('25', '4', 'CONF GENERAL', '../configuraciongeneral/index', 'fa fa-crop', 'GENERAL CONFIG');
+
+INSERT INTO `db_clinica`.`menuusuario` (`IdMenuUsuario`, `IdMenuDetalle`, `MenuUsuarioActivo`, `IdUsuario`, `IdMenu`, `TipoPermiso`) VALUES ('25', '24', '1', '1', '4', '1');
+INSERT INTO `db_clinica`.`menuusuario` (`IdMenuUsuario`, `IdMenuDetalle`, `MenuUsuarioActivo`, `IdUsuario`, `IdMenu`, `TipoPermiso`) VALUES ('26', '25', '1', '1', '4', '1');
+
+
