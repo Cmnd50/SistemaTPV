@@ -47,7 +47,7 @@ use kartik\file\FileInput;
     ?>
  </div>
   <div class="col-lg-4">
- <?= $form->field($model, 'FechaConsulta')->widget(\yii\widgets\MaskedInput::className(), [
+ <?= $form->field($model, 'FechaProcedimiento')->widget(\yii\widgets\MaskedInput::className(), [
         'mask' => '9999-99-99',
     ]) ?>
  </div>

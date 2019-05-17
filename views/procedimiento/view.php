@@ -3,21 +3,10 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\Consulta */
-include '../include/dbconnect.php';
+/* @var $model app\models\Enfermeriaprocedimiento */
 
-$id = $model->IdConsulta;
-
-// CONSULTA PARA OBTENER EL NOMBRE DEL USUARIO
-    $queryUsuarios = "SELECT concat(u.Nombres,' ',u.Apellidos ) as 'NOMBRE' FROM consulta c 
-      INNER JOIN usuario u on c.IdUsuario = u.IdUsuario WHERE c.IdConsulta = '$id'";
-    $resultadoUsuarios = $mysqli->query($queryUsuarios);
-    while ($test = $resultadoUsuarios->fetch_assoc()) {
-        $IdUsuario = $test['NOMBRE'];
-    }
-
-$this->title ='Consulta: ' .$model->IdConsulta. ' de '. $model->persona->fullName;
-$this->params['breadcrumbs'][] = ['label' => 'Consultas', 'url' => ['index']];
+$this->title = 'Procedimiento: ' .$model->IdEnfermeriaProcedimiento;
+$this->params['breadcrumbs'][] = ['label' => 'Procedimiento', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 </br>
@@ -74,7 +63,7 @@ $this->params['breadcrumbs'][] = $this->title;
       <div class="ibox-title">
         <h3><?= Html::encode($this->title) ?></h3>
         <p align="right">
-             <?= Html::a('Actualizar', ['update', 'id' => $model->IdConsulta], ['class' => 'btn btn-warning']) ?>
+             <?= Html::a('Actualizar', ['update', 'id' => $model->IdEnfermeriaProcedimiento], ['class' => 'btn btn-warning']) ?>
         </p>
       </div>
           <div class="ibox-content">
@@ -82,31 +71,21 @@ $this->params['breadcrumbs'][] = $this->title;
                 <?= DetailView::widget([
                     'model' => $model,
                     'attributes' => [
-                        'IdConsulta',
+                        'IdEnfermeriaProcedimiento',
                         'persona.FullName',
-
-                      [
-                            'attribute' => 'IdUsuario',
-                            'format' => 'raw',
-                            'value' => $IdUsuario,
+                        'FechaProcedimiento',
+                        'Observaciones:ntext',
+                        'motivoProcedimiento.Nombre',
+                        'usuario.FullName',
+                        'IdModulo',
+                        //'Estado',
+                        [
+                         'attribute' => 'Estado',
+                         'value' => (($model->Estado ==0) ? "Inactivo": (($model->Estado ==1)? "Activo" : "General Voucher")),
                         ],
-                        
-                        'modulo.NombreModulo',
-                        'Diagnostico:ntext',
-                        'Comentarios:ntext',
-                        'Otros:ntext',
-                        'enfermedad.Nombre',
-                        
-                        'EstadoNutricional:ntext',
-                        'CirugiasPrevias:ntext',
-                        'MedicamentosActuales:ntext',
-                        'ExamenFisica:ntext',
-                        'PlanTratamiento:ntext',
-                        'FechaProxVisita',
-                        'Alergias:ntext',
-                        'FechaConsulta',
-                                ],
-                            ]) ?>
+
+                    ],
+                ]) ?>
             </table>
           </div>
       </div>

@@ -19,4 +19,37 @@ INSERT INTO `db_clinica`.`menudetalle` (`IdMenuDetalle`, `IdMenu`, `DescripcionM
 INSERT INTO `db_clinica`.`menuusuario` (`IdMenuUsuario`, `IdMenuDetalle`, `MenuUsuarioActivo`, `IdUsuario`, `IdMenu`, `TipoPermiso`) VALUES ('25', '24', '1', '1', '4', '1');
 INSERT INTO `db_clinica`.`menuusuario` (`IdMenuUsuario`, `IdMenuDetalle`, `MenuUsuarioActivo`, `IdUsuario`, `IdMenu`, `TipoPermiso`) VALUES ('26', '25', '1', '1', '4', '1');
 
+INSERT INTO `db_clinica`.`menudetalle` (`IdMenuDetalle`, `IdMenu`, `DescripcionMenuDetalle`, `Url`, `Icono`, `DescripcionMenuDetalleIng`) VALUES ('26', '4', 'SVITAL CONSULTA', '../indicador/index', 'fa fa-medkit', 'SV VISIT\'S');
+
+INSERT INTO `db_clinica`.`menudetalle` (`IdMenuDetalle`, `IdMenu`, `DescripcionMenuDetalle`, `Url`, `Icono`, `DescripcionMenuDetalleIng`) VALUES ('27', '4', 'SVITAL PROCE', '../indicadorprocedimiento/index', 'fa fa-medkit', 'SV PROCE');
+
+INSERT INTO `db_clinica`.`menuusuario` (`IdMenuUsuario`, `IdMenuDetalle`, `MenuUsuarioActivo`, `IdUsuario`, `IdMenu`, `TipoPermiso`) VALUES ('27', '26', '1', '1', '4', '1');
+INSERT INTO `db_clinica`.`menuusuario` (`IdMenuUsuario`, `IdMenuDetalle`, `MenuUsuarioActivo`, `IdUsuario`, `IdMenu`, `TipoPermiso`) VALUES ('28', '27', '1', '1', '4', '1');
+
+INSERT INTO `db_clinica`.`menu` (`IdMenu`, `DescripcionMenu`, `DescripcionMenuIng`, `Icono`, `TipoMenu`) VALUES ('11', 'FARMACIA', 'PHARMACY', 'fa fa-barcode', 'Menu');
+
+INSERT INTO `db_clinica`.`menu` (`IdMenu`, `DescripcionMenu`, `DescripcionMenuIng`, `Icono`, `TipoMenu`) VALUES ('12', 'ADMIN CONSULTAS', 'VISIT ADMIN', 'fa fa-stethoscope', 'Menu');
+
+ALTER TABLE `db_clinica`.`menu` 
+ADD COLUMN `Orden` INT(2) NOT NULL AFTER `TipoMenu`;
+UPDATE `db_clinica`.`menudetalle` SET `IdMenu`='12' WHERE `IdMenuDetalle`='26';
+UPDATE `db_clinica`.`menudetalle` SET `IdMenu`='12' WHERE `IdMenuDetalle`='27';
+UPDATE `db_clinica`.`menuusuario` SET `IdMenu`='12' WHERE `IdMenuUsuario`='27';
+UPDATE `db_clinica`.`menuusuario` SET `IdMenu`='12' WHERE `IdMenuUsuario`='28';
+UPDATE `db_clinica`.`menudetalle` SET `IdMenu`='12' WHERE `IdMenuDetalle`='24';
+UPDATE `db_clinica`.`menudetalle` SET `IdMenu`='12' WHERE `IdMenuDetalle`='25';
+UPDATE `db_clinica`.`menuusuario` SET `IdMenu`='12' WHERE `IdMenuUsuario`='25';
+UPDATE `db_clinica`.`menuusuario` SET `IdMenu`='12' WHERE `IdMenuUsuario`='26';
+UPDATE `db_clinica`.`menudetalle` SET `IdMenu`='1' WHERE `IdMenuDetalle`='25';
+UPDATE `db_clinica`.`menuusuario` SET `IdMenu`='1' WHERE `IdMenuUsuario`='26';
+
+INSERT INTO `db_clinica`.`menudetalle` (`IdMenuDetalle`, `IdMenu`, `DescripcionMenuDetalle`, `Url`, `Icono`, `DescripcionMenuDetalleIng`) VALUES ('28', '12', 'PROCEDIMIENTOS', '../procedimiento/index', 'fa fa-medkit', 'PROCEDURE');
+
+INSERT INTO `db_clinica`.`menuusuario` (`IdMenuUsuario`, `IdMenuDetalle`, `MenuUsuarioActivo`, `IdUsuario`, `IdMenu`, `TipoPermiso`) VALUES ('29', '28', '1', '1', '12', '1');
+
+
+
+
+
+
 

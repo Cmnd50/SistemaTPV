@@ -3,21 +3,10 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\Consulta */
-include '../include/dbconnect.php';
+/* @var $model app\models\Indicador */
 
-$id = $model->IdConsulta;
-
-// CONSULTA PARA OBTENER EL NOMBRE DEL USUARIO
-    $queryUsuarios = "SELECT concat(u.Nombres,' ',u.Apellidos ) as 'NOMBRE' FROM consulta c 
-      INNER JOIN usuario u on c.IdUsuario = u.IdUsuario WHERE c.IdConsulta = '$id'";
-    $resultadoUsuarios = $mysqli->query($queryUsuarios);
-    while ($test = $resultadoUsuarios->fetch_assoc()) {
-        $IdUsuario = $test['NOMBRE'];
-    }
-
-$this->title ='Consulta: ' .$model->IdConsulta. ' de '. $model->persona->fullName;
-$this->params['breadcrumbs'][] = ['label' => 'Consultas', 'url' => ['index']];
+$this->title = $model->IdIndicador;
+$this->params['breadcrumbs'][] = ['label' => 'Indicadors', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 </br>
@@ -74,7 +63,7 @@ $this->params['breadcrumbs'][] = $this->title;
       <div class="ibox-title">
         <h3><?= Html::encode($this->title) ?></h3>
         <p align="right">
-             <?= Html::a('Actualizar', ['update', 'id' => $model->IdConsulta], ['class' => 'btn btn-warning']) ?>
+             <?= Html::a('Actualizar', ['update', 'id' => $model->IdIndicador], ['class' => 'btn btn-warning']) ?>
         </p>
       </div>
           <div class="ibox-content">
@@ -82,31 +71,28 @@ $this->params['breadcrumbs'][] = $this->title;
                 <?= DetailView::widget([
                     'model' => $model,
                     'attributes' => [
-                        'IdConsulta',
-                        'persona.FullName',
-
-                      [
-                            'attribute' => 'IdUsuario',
-                            'format' => 'raw',
-                            'value' => $IdUsuario,
-                        ],
-                        
-                        'modulo.NombreModulo',
-                        'Diagnostico:ntext',
-                        'Comentarios:ntext',
-                        'Otros:ntext',
-                        'enfermedad.Nombre',
-                        
-                        'EstadoNutricional:ntext',
-                        'CirugiasPrevias:ntext',
-                        'MedicamentosActuales:ntext',
-                        'ExamenFisica:ntext',
-                        'PlanTratamiento:ntext',
-                        'FechaProxVisita',
-                        'Alergias:ntext',
-                        'FechaConsulta',
-                                ],
-                            ]) ?>
+                        'IdIndicador',
+            'IdConsulta',
+            'Peso',
+            'UnidadPeso',
+            'Altura',
+            'UnidadAltura',
+            'Temperatura',
+            'UnidadTemperatura',
+            'Pulso',
+            'PresionMax',
+            'PresionMin',
+            'Observaciones:ntext',
+            'PeriodoMeunstral',
+            'Glucotex',
+            'PC',
+            'PT',
+            'PA',
+            'FR',
+            'PAP',
+            'Motivo:ntext',
+                    ],
+                ]) ?>
             </table>
           </div>
       </div>

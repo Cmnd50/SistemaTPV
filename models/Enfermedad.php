@@ -52,6 +52,8 @@ class Enfermedad extends \yii\db\ActiveRecord
             'Numero' => 'Numero',
             'Nombre' => 'Nombre',
             'IdTipoDiagnostico' => 'Id Tipo Diagnostico',
+            'fullNameEnfe' => Yii::t('app', 'Full Name'),
+            'fullNameEnfe' => 'Enfermedad'
         ];
     }
 
@@ -85,5 +87,10 @@ class Enfermedad extends \yii\db\ActiveRecord
     public function getTipoDiagnostico()
     {
         return $this->hasOne(Tipodiagnostico::className(), ['IdTipoDiagnostico' => 'IdTipoDiagnostico']);
+    }
+
+    public function getFullNameEnfe()
+    {
+            return 'ICD: '.$this->Numero.' - '.$this->Nombre;
     }
 }

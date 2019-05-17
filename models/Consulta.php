@@ -77,26 +77,29 @@ class Consulta extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'IdConsulta' => 'Id Consulta',
-            'IdUsuario' => 'Id Usuario',
-            'IdPersona' => 'Id Persona',
-            'IdModulo' => 'Id Modulo',
+            'IdConsulta' => 'ID',
+            'IdUsuario' => 'Medico',
+            'IdPersona' => 'Paciente',
+            'IdModulo' => 'Modulo',
             'Diagnostico' => 'Diagnostico',
             'Comentarios' => 'Comentarios',
             'Otros' => 'Otros',
-            'IdEnfermedad' => 'Id Enfermedad',
+            'IdEnfermedad' => 'Enfermedad',
             'FechaConsulta' => 'Fecha Consulta',
             'Activo' => 'Activo',
-            'IdEstado' => 'Id Estado',
+            'IdEstado' => 'Estado',
             'Status' => 'Status',
             'EstadoNutricional' => 'Estado Nutricional',
             'CirugiasPrevias' => 'Cirugias Previas',
             'MedicamentosActuales' => 'Medicamentos Actuales',
             'ExamenFisica' => 'Examen Fisica',
             'PlanTratamiento' => 'Plan Tratamiento',
-            'FechaProxVisita' => 'Fecha Prox Visita',
+            'FechaProxVisita' => 'Proxima Visita',
             'Alergias' => 'Alergias',
             'Consultaimaurl' => 'Consultaimaurl',
+            'persona.FullName' => 'Paciente',
+            'modulo.NombreModulo' => 'Modulo',
+            'enfermedad.Nombre' => 'Enfermedad',
         ];
     }
 

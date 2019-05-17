@@ -60,15 +60,16 @@ class Enfermeriaprocedimiento extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'IdEnfermeriaProcedimiento' => 'Id Enfermeria Procedimiento',
-            'IdPersona' => 'Id Persona',
-            'FechaProcedimiento' => 'Fecha Procedimiento',
+            'IdEnfermeriaProcedimiento' => 'ID',
+            'IdPersona' => 'Paciente',
+            'FechaProcedimiento' => 'Fecha',
             'Observaciones' => 'Observaciones',
-            'IdMotivoProcedimiento' => 'Id Motivo Procedimiento',
-            'IdUsuario' => 'Id Usuario',
-            'IdModulo' => 'Id Modulo',
+            'IdMotivoProcedimiento' => 'Motivo',
+            'IdUsuario' => 'Medico',
+            'IdModulo' => 'Modulo',
             'Estado' => 'Estado',
             'Procedimientoimaurl' => 'Procedimientoimaurl',
+
         ];
     }
 

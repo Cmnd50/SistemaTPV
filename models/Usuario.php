@@ -72,6 +72,8 @@ class Usuario extends \yii\db\ActiveRecord
             'Activo' => 'Activo',
             'IdPuesto' => 'Puesto',
             'FechaIngreso' => 'Fecha Ingreso',
+            'fullName' => Yii::t('app', 'Full Name'),
+            'fullName' => 'Medico'
         ];
     }
 

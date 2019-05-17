@@ -23,26 +23,16 @@
   ]);?>
 <?php endif; ?> <?php
 
-include '../include/dbconnect.php';
+
 
 use yii\helpers\Html;
 use yii\grid\GridView;
 
 /* @var $this yii\web\View */
-/* @var $searchModel app\models\ConsultaSearch */
+/* @var $searchModel app\models\ProcedimientoSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-
-
-// CONSULTA PARA OBTENER EL NOMBRE DEL USUARIO
-    $queryUsuarios = "SELECT concat(u.Nombres,' ',u.Apellidos ) as 'NOMBRE' FROM consulta c 
-      INNER JOIN usuario u on c.IdUsuario = u.IdUsuario";
-    $resultadoUsuarios = $mysqli->query($queryUsuarios);
-    while ($test = $resultadoUsuarios->fetch_assoc()) {
-        $IdUsuarios = $test['NOMBRE'];
-    }
-
-$this->title = 'Administrador de Consultas';
+$this->title = 'Administrador de Procedimientos';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 </br>
@@ -58,40 +48,27 @@ $this->params['breadcrumbs'][] = $this->title;
                   <?php echo $this->render('_search', ['model' => $searchModel]); ?>
                                     <?= GridView::widget([
                       'dataProvider' => $dataProvider,
-                    'columns' => [
+'columns' => [
                         ['class' => 'yii\grid\SerialColumn'],
-                          'IdConsulta',
+                          'IdEnfermeriaProcedimiento',
                           [
                             'attribute'=>'IdPersona',
                             'value'=>'persona.FullName',
                           ],
-                          'FechaConsulta',
+                          'FechaProcedimiento',
                           // 'IdUsuario',
-
+                          [
+                            'attribute'=>'IdUsuario',
+                            'value'=>'usuario.FullName',
+                          ],
                           [
                             'attribute'=>'IdModulo',
                             'value'=>'modulo.NombreModulo',
                           ],
-                          //'Diagnostico:ntext',
-                          // 'Comentarios:ntext',
-                          // 'Otros:ntext',
-                          // 'IdEnfermedad',
-                          // 'FechaConsulta',
-                          // 'Activo',
-                          // 'IdEstado',
-                          // 'Status',
-                          // 'EstadoNutricional:ntext',
-                          // 'CirugiasPrevias:ntext',
-                          // 'MedicamentosActuales:ntext',
-                          // 'ExamenFisica:ntext',
-                          // 'PlanTratamiento:ntext',
-                          // 'FechaProxVisita',
-                          // 'Alergias:ntext',
-                          // 'Consultaimaurl',
-                          ['class' => 'yii\grid\ActionColumn',
-                           'options' => ['style' => 'width:100px;'],
-                           'template' => " {view} {update} {delete} "
-                          ],
+                              ['class' => 'yii\grid\ActionColumn',
+                               'options' => ['style' => 'width:100px;'],
+                               'template' => " {view} {update} {delete} "
+                              ],
                           ],
                       ]); ?>
                                   </table>
