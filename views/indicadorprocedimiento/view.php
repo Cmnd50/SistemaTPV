@@ -5,8 +5,8 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model app\models\Indicadorprocedimiento */
 
-$this->title = $model->IdIndicadorProcedimiento;
-$this->params['breadcrumbs'][] = ['label' => 'Indicadorprocedimientos', 'url' => ['index']];
+$this->title = 'Signos Vitales de Procedimiento '.$model->IdConsulta;
+$this->params['breadcrumbs'][] = ['label' => 'Signos Vitales de Procedimiento', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 </br>
@@ -72,25 +72,34 @@ $this->params['breadcrumbs'][] = $this->title;
                     'model' => $model,
                     'attributes' => [
                         'IdIndicadorProcedimiento',
-            'IdEnfermeriaProcedimiento',
-            'Peso',
-            'UnidadPeso',
-            'Altura',
-            'UnidadAltura',
-            'Temperatura',
-            'UnidadTemperatura',
-            'Pulso',
-            'PresionMax',
-            'PresionMin',
-            'Observaciones:ntext',
-            'PeriodoMeunstral',
-            'Glucotex',
-            'PC',
-            'PT',
-            'PA',
-            'FR',
-            'PAP',
-            'Motivo:ntext',
+                        'IdEnfermeriaProcedimiento',
+                        'Peso',
+                        [
+                         'attribute' => 'UnidadPeso',
+                         'value' => (($model->UnidadPeso ==1) ? "KG": (($model->UnidadPeso ==2)? "LB" : "General Voucher")),
+                        ],
+                        'Altura',
+                        [
+                         'attribute' => 'UnidadAltura',
+                         'value' => (($model->UnidadAltura ==1) ? "MTS": (($model->UnidadAltura ==2)? "CMS" : "General Voucher")),
+                        ],
+                        'Temperatura',
+                        [
+                         'attribute' => 'UnidadTemperatura',
+                         'value' => (($model->UnidadTemperatura ==1) ? "C": (($model->UnidadTemperatura ==2)? "F" : "General Voucher")),
+                        ],
+                        'Pulso',
+                        'PresionMax',
+                        'PresionMin',
+                        'Observaciones:ntext',
+                        'PeriodoMeunstral',
+                        'Glucotex',
+                        'PC',
+                        'PT',
+                        'PA',
+                        'FR',
+                        'PAP',
+                        'Motivo:ntext',
                     ],
                 ]) ?>
             </table>

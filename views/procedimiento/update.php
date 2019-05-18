@@ -7,7 +7,7 @@ use yii\helpers\Html;
 
 $this->title = 'Actualizar Procedimiento Codigo:' . $model->IdEnfermeriaProcedimiento;
 $this->params['breadcrumbs'][] = ['label' => 'Procedimientos', 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => 'Procedimiento: ' .$model->IdEnfermeriaProcedimiento, 'url' => ['view', 'id' => $model->IdEnfermeriaProcedimiento]];
+$this->params['breadcrumbs'][] = ['label' => 'Procedimiento: ' .$model->IdEnfermeriaProcedimiento ' de '. $model->persona->fullName, 'url' => ['view', 'id' => $model->IdEnfermeriaProcedimiento]];
 $this->params['breadcrumbs'][] = 'Actualizar';
 ?>
 </br>

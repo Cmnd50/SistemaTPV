@@ -15,15 +15,11 @@ use yii\widgets\ActiveForm;
         'method' => 'get',
     ]); ?>
 
-    <?= $form->field($model, 'IdIndicadorProcedimiento') ?>
+
 
     <?= $form->field($model, 'IdEnfermeriaProcedimiento') ?>
 
-    <?= $form->field($model, 'Peso') ?>
 
-    <?= $form->field($model, 'UnidadPeso') ?>
-
-    <?= $form->field($model, 'Altura') ?>
 
     <?php // echo $form->field($model, 'UnidadAltura') ?>
 

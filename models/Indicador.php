@@ -63,14 +63,14 @@ class Indicador extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'IdIndicador' => 'Id Indicador',
-            'IdConsulta' => 'Id Consulta',
+            'IdIndicador' => 'ID Indicador',
+            'IdConsulta' => 'ID de Consulta',
             'Peso' => 'Peso',
-            'UnidadPeso' => 'Unidad Peso',
+            'UnidadPeso' => 'Unidad',
             'Altura' => 'Altura',
-            'UnidadAltura' => 'Unidad Altura',
+            'UnidadAltura' => 'Unidad',
             'Temperatura' => 'Temperatura',
-            'UnidadTemperatura' => 'Unidad Temperatura',
+            'UnidadTemperatura' => 'Unidad',
             'Pulso' => 'Pulso',
             'PresionMax' => 'Presion Max',
             'PresionMin' => 'Presion Min',
