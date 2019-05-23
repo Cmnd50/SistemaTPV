@@ -63,8 +63,8 @@ class Usuario extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'IdUsuario' => 'Id Usuario',
-            'InicioSesion' => 'Inicio Sesion',
+            'IdUsuario' => 'ID',
+            'InicioSesion' => 'Usuario',
             'Nombres' => 'Nombres',
             'Apellidos' => 'Apellidos',
             'Correo' => 'Correo',
@@ -74,6 +74,7 @@ class Usuario extends \yii\db\ActiveRecord
             'FechaIngreso' => 'Fecha Ingreso',
             'fullName' => Yii::t('app', 'Full Name'),
             'fullName' => 'Medico'
+            
         ];
     }
 

@@ -13,7 +13,7 @@ require_once("../include/database.php");
              $menu = $this->_db->query("select distinct m.IdMenu ,DescripcionMenu, DescripcionMenuIng, Icono from menu m
                   inner join menuusuario mu on m.IdMenu = mu.IdMenu
                   inner join usuario u on mu.IdUsuario = u.IdUsuario
-                  where m.IdMenu <> 11 and m.IdMenu <> 14 and m.IdMenu between 1 and 30 and m.TipoMenu = 'Menu' and u.InicioSesion = '" . $_SESSION['user'] . "'
+                  where m.IdMenu <> 11 and mu.MenuUsuarioActivo = 1 and m.IdMenu <> 14 and  m.IdMenu between 1 and 30 and m.TipoMenu = 'Menu' and u.InicioSesion = '" . $_SESSION['user'] . "'
                   order by m.Orden
                   ") ;
              return $menu->fetchAll();
@@ -25,7 +25,7 @@ require_once("../include/database.php");
                 inner join menudetalle me on mu.IdMenuDetalle = me.IdMenuDetalle
                 inner join menu m on me.IdMenu = m.IdMenu
                 inner join usuario u on mu.IdUsuario = u.IdUsuario
-                where mu.IdMenu = $id and mu.TipoPermiso = 1 and u.InicioSesion = '" . $_SESSION['user'] . "'") ;
+                where mu.IdMenu = $id and mu.MenuUsuarioActivo = 1 and mu.TipoPermiso = 1 and u.InicioSesion = '" . $_SESSION['user'] . "'") ;
              return $menu -> fetchAll();
       }
    }

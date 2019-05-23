@@ -23,9 +23,9 @@ $this->params['breadcrumbs'][] = $this->title;
           <div class="ibox-content">
               <table class="table table-hover">
                   <?php echo $this->render('_search', ['model' => $searchModel]); ?>
-                                    <?= GridView::widget([
+                <?= GridView::widget([
                       'dataProvider' => $dataProvider,
-'columns' => [
+                        'columns' => [
                         ['class' => 'yii\grid\SerialColumn'],
                                    [
                                       'attribute'=>'IdUsuario',
@@ -53,7 +53,7 @@ $this->params['breadcrumbs'][] = $this->title;
                               ],
                           ],
                       ]); ?>
-                                  </table>
+              </table>
           </div>
       </div>
     </div>

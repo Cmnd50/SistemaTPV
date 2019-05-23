@@ -23,7 +23,7 @@ use kartik\depdrop\DepDrop;
   <div class="form-group">
     <?php
        echo $form->field($model, 'IdUsuario')->widget(Select2::classname(), [
-           'data' => ArrayHelper::map(Usuario::find()->where(['Activo' => 1])->andWhere(['AmilatAdmin' => 0])->all(), 'IdUsuario', 'InicioSesion'),
+           'data' => ArrayHelper::map(Usuario::find()->where(['Activo' => 1])->all(), 'IdUsuario', 'InicioSesion'),
            'language' => 'es',
            'options' => ['placeholder' => ' Selecione ...'],
            'pluginOptions' => [
@@ -34,7 +34,7 @@ use kartik\depdrop\DepDrop;
 
        <?php
        $catList=ArrayHelper::map(app\models\Menu::find()->where([
-                       '>','IdMenu', 2])->all(), 'IdMenu', 'DescripcionMenu' );
+                       '>','IdMenu', 0])->all(), 'IdMenu', 'DescripcionMenu' );
        echo $form->field($model, 'IdMenu')->dropDownList($catList, ['id'=>'DescripcionMenu']);
 
        ?>
