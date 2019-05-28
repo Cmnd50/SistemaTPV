@@ -17,3 +17,16 @@ delete from receta;
 delete from consulta;
 delete from test;
 delete from persona;
+
+
+
+-- ELIMINAR LINEAS DUPLICADAS
+SELECT concat(dui,' ',nombres,' ',Apellidos) as 'NOMBRE', COUNT(*) Total
+FROM temporalpacientes
+GROUP BY concat(dui,' ',nombres,' ',Apellidos)
+HAVING COUNT(*) > 1;
+
+
+DELETE t1 FROM temporalpacientes t1
+INNER JOIN temporalpacientes t2 
+WHERE t1.IdTempPaciente > t2.IdTempPaciente AND t1.Dui = t2.Dui; 

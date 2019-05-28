@@ -28,6 +28,7 @@ if(isset($_POST['hidden_id']))
 {
   $activo = $_POST['activo'];
   $id = $_POST['hidden_id'];
+  
  for($count = 0; $count < count($id); $count++)
  {
   $data = array(

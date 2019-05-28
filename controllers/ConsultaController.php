@@ -12,6 +12,8 @@ use yii\filters\VerbFilter;
 /**
  * ConsultaController implements the CRUD actions for Consulta model.
  */
+
+
 class ConsultaController extends Controller
 {
     /**
@@ -114,6 +116,9 @@ class ConsultaController extends Controller
      */
     public function actionDelete($id)
     {
+
+
+
         $this->findModel($id)->delete();
         Yii::$app->session->setFlash('error', "User created successfully.");
         return $this->redirect(['index']);
