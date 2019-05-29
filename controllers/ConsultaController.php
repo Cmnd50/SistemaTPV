@@ -3,11 +3,14 @@
 namespace app\controllers;
 
 use Yii;
+
 use app\models\Consulta;
 use app\models\ConsultaSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\helpers\BaseFileHelper;
+use yii\helpers\FileHelper;
 
 /**
  * ConsultaController implements the CRUD actions for Consulta model.
@@ -116,11 +119,11 @@ class ConsultaController extends Controller
      */
     public function actionDelete($id)
     {
-
-
-
+        $espacio = "";
+        $model = $this->findModel($id);
         $this->findModel($id)->delete();
         Yii::$app->session->setFlash('error', "User created successfully.");
+        FileHelper::removeDirectory('Y:'.$model->Consultaimaurl);
         return $this->redirect(['index']);
     }
 

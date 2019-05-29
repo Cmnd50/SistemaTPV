@@ -3,8 +3,8 @@
 namespace app\controllers;
 
 use Yii;
-use app\models\Enfermeriaprocedimiento;
-use app\models\ProcedimientoSearch;
+use app\models\Receta;
+use app\models\RecetasSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -12,9 +12,9 @@ use yii\helpers\BaseFileHelper;
 use yii\helpers\FileHelper;
 
 /**
- * ProcedimientoController implements the CRUD actions for Enfermeriaprocedimiento model.
+ * RecetasController implements the CRUD actions for Receta model.
  */
-class ProcedimientoController extends Controller
+class RecetasController extends Controller
 {
     /**
      * {@inheritdoc}
@@ -32,12 +32,12 @@ class ProcedimientoController extends Controller
     }
 
     /**
-     * Lists all Enfermeriaprocedimiento models.
+     * Lists all Receta models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new ProcedimientoSearch();
+        $searchModel = new RecetasSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -47,7 +47,7 @@ class ProcedimientoController extends Controller
     }
 
     /**
-     * Displays a single Enfermeriaprocedimiento model.
+     * Displays a single Receta model.
      * @param integer $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
@@ -60,13 +60,13 @@ class ProcedimientoController extends Controller
     }
 
     /**
-     * Creates a new Enfermeriaprocedimiento model.
+     * Creates a new Receta model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new Enfermeriaprocedimiento();
+        $model = new Receta();
 
         if ($model->load(Yii::$app->request->post())) {
           if ($model->save()) {
@@ -74,7 +74,7 @@ class ProcedimientoController extends Controller
             } else {
               Yii::$app->session->setFlash('error', "User created successfully.");
             }
-            return $this->redirect(['view', 'id' => $model->IdEnfermeriaProcedimiento]);
+            return $this->redirect(['view', 'id' => $model->IdReceta]);
         }
 
         return $this->render('create', [
@@ -83,7 +83,7 @@ class ProcedimientoController extends Controller
     }
 
     /**
-     * Updates an existing Enfermeriaprocedimiento model.
+     * Updates an existing Receta model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -99,7 +99,7 @@ class ProcedimientoController extends Controller
             } else {
               Yii::$app->session->setFlash('warning', "User created successfully.");
             }
-            return $this->redirect(['view', 'id' => $model->IdEnfermeriaProcedimiento]);
+            return $this->redirect(['view', 'id' => $model->IdReceta]);
         }
 
         return $this->render('update', [
@@ -108,32 +108,32 @@ class ProcedimientoController extends Controller
     }
 
     /**
-     * Deletes an existing Enfermeriaprocedimiento model.
+     * Deletes an existing Receta model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-     public function actionDelete($id)
+    public function actionDelete($id)
     {
         $espacio = "";
         $model = $this->findModel($id);
         $this->findModel($id)->delete();
         Yii::$app->session->setFlash('error', "User created successfully.");
-        FileHelper::removeDirectory('Y:'.$model->Procedimientoimaurl);
+        FileHelper::removeDirectory('Y:'.$model->Consultaimaurl);
         return $this->redirect(['index']);
     }
 
     /**
-     * Finds the Enfermeriaprocedimiento model based on its primary key value.
+     * Finds the Receta model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Enfermeriaprocedimiento the loaded model
+     * @return Receta the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Enfermeriaprocedimiento::findOne($id)) !== null) {
+        if (($model = Receta::findOne($id)) !== null) {
             return $model;
         }
 

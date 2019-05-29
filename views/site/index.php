@@ -95,6 +95,15 @@ if (!empty($_SESSION['user']))
             }
 
 
+           $queryfichaconsulta4 = "SELECT COUNT(*) as 'TOTAL' from persona";
+
+            $resultadofichaconsulta4 = $mysqli->query($queryfichaconsulta4);
+            while ($test = $resultadofichaconsulta4->fetch_assoc())
+            {
+                $TOTAL = $test['TOTAL'];
+            }
+
+
 $this->title = 'Sistema TPV';
 ?>
 
@@ -105,6 +114,24 @@ $this->title = 'Sistema TPV';
   </h1>
     <div class="row animated fadeInDown">
         <div class="col-lg-6">
+        <div class="row animated fadeInDown">
+        <div class="col-lg-6">
+          <div class="widget style1 blue-bg">
+                  <div class="row">
+                      <div class="col-xs-4 text-center">
+                          <i class="fa fa-hospital-o fa-5x"></i>
+                      </div>
+                      <div class="col-xs-8 text-right">
+                          <span id='widget25'></span>
+                          <h2 class="font-bold"><?php echo $TOTAL; ?></h2>
+                      </div>
+                  </div>
+          </div>
+        </div>
+        <div class="col-lg-6">
+
+        </div>
+        </div>
         <div class="row animated fadeInDown">
         <div class="col-lg-6">
           <div class="widget style1 blue-bg">
@@ -338,6 +365,7 @@ $(document).ready(function() {
        $("#widget6").text('Hombre Atendido');
        $("#widget7").text('Mujer Atendida');
        $("#widget8").text('Hombre Atendido');
+       $("#widget25").text('Expedientes Ingresados');
        $("#calendarname").text('Calendario');
        $("#").text('Adminstración de Pacientes y Laboratorio');
        $("#").text('Adminstración de Pacientes y Laboratorio');
@@ -355,6 +383,7 @@ $(document).ready(function() {
        $("#widget6").text('Men Served');
        $("#widget7").text('Women Served');
        $("#widget8").text('Men Served');
+        $("#widget25").text('Expedientes Ingresados');
        $("#calendarname").text('Calendar');
        $("#").text('Adminstración de Pacientes y Laboratorio');
        $("#").text('Adminstración de Pacientes y Laboratorio');

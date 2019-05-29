@@ -57,9 +57,9 @@ function eliminar_simbolos($string){
     );
 return $string;
 } 
+
 $persona = $_POST['txtid'];
 $fecha = $_POST['txtFechaConsulta'];
-
 
 //OBTENER CONFIGURACION GENERAL
 $queryobtenerconfig = "SELECT IpServidora, NombreCarpeta, UnidadServer FROM configuraciongeneral WHERE IdConfiguracionGeneral = 1";
@@ -71,8 +71,6 @@ while ($test = $resultadoobtenerconfig->fetch_assoc()) {
            $nombrecarpeta = $test['NombreCarpeta'];
        }
 
-//$IdUsuario = 3;
-
 //OBTENER USUARIO MIGRADO
 $queryobtenerusiario = "SELECT IdUsuario FROM usuario WHERE InicioSesion = 'Migrado'";
 
@@ -81,20 +79,20 @@ while ($test = $resultadoobtenerusiario->fetch_assoc()) {
            $IdUsuario = $test['IdUsuario'];
        }
 
- //OBTENER ID DEL MODULO
-$queryobtenermodulo = "SELECT IdModulo FROM modulo WHERE NombreModulo = 'Pediatria'";
-
-$resultadoobtenermodulo = $mysqli->query($queryobtenermodulo);
-while ($test = $resultadoobtenermodulo->fetch_assoc()) {
-           $IdModulo = $test['IdModulo'];
-       }      
-
 //OBTENER NOMBRE CON CODIGO **************************************
 $queryobtenernombrecodigo = "SELECT CONCAT(Categoria,'',replace(FechaNacimiento,'-',''),' ',Nombres,' ',Apellidos) AS 'Nombre' FROM persona WHERE IdPersona = '$persona'";
 
 $resultadoobtenernombrecodigo = $mysqli->query($queryobtenernombrecodigo);
 while ($test = $resultadoobtenernombrecodigo->fetch_assoc()) {
            $codigo = $test['Nombre'];
+       }
+
+ //OBTENER NOMBRE CON CATEGORIA **************************************
+$queryobtenernombrecategoria = "SELECT CONCAT(Categoria,' ',Nombres,' ',Apellidos) AS 'Nombre' FROM persona WHERE IdPersona = '$persona'";
+
+$resultadoobtenernombrecategoria = $mysqli->query($queryobtenernombrecategoria);
+while ($test = $resultadoobtenernombrecategoria->fetch_assoc()) {
+           $nombrecategoria = eliminar_simbolos($test['Nombre']);
        }
 
 //OBTENER NOMBRE COMPLETO **************************************
@@ -106,41 +104,28 @@ while ($test = $resultadoobtenernombre->fetch_assoc()) {
        }
 
 
-  //OBTENER NOMBRE CON CATEGORIA **************************************
-$queryobtenernombrecategoria = "SELECT CONCAT(Categoria,' ',Nombres,' ',Apellidos) AS 'Nombre' FROM persona WHERE IdPersona = '$persona'";
-
-$resultadoobtenernombrecategoria = $mysqli->query($queryobtenernombrecategoria);
-while ($test = $resultadoobtenernombrecategoria->fetch_assoc()) {
-           $nombrecategoria = eliminar_simbolos($test['Nombre']);
-       }
-
-
 //DARLE FORMATO AL NOMBRE QUE TENDRA EL PDF **************************************
-$NombreArchivo = "Consulta " . str_replace('-','',$fecha).'';
+$NombreArchivo = "Receta " . str_replace('-','',$fecha).'';
 
-//RUTA DE LA CARPETA DONDE SE ALMACENARAN LOS PDFS DE LAS CONSULTAS SEGUN NOMBRE **************************************
-
-//RUTA DE LA CARPETA DONDE SE ALMACENARAN LOS PDFS DE LAS CONSULTAS SEGUN NOMBRE **************************************
+//RUTA DE LA CARPETA DONDE SE ALMACENARAN LOS PDFS DE LAS RECETAS SEGUN NOMBRE **************************************
 
 $rutapersona = $nombrecarpeta.'/'.$nombrecategoria;
-$ruta = $nombrecarpeta.'/'.$nombrecategoria.'/Pediatria/'.$NombreArchivo;
-$carpeta = '//'.$ip.'/'.$unidad.'/'.$nombrecarpeta.'/'.$nombrecategoria.'/Pediatria/';
+$ruta = $nombrecarpeta.'/'.$nombrecategoria.'/Recetas/'.$NombreArchivo;
+$carpeta = '//'.$ip.'/'.$unidad.'/'.$nombrecarpeta.'/'.$nombrecategoria.'/Recetas/';
 $subcarpeta = $carpeta . $NombreArchivo;
-
-//VALIDACION PARA TOMAR EL ARCHIVO PDF **************************************
 
 if (!file_exists($carpeta)) {
     mkdir($carpeta, 0777, true);
 
-	    $insertexpediente2 = "UPDATE persona SET RutaCarpeta='$rutapersona'  WHERE IdPersona='$persona'";
+	     $insertexpediente2 = "UPDATE persona SET RutaCarpeta='$rutapersona'  WHERE IdPersona='$persona'";
 	    $resultadoinsertmovimiento2 = $mysqli->query($insertexpediente2);
 
 	    	if(!file_exists($subcarpeta)){
 	    		mkdir($subcarpeta, 0777, true);
 
-    		        $insertconsultaurlima = "INSERT INTO consulta(IdPersona,IdModulo,FechaConsulta, Activo, IdEstado,Status, Consultaimaurl,IPServer,UnidadServer,IdUsuario)"
-                     				  . "VALUES ('$persona','$IdModulo','$fecha',0,2,1,'$ruta','$ip','$unidad','$IdUsuario')";
-									$resultadoinsertconsultaurlima = $mysqli->query($insertconsultaurlima);
+    		        $insertconsultaurlima = "INSERT INTO receta(IdPersona,Fecha, Activo, Consultaimaurl,IPServer,UnidadServer,IdUsuario)"
+                       . "VALUES ('$persona','$fecha',1,'$ruta','$ip','$unidad','$IdUsuario')";
+					$resultadoinsertconsultaurlima = $mysqli->query($insertconsultaurlima);
 					
 					foreach($_FILES["file"]['tmp_name'] as $key => $tmp_name)
 						{
@@ -170,10 +155,10 @@ if (!file_exists($carpeta)) {
 							}
 						}
 	    	}
-	    	else{
+	    		    	else{
 		//CONTADOR DE CONSULTAS **************************************
-			$queryobtenercontador = "SELECT COUNT(IdConsulta) as Contador FROM consulta WHERE IdModulo =  '$IdModulo' and FechaConsulta = '$fecha' and IdPersona = '$persona'";
-
+			$queryobtenercontador = "SELECT count(*) as 'Contador' FROM 
+										receta WHERE Fecha = '$fecha' and IdPersona = '$persona'";
 
 							$resultadoobtenercontador = $mysqli->query($queryobtenercontador);
 							while ($test = $resultadoobtenercontador->fetch_assoc()) {
@@ -184,10 +169,10 @@ if (!file_exists($carpeta)) {
 	    					$subcarpeta = $carpeta . $NombreArchivo.'('.$contador.')';
 
 	    			    	mkdir($subcarpeta, 0777, true);
-							$ruta = $nombrecarpeta.'/'.$nombrecategoria.'/Pediatria/'.$NombreArchivo.'('.$contador.')';
-    		        		$insertconsultaurlima = "INSERT INTO consulta(IdPersona,IdModulo,FechaConsulta, Activo, IdEstado,Status, Consultaimaurl,IPServer,UnidadServer,IdUsuario)"
-                     				  . "VALUES ('$persona','$IdModulo','$fecha',0,2,1,'$ruta','$ip','$unidad','$IdUsuario')";
-									$resultadoinsertconsultaurlima = $mysqli->query($insertconsultaurlima);
+							$ruta = $nombrecarpeta.'/'.$nombrecategoria.'/Recetas/'.$NombreArchivo.'('.$contador.')';
+    		        		$insertconsultaurlima = "INSERT INTO receta(IdPersona,Fecha, Activo, Consultaimaurl,IPServer,UnidadServer,IdUsuario)"
+                       . "VALUES ('$persona','$fecha',1,'$ruta','$ip','$unidad','$IdUsuario')";
+								$resultadoinsertconsultaurlima = $mysqli->query($insertconsultaurlima);
 					
 					foreach($_FILES["file"]['tmp_name'] as $key => $tmp_name)
 						{
@@ -219,14 +204,15 @@ if (!file_exists($carpeta)) {
 							}
 						}
 	    	}
+
 }
 else{
     	if(!file_exists($subcarpeta)){
 	    		mkdir($subcarpeta, 0777, true);
 
-	    		   $insertconsultaurlima = "INSERT INTO consulta(IdPersona,IdModulo,FechaConsulta, Activo, IdEstado,Status, Consultaimaurl,IPServer,UnidadServer,IdUsuario)"
-                     				  . "VALUES ('$persona','$IdModulo','$fecha',0,2,1,'$ruta','$ip','$unidad','$IdUsuario')";
-									$resultadoinsertconsultaurlima = $mysqli->query($insertconsultaurlima);
+	    		   $$insertconsultaurlima = "INSERT INTO receta(IdPersona,Fecha, Activo, Consultaimaurl,IPServer,UnidadServer,IdUsuario)"
+                       . "VALUES ('$persona','$fecha',1,'$ruta','$ip','$unidad','$IdUsuario')";
+					$resultadoinsertconsultaurlima = $mysqli->query($insertconsultaurlima);
 
 					foreach($_FILES["file"]['tmp_name'] as $key => $tmp_name)
 						{
@@ -248,7 +234,6 @@ else{
 								//Movemos y validamos que el archivo se haya cargado correctamente
 								//El primer campo es el origen y el segundo el destino
 								if(move_uploaded_file($source, $target_path)) {	
-									echo $insertconsultaurlima;
 									
 									} else {	
 									
@@ -257,10 +242,10 @@ else{
 							}
 				 }
 	    	}  
-	    		    	else{
+	    	else{
 		//CONTADOR DE CONSULTAS **************************************
-			$queryobtenercontador = "SELECT COUNT(IdConsulta) as Contador FROM consulta WHERE IdModulo =  '$IdModulo' and FechaConsulta = '$fecha' and IdPersona = '$persona'";
-
+			$queryobtenercontador = "SELECT count(*) as 'Contador' FROM 
+										receta WHERE Fecha = '$fecha' and IdPersona = '$persona'";
 
 							$resultadoobtenercontador = $mysqli->query($queryobtenercontador);
 							while ($test = $resultadoobtenercontador->fetch_assoc()) {
@@ -271,11 +256,10 @@ else{
 	    					$subcarpeta = $carpeta . $NombreArchivo.'('.$contador.')';
 
 	    			    	mkdir($subcarpeta, 0777, true);
-							$ruta = $nombrecarpeta.'/'.$nombrecategoria.'/Pediatria/'.$NombreArchivo.'('.$contador.')';
-    		        		$insertconsultaurlima = "INSERT INTO consulta(IdPersona,IdModulo,FechaConsulta, Activo, IdEstado,Status, Consultaimaurl,IPServer,UnidadServer,IdUsuario)"
-                     				  . "VALUES ('$persona','$IdModulo','$fecha',0,2,1,'$ruta','$ip','$unidad','$IdUsuario')";
-									$resultadoinsertconsultaurlima = $mysqli->query($insertconsultaurlima);
-					
+							$ruta = $nombrecarpeta.'/'.$nombrecategoria.'/Recetas/'.$NombreArchivo.'('.$contador.')';
+    		        		$insertconsultaurlima = "INSERT INTO receta(IdPersona,Fecha, Activo, Consultaimaurl,IPServer,UnidadServer,IdUsuario)"
+                       . "VALUES ('$persona','$fecha',1,'$ruta','$ip','$unidad','$IdUsuario')";
+								$resultadoinsertconsultaurlima = $mysqli->query($insertconsultaurlima);
 					foreach($_FILES["file"]['tmp_name'] as $key => $tmp_name)
 						{
 							//Validamos que el archivo exista

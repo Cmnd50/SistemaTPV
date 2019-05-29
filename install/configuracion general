@@ -49,6 +49,37 @@ INSERT INTO `db_clinica`.`menuusuario` (`IdMenuUsuario`, `IdMenuDetalle`, `MenuU
 
 
 
+------------------------------------+-------------------------------------------------------------------------------------------+------------------------------------
+ALTER TABLE `db_clinica`.`receta` 
+CHANGE COLUMN `Activo` `Activo` INT(1) NULL DEFAULT NULL ,
+ADD COLUMN `Comentarios` VARCHAR(1000) NULL AFTER `Activo`;
+
+INSERT INTO `db_clinica`.`menudetalle` (`IdMenuDetalle`, `IdMenu`, `DescripcionMenuDetalle`, `Url`, `Icono`, `DescripcionMenuDetalleIng`) VALUES ('29', '12', 'RECETAS', '../recetas/index', 'fa fa-medkit', 'RECETAS');
+
+INSERT INTO `db_clinica`.`menuusuario` (`IdMenuUsuario`, `IdMenuDetalle`, `MenuUsuarioActivo`, `IdUsuario`, `IdMenu`, `TipoPermiso`) VALUES ('30', '29', '1', '1', '12', '1');
+
+ALTER TABLE `db_clinica`.`receta` 
+ADD COLUMN `Consultaimaurl` VARCHAR(400) NULL DEFAULT NULL AFTER `Comentarios`,
+ADD COLUMN `IPServer` VARCHAR(45) NULL DEFAULT NULL AFTER `Consultaimaurl`,
+ADD COLUMN `UnidadServer` VARCHAR(45) NULL DEFAULT NULL AFTER `IPServer`;
+
+INSERT INTO `db_clinica`.`usuario` (`IdUsuario`, `InicioSesion`, `Nombres`, `Apellidos`, `Clave`, `Activo`, `IdPuesto`, `FechaIngreso`, `AmilatAdmin`, `Idioma`, `Estado`) VALUES ('3', 'Migrado', 'Migrado', 'Migrado', '827ccb0eea8a706c4c34a16891f84e7b', '1', '1', '2019-05-29', '1', '1', 'Desconectado');
+
+ALTER TABLE `db_clinica`.`receta` 
+DROP FOREIGN KEY `fk_receta_consulta1_idx`;
+ALTER TABLE `db_clinica`.`receta` 
+CHANGE COLUMN `IdConsulta` `IdConsulta` INT(11) NULL ;
+ALTER TABLE `db_clinica`.`receta` 
+ADD CONSTRAINT `fk_receta_consulta1_idx`
+  FOREIGN KEY (`IdConsulta`)
+  REFERENCES `db_clinica`.`consulta` (`IdConsulta`)
+  ON DELETE NO ACTION
+  ON UPDATE NO ACTION;
+
+
+
+
+
 
 
 

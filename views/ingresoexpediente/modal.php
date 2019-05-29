@@ -1290,13 +1290,13 @@
         
                          <div class="modal-header">
                               <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                              <i class="fa fa-file-image-o modal-icon"></i>
+                              <i class="fa fa-file-pdf-o modal-icon"></i>
                               <h4 class="modal-title" id=''>CARGA DE PDF</h4>
                               <small id=''>ESCANEO DE CONSULTAS</small>
                            </div>
                            <div class="modal-body ">
                               <div class="form-group">
-                                 <label for="inputEmail3" class="col-sm-2 control-label" id=''>Fecha de Consulta</label>
+                                 <label for="inputEmail3" class="col-sm-2 control-label" id=''>Fecha</label>
                                  <div class="col-sm-9"  id="data_3">
                                     <div class="input-group date">
                                        <div class="input-group-addon">
@@ -1340,13 +1340,13 @@
         
                          <div class="modal-header">
                               <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                              <i class="fa fa-file-image-o modal-icon"></i>
+                              <i class="fa fa-file-pdf-o modal-icon"></i>
                               <h4 class="modal-title" id=''>CARGA DE PDF</h4>
                               <small id=''>ESCANEO DE CONSULTAS</small>
                            </div>
                            <div class="modal-body ">
                               <div class="form-group">
-                                 <label for="inputEmail3" class="col-sm-2 control-label" id=''>Fecha de Consulta</label>
+                                 <label for="inputEmail3" class="col-sm-2 control-label" id=''>Fecha</label>
                                  <div class="col-sm-9"  id="data_3">
                                     <div class="input-group date">
                                        <div class="input-group-addon">
@@ -1390,13 +1390,13 @@
         
                          <div class="modal-header">
                               <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                              <i class="fa fa-file-image-o modal-icon"></i>
+                              <i class="fa fa-file-pdf-o modal-icon"></i>
                               <h4 class="modal-title" id=''>CARGA DE PDF</h4>
                               <small id=''>ESCANEO DE PROCEDIMIENTOS</small>
                            </div>
                            <div class="modal-body ">
                               <div class="form-group">
-                                 <label for="inputEmail3" class="col-sm-2 control-label" id=''>Fecha de Consulta</label>
+                                 <label for="inputEmail3" class="col-sm-2 control-label" id=''>Fecha</label>
                                  <div class="col-sm-9"  id="data_3">
                                     <div class="input-group date">
                                        <div class="input-group-addon">
@@ -1440,13 +1440,63 @@
         
                          <div class="modal-header">
                               <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                              <i class="fa fa-file-image-o modal-icon"></i>
+                              <i class="fa fa-file-pdf-o modal-icon"></i>
                               <h4 class="modal-title" id=''>CARGA DE PDF</h4>
                               <small id=''>ESCANEO DE PEDIATRIA</small>
                            </div>
                            <div class="modal-body ">
                               <div class="form-group">
-                                 <label for="inputEmail3" class="col-sm-2 control-label" id=''>Fecha de Consulta</label>
+                                 <label for="inputEmail3" class="col-sm-2 control-label" id=''>Fecha</label>
+                                 <div class="col-sm-9"  id="data_3">
+                                    <div class="input-group date">
+                                       <div class="input-group-addon">
+                                          <i class="fa fa-user"></i>
+                                       </div>
+                                       <input type="text" class="form-control" name="txtFechaConsulta" id="" required="">
+                                    </div>
+                                 </div>
+                              </div>
+                              <div class="form-group" >
+                              <div class="col-sm-5"><input type="text" hidden="hidden" name="txtid" value="<?php echo $idpersona ?>">  </div>
+                              <label for="inputEmail3" class="col-sm-2 control-label" id=''></label>
+
+                               <input type="file" class="form-control" id="file[]" name="file[]" multiple="" required="">
+                              </div>
+                           </div>
+                           <div class="modal-footer">
+                              <div class="col-sm-3">
+                              </div>
+                              <div class="col-sm-3">
+                              </div>
+                              <div class="col-sm-2">
+                              <button type="button" class="btn btn-danger" id="btn-cerrarmodal" data-dismiss="modal"  id=''>Cerrar</button>
+                              </div>
+                              <div class="col-sm-2">
+                                 <button type="submit" class="btn btn-primary" value="submitExamen" name="submitExamen" id=''>Guardar Cambios</button>
+                              </div>
+                           </div>
+                        </form>
+                     </div>
+                  </div>
+               </div>
+         </div>
+
+                  <!-- MODAL ASIGNAR IMAGEN DE GINECOLOGIA -->
+         <div class="modal inmodal" id="modalCargarGinecologiaIma" tabindex="-1" role="dialog"  aria-hidden="true">
+               <div class="modal-dialog modal-md">
+                  <div class="modal-content animated fadeIn">
+                     <div class="modal-content">
+                        <form class="form-horizontal" method="POST" action="../../views/ingresoexpediente/guardarginecologiaimagen.php"  id="demo-form1" data-parsley-validate="" enctype="multipart/form-data">
+        
+                         <div class="modal-header">
+                              <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                              <i class="fa fa-file-pdf-o modal-icon"></i>
+                              <h4 class="modal-title" id=''>CARGA DE PDF</h4>
+                              <small id=''>ESCANEO DE GINECOLOGIA</small>
+                           </div>
+                           <div class="modal-body ">
+                              <div class="form-group">
+                                 <label for="inputEmail3" class="col-sm-2 control-label" id=''>Fecha</label>
                                  <div class="col-sm-9"  id="data_3">
                                     <div class="input-group date">
                                        <div class="input-group-addon">
@@ -1483,30 +1533,52 @@
 
 
 
-                  <!-- MODAL MOSTRAR IMAGEN DE PEDIATRIA -->
-         <div class="modal inmodal" id="modalMostrarConsultaIma" tabindex="-1" role="dialog"  aria-hidden="true">
-               <div class="modal-dialog modal-lg">
+                  <!-- MODAL ASIGNAR IMAGEN DE RECETAS -->
+         <div class="modal inmodal" id="modalCargarRecetasIma" tabindex="-1" role="dialog"  aria-hidden="true">
+               <div class="modal-dialog modal-md">
                   <div class="modal-content animated fadeIn">
-
+                     <div class="modal-content">
+                        <form class="form-horizontal" method="POST" action="../../views/ingresoexpediente/guardarrecetasimagen.php"  id="demo-form1" data-parsley-validate="" enctype="multipart/form-data">
+        
+                         <div class="modal-header">
+                              <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                              <i class="fa fa-file-pdf-o modal-icon"></i>
+                              <h4 class="modal-title" id=''>CARGA DE PDF</h4>
+                              <small id=''>ESCANEO DE RECETAS</small>
+                           </div>
                            <div class="modal-body ">
                               <div class="form-group">
-                                 <div class="col-sm-9"">
-                                                                         
+                                 <label for="inputEmail3" class="col-sm-2 control-label" id=''>Fecha</label>
+                                 <div class="col-sm-9"  id="data_3">
+                                    <div class="input-group date">
+                                       <div class="input-group-addon">
+                                          <i class="fa fa-user"></i>
+                                       </div>
+                                       <input type="text" class="form-control" name="txtFechaConsulta" id="" required="">
+                                    </div>
+                                 </div>
+                              </div>
+                              <div class="form-group" >
+                              <div class="col-sm-5"><input type="text" hidden="hidden" name="txtid" value="<?php echo $idpersona ?>">  </div>
+                              <label for="inputEmail3" class="col-sm-2 control-label" id=''></label>
+
+                               <input type="file" class="form-control" id="file[]" name="file[]" multiple="" required="">
                               </div>
                            </div>
                            <div class="modal-footer">
-                              <div class="col-sm-6">
+                              <div class="col-sm-3">
                               </div>
                               <div class="col-sm-3">
                               </div>
                               <div class="col-sm-2">
                               <button type="button" class="btn btn-danger" id="btn-cerrarmodal" data-dismiss="modal"  id=''>Cerrar</button>
                               </div>
+                              <div class="col-sm-2">
+                                 <button type="submit" class="btn btn-primary" value="submitExamen" name="submitExamen" id=''>Guardar Cambios</button>
+                              </div>
                            </div>
+                        </form>
                      </div>
                   </div>
                </div>
          </div>
-
-
-

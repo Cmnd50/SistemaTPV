@@ -60,7 +60,7 @@ return $string;
 
 $persona = $_POST['txtid'];
 $fecha = $_POST['txtFechaConsulta'];
-
+//$IdUsuario = 3;
 //OBTENER CONFIGURACION GENERAL
 $queryobtenerconfig = "SELECT IpServidora, NombreCarpeta, UnidadServer FROM configuraciongeneral WHERE IdConfiguracionGeneral = 1";
 
@@ -70,6 +70,16 @@ while ($test = $resultadoobtenerconfig->fetch_assoc()) {
            $unidad = $test['UnidadServer'];
            $nombrecarpeta = $test['NombreCarpeta'];
        }
+
+
+//OBTENER USUARIO MIGRADO
+$queryobtenerconfig = "SELECT IdUsuario FROM usuario WHERE InicioSesion = 'Migrado'";
+
+$resultadoobtenerconfig = $mysqli->query($queryobtenerconfig);
+while ($test = $resultadoobtenerconfig->fetch_assoc()) {
+           $IdUsuario = $test['IdUsuario'];
+       }
+
 
 //OBTENER NOMBRE CON CODIGO **************************************
 $queryobtenernombrecodigo = "SELECT CONCAT(Categoria,'',replace(FechaNacimiento,'-',''),' ',Nombres,' ',Apellidos) AS 'Nombre' FROM persona WHERE IdPersona = '$persona'";
@@ -97,7 +107,7 @@ while ($test = $resultadoobtenernombre->fetch_assoc()) {
 
 
 //DARLE FORMATO AL NOMBRE QUE TENDRA EL PDF **************************************
-$NombreArchivo = "Consulta" . str_replace('-','',$fecha).'';
+$NombreArchivo = "Consulta " . str_replace('-','',$fecha).'';
 
 //RUTA DE LA CARPETA DONDE SE ALMACENARAN LOS PDFS DE LAS CONSULTAS SEGUN NOMBRE **************************************
 
@@ -115,8 +125,8 @@ if (!file_exists($carpeta)) {
 	    	if(!file_exists($subcarpeta)){
 	    		mkdir($subcarpeta, 0777, true);
 
-    		        $insertconsultaurlima = "INSERT INTO enfermeriaprocedimiento(IdPersona,FechaProcedimiento, Estado, Procedimientoimaurl,IPServer,UnidadServer)"
-                       . "VALUES ('$persona','$fecha',1,'$ruta','$ip','$unidad')";
+    		        $insertconsultaurlima = "INSERT INTO enfermeriaprocedimiento(IdPersona,FechaProcedimiento, Estado, Procedimientoimaurl,IPServer,UnidadServer,IdUsuario)"
+                       . "VALUES ('$persona','$fecha',1,'$ruta','$ip','$unidad','$IdUsuario')";
 					$resultadoinsertconsultaurlima = $mysqli->query($insertconsultaurlima);
 					
 					foreach($_FILES["file"]['tmp_name'] as $key => $tmp_name)
@@ -147,14 +157,63 @@ if (!file_exists($carpeta)) {
 							}
 						}
 	    	}
+	    		    	else{
+		//CONTADOR DE CONSULTAS **************************************
+			$queryobtenercontador = "SELECT count(*) as 'Contador' FROM 
+										enfermeriaprocedimiento WHERE FechaProcedimiento = '$fecha' and IdPersona = '$persona';";
+
+							$resultadoobtenercontador = $mysqli->query($queryobtenercontador);
+							while ($test = $resultadoobtenercontador->fetch_assoc()) {
+							           $contador = $test['Contador'] + 1;
+							       }
+
+
+	    					$subcarpeta = $carpeta . $NombreArchivo.'('.$contador.')';
+
+	    			    	mkdir($subcarpeta, 0777, true);
+							$ruta = $nombrecarpeta.'/'.$nombrecategoria.'/Procedimientos/'.$NombreArchivo.'('.$contador.')';
+    		        		$insertconsultaurlima = "INSERT INTO enfermeriaprocedimiento(IdPersona,FechaProcedimiento, Estado, Procedimientoimaurl,IPServer,UnidadServer,IdUsuario)"
+                       					. "VALUES ('$persona','$fecha',1,'$ruta','$ip','$unidad','$IdUsuario')";
+								$resultadoinsertconsultaurlima = $mysqli->query($insertconsultaurlima);
+					
+					foreach($_FILES["file"]['tmp_name'] as $key => $tmp_name)
+						{
+							//Validamos que el archivo exista
+							if($_FILES["file"]["name"][$key]) {
+								$filename = $_FILES["file"]["name"][$key]; //Obtenemos el nombre original del archivo
+								$source = $_FILES["file"]["tmp_name"][$key]; //Obtenemos un nombre temporal del archivo
+								
+								$directorio = $subcarpeta; //Declaramos un  variable con la ruta donde guardaremos los archivos
+								
+								//Validamos si la ruta de destino existe, en caso de no existir la creamos
+								if(!file_exists($directorio)){
+									mkdir($directorio, 0777) or die("No se puede crear el directorio de extracci&oacute;n");	
+								}
+								
+									$dir=opendir($directorio); //Abrimos el directorio de destino
+									$target_path = $directorio.'/'.$filename; //Indicamos la ruta de destino, así como el nombre del archivo
+									
+							
+
+								//Movemos y validamos que el archivo se haya cargado correctamente
+								//El primer campo es el origen y el segundo el destino
+								if(move_uploaded_file($source, $target_path)) {	
+									
+									} else {	
+									
+								}
+								closedir($dir); //Cerramos el directorio de destino
+							}
+						}
+	    	}
 
 }
 else{
     	if(!file_exists($subcarpeta)){
 	    		mkdir($subcarpeta, 0777, true);
 
-	    		   $insertconsultaurlima = "INSERT INTO enfermeriaprocedimiento(IdPersona,FechaProcedimiento, Estado, Procedimientoimaurl,IPServer,UnidadServer)"
-                       . "VALUES ('$persona','$fecha',1,'$ruta','$ip','$unidad')";
+	    		   $insertconsultaurlima = "INSERT INTO enfermeriaprocedimiento(IdPersona,FechaProcedimiento, Estado, Procedimientoimaurl,IPServer,UnidadServer,IdUsuario)"
+                       . "VALUES ('$persona','$fecha',1,'$ruta','$ip','$unidad','$IdUsuario')";
 					$resultadoinsertconsultaurlima = $mysqli->query($insertconsultaurlima);
 
 					foreach($_FILES["file"]['tmp_name'] as $key => $tmp_name)
@@ -186,6 +245,55 @@ else{
 							}
 				 }
 	    	}  
+	    	else{
+		//CONTADOR DE CONSULTAS **************************************
+			$queryobtenercontador = "SELECT count(*) as 'Contador' FROM 
+										enfermeriaprocedimiento WHERE FechaProcedimiento = '$fecha' and IdPersona = '$persona';";
+
+							$resultadoobtenercontador = $mysqli->query($queryobtenercontador);
+							while ($test = $resultadoobtenercontador->fetch_assoc()) {
+							           $contador = $test['Contador'] + 1;
+							       }
+
+
+	    					$subcarpeta = $carpeta . $NombreArchivo.'('.$contador.')';
+
+	    			    	mkdir($subcarpeta, 0777, true);
+							$ruta = $nombrecarpeta.'/'.$nombrecategoria.'/Procedimientos/'.$NombreArchivo.'('.$contador.')';
+    		        		$insertconsultaurlima = "INSERT INTO enfermeriaprocedimiento(IdPersona,FechaProcedimiento, Estado, Procedimientoimaurl,IPServer,UnidadServer,IdUsuario)"
+                       					. "VALUES ('$persona','$fecha',1,'$ruta','$ip','$unidad','$IdUsuario')";
+								$resultadoinsertconsultaurlima = $mysqli->query($insertconsultaurlima);
+					
+					foreach($_FILES["file"]['tmp_name'] as $key => $tmp_name)
+						{
+							//Validamos que el archivo exista
+							if($_FILES["file"]["name"][$key]) {
+								$filename = $_FILES["file"]["name"][$key]; //Obtenemos el nombre original del archivo
+								$source = $_FILES["file"]["tmp_name"][$key]; //Obtenemos un nombre temporal del archivo
+								
+								$directorio = $subcarpeta; //Declaramos un  variable con la ruta donde guardaremos los archivos
+								
+								//Validamos si la ruta de destino existe, en caso de no existir la creamos
+								if(!file_exists($directorio)){
+									mkdir($directorio, 0777) or die("No se puede crear el directorio de extracci&oacute;n");	
+								}
+								
+									$dir=opendir($directorio); //Abrimos el directorio de destino
+									$target_path = $directorio.'/'.$filename; //Indicamos la ruta de destino, así como el nombre del archivo
+									
+							
+
+								//Movemos y validamos que el archivo se haya cargado correctamente
+								//El primer campo es el origen y el segundo el destino
+								if(move_uploaded_file($source, $target_path)) {	
+									
+									} else {	
+									
+								}
+								closedir($dir); //Cerramos el directorio de destino
+							}
+						}
+	    	}
 }
 
 

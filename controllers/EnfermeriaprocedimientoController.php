@@ -4,11 +4,13 @@ namespace app\controllers;
 
 use Yii;
 use app\models\Persona;
+use app\models\Enfermeriaprocedimiento;
 use app\models\EnfermeriaprocedimientoSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-
+use yii\helpers\BaseFileHelper;
+use yii\helpers\FileHelper;
 /**
  * EnfermeriaprocedimientoController implements the CRUD actions for Persona model.
  */
@@ -121,8 +123,11 @@ class EnfermeriaprocedimientoController extends Controller
      */
     public function actionDelete($id)
     {
+        $espacio = "";
+        $model = $this->findModel($id);
         $this->findModel($id)->delete();
         Yii::$app->session->setFlash('error', "User created successfully.");
+        FileHelper::removeDirectory('Y:'.$model->Procedimientoimaurl);
         return $this->redirect(['index']);
     }
 

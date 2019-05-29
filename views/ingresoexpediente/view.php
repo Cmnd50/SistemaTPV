@@ -33,9 +33,9 @@
        }     
 
 
-   $queryobtenermodulopediatria = "SELECT IdModulo FROM modulo WHERE NombreModulo = 'Ginecologia'";
-   $resultadoobtenermodulopediatria = $mysqli->query($queryobtenermodulopediatria);
-   while ($test = $resultadoobtenermodulopediatria->fetch_assoc()) {
+   $queryobtenermoduloginecologia = "SELECT IdModulo FROM modulo WHERE NombreModulo = 'Ginecologia'";
+   $resultadoobtenermoduloginecologia = $mysqli->query($queryobtenermoduloginecologia);
+   while ($test = $resultadoobtenermoduloginecologia->fetch_assoc()) {
            $ginecologia = $test['IdModulo'];
        }  
    
@@ -122,6 +122,8 @@
                                            WHERE le.Activo = 0 and le.IdPersona = $idpersonaid
                                            ORDER BY le.FechaExamen DESC";
        $resultadotablaexamenes = $mysqli->query($querytablaexamenes);
+
+
    
    
     // CONSULTA PARA CARGAR LA TABLA DE LAS CONSULTAS CARGADAS EN PDF PARA LOS EXPEDIENTES DEL PACIENTE
@@ -132,11 +134,19 @@
      // CONSULTA PARA CARGAR LA TABLA DE LAS CONSULTAS CARGADAS EN PDF PARA LOS EXPEDIENTES DEL PACIENTE EN PEDIATRIA
        $querytablaconsultasimaped = "SELECT IdConsulta, FechaConsulta, Consultaimaurl FROM consulta where Consultaimaurl IS NOT NULL and IdPersona = $idpersonaid and IdModulo = '$pediatria' ORDER BY FechaConsulta DESC";
        $resultadotablaconsultasimaped = $mysqli->query($querytablaconsultasimaped);
+
+        // CONSULTA PARA CARGAR LA TABLA DE LAS CONSULTAS CARGADAS EN PDF PARA LOS EXPEDIENTES DEL PACIENTE EN GINECOLOGIA
+       $querytablaconsultasgineco = "SELECT IdConsulta, FechaConsulta, Consultaimaurl FROM consulta where Consultaimaurl IS NOT NULL and IdPersona = $idpersonaid and IdModulo = '$ginecologia' ORDER BY FechaConsulta DESC";
+       $resultadotablaconsultasgineco = $mysqli->query($querytablaconsultasgineco);
    
    
       // CONSULTA PARA CARGAR LA TABLA DE LOS PROCEDIMIENTOS CARGADOS EN PDF PARA LOS EXPEDIENTES DEL PACIENTE
        $querytablaprocedimientoima = "SELECT IdEnfermeriaProcedimiento, FechaProcedimiento, Procedimientoimaurl FROM enfermeriaprocedimiento where Procedimientoimaurl IS NOT NULL and IdPersona = $idpersonaid  ORDER BY FechaProcedimiento DESC";
        $resultadotablaprocedimientoima = $mysqli->query($querytablaprocedimientoima);
+
+      // CONSULTA PARA CARGAR LA TABLA DE LAS RECETAS CARGADAS EN PDF PARA LOS EXPEDIENTES DEL PACIENTE
+       $querytablarecetasima = "SELECT IdReceta, Fecha, Consultaimaurl FROM receta where Consultaimaurl IS NOT NULL and IdPersona = $idpersonaid  ORDER BY Fecha DESC";
+       $resultadotablarecetasima = $mysqli->query($querytablarecetasima);
    
      // CONSULTA PARA CARGAR EL CBO DE LOS EXAMENES
       $querytipoexamen = "SELECT IdTipoExamen, NombreExamen, DescripcionExamen FROM tipoexamen";
@@ -240,14 +250,17 @@
    <div class="col-md-12">
       <div class="ibox float-e-margins">
          <div class="ibox-title">
-            <h3><?= Html::encode($this->title) ?></h3>
+            <h3><?= Html::encode($this->title) ?></h3> <br>
             <center>
                <button type="button" class="btn  btn-danger dim"   data-toggle="modal" data-target="#modalGuardarDiagnostico">+ CONSULTA<i class="fa fa-heart"></i></button>   
-               <button type="button" class="btn  btn-success dim"  data-toggle="modal" data-target="#modalGuardarImagenExamen"> + SCAN CONSULTAS <i class="fa fa-bars"></i></button>
-               <button type="button" class="btn  btn-success dim"  data-toggle="modal" data-target="#modalGuardarImagenExamen"> + SCAN EXAMENES <i class="fa fa-bars"></i></button>
-               <button type="button" class="btn  btn-success dim"  data-toggle="modal" data-target="#modalCargarProcedimientoIma"> + SCAN PROCEDIMIENTOS <i class="fa fa-bars"></i></button>
-               <button type="button" class="btn  btn-success dim"  data-toggle="modal" data-target="#modalCargarPediatriaIma"> + SCAN PEDIATRIA <i class="fa fa-bars"></i></button>
+               <button type="button" class="btn  btn-success dim"  data-toggle="modal" data-target="#modalGuardarImagenExamen">CONSULTAS <i class="fa fa-file-pdf-o"></i></button>
+               <button type="button" class="btn  btn-success dim"  data-toggle="modal" data-target="#modalGuardarImagenExamen">EXAMENES <i class="fa fa-file-pdf-o"></i></button>
+               <button type="button" class="btn  btn-success dim"  data-toggle="modal" data-target="#modalCargarProcedimientoIma">PROCEDIMIENTOS <i class="fa fa-file-pdf-o"></i></button>
+               <button type="button" class="btn  btn-success dim"  data-toggle="modal" data-target="#modalCargarPediatriaIma">PEDIATRIA <i class="fa fa-file-pdf-o"></i></button>
+               <button type="button" class="btn  btn-success dim"  data-toggle="modal" data-target="#modalCargarGinecologiaIma">GINECOLOGIA <i class="fa fa-file-pdf-o"></i></button>
+               <button type="button" class="btn  btn-success dim"  data-toggle="modal" data-target="#modalCargarRecetasIma">RECETAS <i class="fa fa-file-pdf-o"></i></button>
             </center>
+            <br>
          </div>
          <div class="ibox-content">
             <div class="tabs-container">
@@ -526,6 +539,9 @@
                             <li class="active"><a data-toggle="tab" href="#tab-51">CONSULTAS PDF</a></li>
                             <li class=""><a data-toggle="tab" href="#tab-61">PROCEDIMIENTOS PDF</a></li>
                             <li class=""><a data-toggle="tab" href="#tab-71">PEDIATRIA PDF</a></li>
+                            <li class=""><a data-toggle="tab" href="#tab-81">GINECOLOGIA PDF</a></li>
+                            <li class=""><a data-toggle="tab" href="#tab-91">EXAMENES PDF</a></li>
+                            <li class=""><a data-toggle="tab" href="#tab-101">RECETAS PDF</a></li>
                          </ul>
                          <div class="tab-content">
                             <div id="tab-51" class="tab-pane active">
@@ -535,7 +551,7 @@
                                   </div>
                                   <!-- /.box-header -->
                                   <div class="box-body">
-                                     <table class="table table-hover">
+                                     <table class="table table-bordered table-hover">
                                         <!-- https://chrome.google.com/webstore/detail/enable-local-file-links/nikfmfgobenbhmocjaaboihbeocackld/related?hl=en -->
                                         <?php
                                            echo"<thead>";
@@ -629,6 +645,88 @@
                                   </div>
                                </div>
                             </div>
+                            <div id="tab-81" class="tab-pane">
+                               <div class="panel-body">
+                                  <div class="box-header with-border">
+                                     <h3 class="box-title" id='tab2historialexamabla1'>GINECOLOGIA EN PDF</h3>
+                                  </div>
+                                  <!-- /.box-header -->
+                                  <div class="box-body">
+                                      <table id="example2" class="table table-bordered table-hover">
+                                        <?php
+                                           echo"<thead>";
+                                           echo"<tr>";
+                                           echo"<th id=''>FECHA</th>";
+                                           echo"<th id=''>URL</th>"; 
+                                           echo"<th style = 'width:150px' id=''>ACCION</th>";
+                                           echo"</tr>";
+                                           echo"</thead>";
+                                           echo"<tbody>";
+                                           while ($row = $resultadotablaconsultasgineco->fetch_assoc()) {
+                                               $urlprueba = $row['Consultaimaurl'];
+                                               echo"<tr>";
+                                               echo"<td>" . $row['FechaConsulta'] . "</td>";
+                                               echo"<td>" . $row['Consultaimaurl'] . "</td>";
+                                               echo "<td>" .
+                                               "<a href='file://///".$ip."/".$unidad."/".$row['Consultaimaurl']."'  target='_blank'>Ver</a>" .
+                                               "</td>";
+                                               echo"</tr>";
+                                               echo"</body>  ";
+                                           }
+                                           ?>
+                                     </table>
+                                  </div>
+                               </div>
+                            </div>
+                            <div id="tab-91" class="tab-pane">
+                               <div class="panel-body">
+                                  <div class="box-header with-border">
+                                     <h3 class="box-title" id='tab2historialexamabla1'>EXAMENES EN PDF</h3>
+                                    
+                                  </div>
+                                  <!-- /.box-header -->
+                                  <div class="box-body">
+                                     <table id="example2" class="table table-bordered table-hover">
+                                        
+                                     </table>
+                                  </div>
+                               </div>
+                            </div>
+                            <div id="tab-101" class="tab-pane">
+                               <div class="panel-body">
+                                  <div class="box-header with-border">
+                                     <h3 class="box-title" id='tab2historialexamabla1'>RECETAS EN PDF</h3>
+                                    
+                                  </div>
+                                  <!-- /.box-header -->
+                                  <div class="box-body">
+                                     <table id="example2" class="table table-bordered table-hover">
+                                        <?php
+                                           echo"<thead>";
+                                           echo"<tr>";
+                                           echo"<th id=''>FECHA</th>";
+                                           echo"<th id=''>URL</th>"; 
+                                           echo"<th style = 'width:150px' id=''>ACCION</th>";
+                                           echo"</tr>";
+                                           echo"</thead>";
+                                           echo"<tbody>";
+                                           while ($row = $resultadotablarecetasima->fetch_assoc()) {
+                                               $urlprueba = $row['Consultaimaurl'];
+                                               echo"<tr>";
+                                               echo"<td>" . $row['Fecha'] . "</td>";
+                                               echo"<td>" . $row['Consultaimaurl'] . "</td>";
+                                               echo "<td>" .
+                                               "<a href='file://///".$ip."/".$unidad."/".$row['Consultaimaurl']."'  target='_blank'>Ver</a>" .
+                                               "</td>";
+                                               echo"</tr>";
+                                               echo"</body>  ";
+                                           }
+                                           ?>
+                                     </table>
+                                  </div>
+                               </div>
+                            </div>
+
                          </div>
                       </div>
                   </div>
