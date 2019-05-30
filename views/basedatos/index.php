@@ -29,10 +29,10 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 
 /* @var $this yii\web\View */
-/* @var $searchModel app\models\ConfiguraciongeneralSearch */
+/* @var $searchModel app\models\BasedatosSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Configuraciones Generales';
+$this->title = 'Administrador de Query';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 </br>
@@ -41,7 +41,9 @@ $this->params['breadcrumbs'][] = $this->title;
       <div class="ibox float-e-margins">
       <div class="ibox-title">
         <h3><?= Html::encode($this->title) ?></h3>
-
+        <p align="right">
+           <?= Html::a('Ingresar Query', ['create'], ['class' => 'btn btn-primary']) ?>
+        </p>
       </div>
           <div class="ibox-content">
               <table class="table table-hover">
@@ -49,22 +51,17 @@ $this->params['breadcrumbs'][] = $this->title;
                       'dataProvider' => $dataProvider,
 'columns' => [
                         ['class' => 'yii\grid\SerialColumn'],
-                          //'IdConfiguracionGeneral',
-                          'IpServidora',
-                          'NombreCarpeta',
-                          'UnidadServer',
+                          //'IdLimpiarTabla',
+                          'Query',
+                          'Orden',
+                          'Activo',
                               ['class' => 'yii\grid\ActionColumn',
-                               'options' => ['style' => 'width:75px;'],
-                               'template' => " {view} {update}"
+                               'options' => ['style' => 'width:100px;'],
+                               'template' => " {view} {update} {delete} "
                               ],
                           ],
                       ]); ?>
-              </table> <br><br>
-             <center>
-            <form class="form-horizontal" action="../../views/configuraciongeneral/limpiarbase.php" method="POST" >
-               <button type="submit" class="btn  btn-danger dim"> LIMPIAR BASE DE DATOS <i class="fa fa-trash"></i></button>   
-            </form>
-         </center>
+                                  </table>
           </div>
       </div>
     </div>

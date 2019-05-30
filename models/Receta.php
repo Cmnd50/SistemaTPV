@@ -58,10 +58,10 @@ class Receta extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'IdReceta' => 'Id Receta',
-            'IdUsuario' => 'Id Usuario',
-            'IdPersona' => 'Id Persona',
-            'IdConsulta' => 'Id Consulta',
+            'IdReceta' => 'ID',
+            'IdUsuario' => 'Medico',
+            'IdPersona' => 'Paciente',
+            'IdConsulta' => 'ID Consulta',
             'Fecha' => 'Fecha',
             'Activo' => 'Activo',
             'Comentarios' => 'Comentarios',

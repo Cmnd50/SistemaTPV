@@ -37,7 +37,7 @@ $queryusuario = "
 SELECT a.IdUsuario, a.InicioSesion, b.IdPuesto, b.Descripcion as 'NombrePuesto', concat(a.Nombres, ' ', a.Apellidos) as NombreCompleto, a.Idioma as 'Idioma', a.Estado as 'Estado'
 FROM usuario as a
 inner join puesto as b on b.IdPuesto = a.IdPuesto
-WHERE InicioSesion='$InicioSesion' and Clave = md5('$Clave') and Activo = 1";
+WHERE InicioSesion='$InicioSesion' and Clave = '$Clave' and Activo = 1";
 $resultado_usuario = $mysqli->query($queryusuario);
 while ($row = $resultado_usuario->fetch_assoc()) {
        $_SESSION['IdUsuario'] = $row['IdUsuario'];

@@ -10,6 +10,7 @@ use Yii;
  * @property int $IdConfiguracionGeneral
  * @property string $IpServidora
  * @property string $NombreCarpeta
+ * @property string $UnidadServer
  */
 class Configuraciongeneral extends \yii\db\ActiveRecord
 {
@@ -27,7 +28,7 @@ class Configuraciongeneral extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['IpServidora', 'NombreCarpeta'], 'string', 'max' => 45],
+            [['IpServidora', 'NombreCarpeta', 'UnidadServer'], 'string', 'max' => 45],
         ];
     }
 
@@ -40,6 +41,7 @@ class Configuraciongeneral extends \yii\db\ActiveRecord
             'IdConfiguracionGeneral' => 'Id Configuracion General',
             'IpServidora' => 'Ip Servidora',
             'NombreCarpeta' => 'Nombre Carpeta',
+            'UnidadServer' => 'Unidad Server',
         ];
     }
 }

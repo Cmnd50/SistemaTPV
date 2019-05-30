@@ -210,7 +210,7 @@ else{
     	if(!file_exists($subcarpeta)){
 	    		mkdir($subcarpeta, 0777, true);
 
-	    		   $$insertconsultaurlima = "INSERT INTO receta(IdPersona,Fecha, Activo, Consultaimaurl,IPServer,UnidadServer,IdUsuario)"
+	    		   $insertconsultaurlima = "INSERT INTO receta(IdPersona,Fecha, Activo, Consultaimaurl,IPServer,UnidadServer,IdUsuario)"
                        . "VALUES ('$persona','$fecha',1,'$ruta','$ip','$unidad','$IdUsuario')";
 					$resultadoinsertconsultaurlima = $mysqli->query($insertconsultaurlima);
 

@@ -14,6 +14,6 @@
 
        $insertexpediente2 = "UPDATE persona SET IdEstado=1 WHERE IdPersona='$idpersona'";
        $resultadoinsertmovimiento2 = $mysqli->query($insertexpediente2);
-       header('Location: ../../web/enfermeriaprocedimiento/index);
+       header('Location: ../../web/enfermeriaprocedimiento/index');
 
       //echo $insertexpediente;

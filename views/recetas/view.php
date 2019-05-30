@@ -5,7 +5,18 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model app\models\Receta */
 
-$this->title = $model->IdReceta;
+include '../include/dbconnect.php';
+$id = $model->IdReceta;
+
+// CONSULTA PARA OBTENER EL NOMBRE DEL USUARIO
+    $queryUsuarios = "SELECT concat(u.Nombres,' ',u.Apellidos ) as 'NOMBRE' FROM receta c 
+      INNER JOIN usuario u on c.IdUsuario = u.IdUsuario WHERE c.IdReceta = '$id'";
+    $resultadoUsuarios = $mysqli->query($queryUsuarios);
+    while ($test = $resultadoUsuarios->fetch_assoc()) {
+        $IdUsuario = $test['NOMBRE'];
+    }
+
+$this->title = 'Receta: '.$model->IdReceta.'   Consulta: '.$model->IdConsulta;
 $this->params['breadcrumbs'][] = ['label' => 'Recetas', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -72,17 +83,19 @@ $this->params['breadcrumbs'][] = $this->title;
                     'model' => $model,
                     'attributes' => [
                         'IdReceta',
-            'IdUsuario',
-            'IdPersona',
-            'IdConsulta',
-            'Fecha',
-            'Activo',
-            'Comentarios',
-            'Consultaimaurl',
-            'IPServer',
-            'UnidadServer',
-                    ],
-                ]) ?>
+                        'IdConsulta',
+                        [
+                        'attribute' => 'IdUsuario',
+                        'format' => 'raw',
+                        'value' => $IdUsuario,
+                        ],
+                          'persona.FullName',
+                          'Fecha',
+                          'Activo',
+                          'Comentarios',
+
+                                  ],
+                              ]) ?>
             </table>
           </div>
       </div>

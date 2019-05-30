@@ -5,12 +5,12 @@ namespace app\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\Configuraciongeneral;
+use app\models\Limpiartablas;
 
 /**
- * ConfiguraciongeneralSearch represents the model behind the search form of `app\models\Configuraciongeneral`.
+ * BasedatosSearch represents the model behind the search form of `app\models\Limpiartablas`.
  */
-class ConfiguraciongeneralSearch extends Configuraciongeneral
+class BasedatosSearch extends Limpiartablas
 {
     /**
      * {@inheritdoc}
@@ -18,8 +18,8 @@ class ConfiguraciongeneralSearch extends Configuraciongeneral
     public function rules()
     {
         return [
-            [['IdConfiguracionGeneral'], 'integer'],
-            [['IpServidora', 'NombreCarpeta', 'UnidadServer'], 'safe'],
+            [['IdLimpiarTabla'], 'integer'],
+            [['Query', 'Orden', 'Activo'], 'safe'],
         ];
     }
 
@@ -41,12 +41,13 @@ class ConfiguraciongeneralSearch extends Configuraciongeneral
      */
     public function search($params)
     {
-        $query = Configuraciongeneral::find();
+        $query = Limpiartablas::find();
 
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'pagination' => [ 'pageSize' => 100 ],
         ]);
 
         $this->load($params);
@@ -59,12 +60,12 @@ class ConfiguraciongeneralSearch extends Configuraciongeneral
 
         // grid filtering conditions
         $query->andFilterWhere([
-            'IdConfiguracionGeneral' => $this->IdConfiguracionGeneral,
+            'IdLimpiarTabla' => $this->IdLimpiarTabla,
         ]);
 
-        $query->andFilterWhere(['like', 'IpServidora', $this->IpServidora])
-            ->andFilterWhere(['like', 'NombreCarpeta', $this->NombreCarpeta])
-            ->andFilterWhere(['like', 'UnidadServer', $this->UnidadServer]);
+        $query->andFilterWhere(['like', 'Query', $this->Query])
+            ->andFilterWhere(['like', 'Orden', $this->Orden])
+            ->andFilterWhere(['like', 'Activo', $this->Activo]);
 
         return $dataProvider;
     }

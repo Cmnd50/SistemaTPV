@@ -73,16 +73,16 @@ $IdUsuario = $model->IdUsuario;
         </p>
       </div>
           <div class="ibox-content">
+
               <form method="post" id="update_form">
-                    <div align="left">
-                        <input type="submit" name="multiple_update" id="multiple_update" class="btn btn-info" value="Multiple Update" />
+                    <div align="right">
+                        <input type="submit" name="multiple_update" id="multiple_update" class="btn btn-success" value="Actualizacion" />
                     </div>
                     <br />
                     <div class="table-responsive">
                         <table class="table table-bordered table-striped">
                             <thead>
                                 <th width="5%"></th>
-                                <th width="20%">ID</th>
                                 <th width="20%">Menu</th>
                                 <th width="30%">Submenu</th>
                                 <th width="15%">Activo</th>
@@ -97,13 +97,13 @@ $IdUsuario = $model->IdUsuario;
 </div>
 
 
-
-    <script>  
+<script>  
+  
 $(document).ready(function(){  
     
     function fetch_data()
     {
-          var id = <?php echo $IdUsuario ?> ;
+      var id = <?php echo $IdUsuario ?> ;
            var myData = {"id": id};
         $.ajax({
             url:"../../views/permisos/select.php",
@@ -116,43 +116,38 @@ $(document).ready(function(){
                 for(var count = 0; count < data.length; count++)
                 {
                     html += '<tr>';
-                    html += '<td><input type="checkbox" id="'+data[count].ID+'" data-menu="'+data[count].MENU+'" data-submenu="'+data[count].SUBMENU+'" data-activo="'+data[count].ACTIVO+'" class="check_box"  /></td>';
-                    html += '<td>'+data[count].ID+'</td>';
-                    html += '<td>'+data[count].MENU+'</td>';
-                    html += '<td>'+data[count].SUBMENU+'</td>';
-                    html += '<td>'+data[count].ACTIVO+'</td>';
-
+                    html += '<td><input type="checkbox" id="'+data[count].id+'" data-name="'+data[count].name+'" data-address="'+data[count].address+'" data-gender="'+data[count].gender+'" data-designation="'+data[count].designation+'" data-age="'+data[count].age+'" class="check_box"  /></td>';
+                    html += '<td>'+data[count].name+'</td>';
+                    html += '<td>'+data[count].address+'</td>';
+                    html += '<td>'+data[count].gender+'</td>';
                 }
                 $('tbody').html(html);
             }
         });
     }
 
-    fetch_data();
+  fetch_data();
 
     $(document).on('click', '.check_box', function(){
         var html = '';
         if(this.checked)
         {
-            html = '<td><input type="checkbox" id="'+$(this).attr('id')+'"  data-menu="'+$(this).data('menu')+'" data-submenu="'+$(this).data('submenu')+'" data-activo="'+$(this).data('activo')+'" data-id="'+$(this).data('id')+'" class="check_box" checked /></td>';
-
-            html += '<td><input type="text" name="id[]" class="form-control" value="'+$(this).attr('id')+'" /></td>';
-
-            html += '<td><input type="text" name="menu[]" disabled="disabled" class="form-control" value="'+$(this).data("menu")+'" /></td>';
-
-            html += '<td><input type="text" name="submenu[]" disabled="disabled" class="form-control" value="'+$(this).data("submenu")+'" /></td>';
-            html += '<td><select name="activo[]" id="activo_'+$(this).attr('activo')+'" class="form-control"><option value="1">ACTIVO</option><option value="0">INACTIVO</option></select></td><input type="hidden" name="hidden_id[]" value="'+$(this).attr('id')+'" /></td>';
+            html = '<td><input type="checkbox" id="'+$(this).attr('id')+'" data-name="'+$(this).data('name')+'" data-address="'+$(this).data('address')+'" data-gender="'+$(this).data('gender')+'" class="check_box" checked /></td>';
+            html += '<td><input type="text" name="name[]" class="form-control" value="'+$(this).data("name")+'" /></td>';
+            html += '<td><input type="text" name="address[]" class="form-control" value="'+$(this).data("address")+'" /></td>';
+            html += '<td><select name="gender[]" id="gender_'+$(this).attr('id')+'" class="form-control"><option value="1">ACTIVO</option><option value="0">INACTIVO</option></select></td><input type="hidden" name="hidden_id[]" value="'+$(this).attr('id')+'" />';
+           
         }
         else
         {
-            html = '<td><input type="checkbox" id="'+$(this).attr('id')+'" data-menu="'+$(this).data('menu')+'" data-submenu="'+$(this).data('submenu')+'" data-activo="'+$(this).data('activo')+'" class="check_box" /></td>';
-            html += '<td>'+$(this).data('id')+'</td>';
-            html += '<td>'+$(this).data('menu')+'</td>';
-            html += '<td>'+$(this).data('submenu')+'</td>';
-            html += '<td>'+$(this).data('activo')+'</td>';           
+            html = '<td><input type="checkbox" id="'+$(this).attr('id')+'" data-name="'+$(this).data('name')+'" data-address="'+$(this).data('address')+'" data-gender="'+$(this).data('gender')+'" class="check_box" /></td>';
+            html += '<td>'+$(this).data('name')+'</td>';
+            html += '<td>'+$(this).data('address')+'</td>';
+            html += '<td>'+$(this).data('gender')+'</td>';
+        
         }
         $(this).closest('tr').html(html);
-        $('#activo_'+$(this).attr('id')+'').val($(this).data('activo'));
+        $('#gender_'+$(this).attr('id')+'').val($(this).data('gender'));
     });
 
     $('#update_form').on('submit', function(event){
@@ -174,5 +169,3 @@ $(document).ready(function(){
 
 });  
 </script>
-
-

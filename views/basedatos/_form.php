@@ -4,7 +4,7 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\Configuraciongeneral */
+/* @var $model app\models\Limpiartablas */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 <div class="ibox float-e-margins">
@@ -15,11 +15,13 @@ use yii\widgets\ActiveForm;
   <?php $form = ActiveForm::begin(); ?>
   <form class="form-horizontal">
   <div class="form-group">
-        <?= $form->field($model, 'IpServidora')->textInput(['maxlength' => true]) ?>
+        <?= $form->field($model, 'IdLimpiarTabla')->textInput() ?>
 
-    <?= $form->field($model, 'NombreCarpeta')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'Query')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'UnidadServer')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'Orden')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'Activo')->textInput(['maxlength' => true]) ?>
 
    </div>
     <div class="form-group" align="right">

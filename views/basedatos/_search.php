@@ -4,24 +4,24 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\ConfiguraciongeneralSearch */
+/* @var $model app\models\BasedatosSearch */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="configuraciongeneral-search">
+<div class="limpiartablas-search">
 
     <?php $form = ActiveForm::begin([
         'action' => ['index'],
         'method' => 'get',
     ]); ?>
 
-    <?= $form->field($model, 'IdConfiguracionGeneral') ?>
+    <?= $form->field($model, 'IdLimpiarTabla') ?>
 
-    <?= $form->field($model, 'IpServidora') ?>
+    <?= $form->field($model, 'Query') ?>
 
-    <?= $form->field($model, 'NombreCarpeta') ?>
+    <?= $form->field($model, 'Orden') ?>
 
-    <?= $form->field($model, 'UnidadServer') ?>
+    <?= $form->field($model, 'Activo') ?>
 
     <div class="form-group">
         <?= Html::submitButton('Buscar', ['class' => 'btn btn-info']) ?>

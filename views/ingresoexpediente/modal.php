@@ -68,7 +68,7 @@
                                        <div class="col-sm-4" id="data_3">
                                           <div class="input-group date">
                                              <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
-                                            <input type="text" class="form-control" name="txtFecha" id="txtFecha">
+                                            <input type="text" class="form-control" data-mask="9999-99-99" name="txtFecha" id="txtFecha">
                                           </div>
                                        </div>
                                     </div>
@@ -169,14 +169,14 @@
                                        <div class="col-sm-4" id="data_3">
                                           <div class="input-group date">
                                              <div class="input-group-addon"><i class="fa fa-circle"></i></div>
-                                             <input type="text" class="form-control"  data-inputmask="'alias': 'yyyy/mm/dd'" data-mask name="txtUmestruacion" id="ultimamestruacions">
+                                             <input type="text" class="form-control"  data-mask="9999-99-99" name="txtUmestruacion" id="ultimamestruacions">
                                           </div>
                                        </div>
                                        <div class="col-sm-2"><label for="inputEmail3" class="control-label" id='modaltabconsultamedica19'>Ult.PAP</label></div>
                                        <div class="col-sm-4 " id="data_3">
                                           <div class="input-group date">
                                              <div class="input-group-addon"><i class="fa fa-circle-o"></i></div>
-                                             <input type="text" class="form-control"  data-inputmask="'alias': 'yyyy/mm/dd'" data-mask name="txtUpap" id="ultimapaps">
+                                             <input type="text" class="form-control"  data-mask="9999-99-99" name="txtUpap" id="ultimapaps">
                                           </div>
                                        </div>
                                     </div>
@@ -563,7 +563,7 @@
                             </div>
                          </div>
                          <div class="form-group">
-                            <div class="col-sm-2"><label for="inputEmail3" class="control-label" id='modalconsultaheces5'>Fecha</label></div>
+                            <div class="col-sm-2"><label for="inputEmail3" data-mask="9999-99-99" class="control-label" id='modalconsultaheces5'>Fecha</label></div>
                             <div class="col-sm-10">
                                <div class="input-group">
                                   <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
@@ -688,7 +688,7 @@
                            <div class="form-group">
                               <label for="inputEmail3" class="col-sm-2 control-label" id='modalconsultavarios5'>Fecha</label>
                               <div class="col-sm-9">
-                                 <input type="text" class="form-control" id="ExamenesVariosFecha" disabled="disabled">
+                                 <input type="text" class="form-control" data-mask="9999-99-99" id="ExamenesVariosFecha" disabled="disabled">
                               </div>
                            </div>
                            <div class="form-group">
@@ -1007,7 +1007,7 @@
                            <div class="col-sm-7">
                               <div class="input-group">
                                  <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
-                                 <input type="text" class="form-control" name="txtFecha" id="procefechas" disabled="disabled">
+                                 <input type="text" class="form-control" name="txtFecha" data-mask="9999-99-99" id="procefechas" disabled="disabled">
                               </div>
                            </div>
                            <div class="col-sm-1"></div>
@@ -1259,7 +1259,7 @@
                                                    <div class="col-sm-9">
                                                       <div class="input-group">
                                                          <div class="input-group-addon"><i class="fa fa-comment-o"></i></div>
-                                                         <input type="text" class="form-control" data-inputmask="'alias': 'yyyy/mm/dd'" data-mask name="txtFechaProxima" required="">
+                                                         <input type="text" class="form-control" data-mask="9999-99-99" name="txtFechaProxima" required="">
                                                       </div>
                                                    </div>
                                                 </div>
@@ -1302,7 +1302,7 @@
                                        <div class="input-group-addon">
                                           <i class="fa fa-user"></i>
                                        </div>
-                                       <input type="text" class="form-control" name="txtFechaConsulta" id="" required="">
+                                       <input type="text" class="form-control" data-mask="9999-99-99" name="txtFechaConsulta" id="" required="">
                                     </div>
                                  </div>
                               </div>
@@ -1352,7 +1352,7 @@
                                        <div class="input-group-addon">
                                           <i class="fa fa-user"></i>
                                        </div>
-                                       <input type="text" class="form-control" name="txtFechaConsulta" id="" required="">
+                                       <input type="text" class="form-control" data-mask="9999-99-99" name="txtFechaConsulta" id="" required="">
                                     </div>
                                  </div>
                               </div>
@@ -1402,7 +1402,7 @@
                                        <div class="input-group-addon">
                                           <i class="fa fa-user"></i>
                                        </div>
-                                       <input type="text" class="form-control" name="txtFechaConsulta" id="" required="">
+                                       <input type="text" class="form-control" data-mask="9999-99-99" name="txtFechaConsulta" id="" required="">
                                     </div>
                                  </div>
                               </div>
@@ -1452,7 +1452,7 @@
                                        <div class="input-group-addon">
                                           <i class="fa fa-user"></i>
                                        </div>
-                                       <input type="text" class="form-control" name="txtFechaConsulta" id="" required="">
+                                       <input type="text" class="form-control" data-mask="9999-99-99" name="txtFechaConsulta" id="" required="">
                                     </div>
                                  </div>
                               </div>
@@ -1502,7 +1502,7 @@
                                        <div class="input-group-addon">
                                           <i class="fa fa-user"></i>
                                        </div>
-                                       <input type="text" class="form-control" name="txtFechaConsulta" id="" required="">
+                                       <input type="text" data-mask="9999-99-99" class="form-control" name="txtFechaConsulta" id="" required="">
                                     </div>
                                  </div>
                               </div>
@@ -1554,7 +1554,7 @@
                                        <div class="input-group-addon">
                                           <i class="fa fa-user"></i>
                                        </div>
-                                       <input type="text" class="form-control" name="txtFechaConsulta" id="" required="">
+                                       <input type="text" class="form-control" data-mask="9999-99-99" name="txtFechaConsulta" id="" required="">
                                     </div>
                                  </div>
                               </div>

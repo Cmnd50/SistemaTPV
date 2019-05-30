@@ -24,7 +24,6 @@
 <?php endif; ?> <?php
 
 
-
 use yii\helpers\Html;
 use yii\grid\GridView;
 
@@ -53,7 +52,11 @@ $this->params['breadcrumbs'][] = $this->title;
                           //'IdReceta',
                           'IdConsulta',
                           //'IdUsuario',
-                          'IdPersona',
+                          [
+                            'attribute'=>'IdPersona',
+                            'value'=>'persona.FullName',
+                          ],
+                          
                           'Fecha',
                           'Activo',
                           // 'Comentarios',

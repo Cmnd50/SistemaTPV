@@ -3,10 +3,10 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\Configuraciongeneral */
+/* @var $model app\models\Limpiartablas */
 
-$this->title = $model->IdConfiguracionGeneral;
-$this->params['breadcrumbs'][] = ['label' => 'Configuraciongenerals', 'url' => ['index']];
+$this->title = $model->IdLimpiarTabla;
+$this->params['breadcrumbs'][] = ['label' => 'Limpiartablas', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 </br>
@@ -63,7 +63,7 @@ $this->params['breadcrumbs'][] = $this->title;
       <div class="ibox-title">
         <h3><?= Html::encode($this->title) ?></h3>
         <p align="right">
-             <?= Html::a('Actualizar', ['update', 'id' => $model->IdConfiguracionGeneral], ['class' => 'btn btn-warning']) ?>
+             <?= Html::a('Actualizar', ['update', 'id' => $model->IdLimpiarTabla], ['class' => 'btn btn-warning']) ?>
         </p>
       </div>
           <div class="ibox-content">
@@ -71,10 +71,10 @@ $this->params['breadcrumbs'][] = $this->title;
                 <?= DetailView::widget([
                     'model' => $model,
                     'attributes' => [
-                        'IdConfiguracionGeneral',
-            'IpServidora',
-            'NombreCarpeta',
-            'UnidadServer',
+                        'IdLimpiarTabla',
+            'Query',
+            'Orden',
+            'Activo',
                     ],
                 ]) ?>
             </table>

@@ -7,6 +7,7 @@
    /* @var $this yii\web\View */
    /* @var $model app\models\persona */
    
+
    
    //OBTENER CONFIGURACION GENERAL
    $queryobtenerconfig = "SELECT IpServidora, NombreCarpeta, UnidadServer FROM configuraciongeneral WHERE IdConfiguracionGeneral = 1";
@@ -66,7 +67,7 @@
       $queryusuario = "SELECT u.IdUsuario, CONCAT(u.Nombres,  ' ', u.Apellidos) as 'NombreCompleto'
          from usuario u
          inner join puesto = p on u.IdPuesto = p.IdPuesto
-         where p.Descripcion = 'Medico' and u.Activo = 1 ";
+         where u.IdUsuario = 3 and u.Activo = 1 ";
       $resultadousuario = $mysqli->query($queryusuario);
    
 
@@ -84,7 +85,7 @@
                                             INNER JOIN usuario u ON c.IdUsuario = u.IdUsuario
                                             INNER JOIN modulo m ON c.IdModulo = m.IdModulo
                                             INNER JOIN persona p ON c.IdPersona = p.IdPersona
-                                            WHERE c.Activo = 0 AND c.IdPersona = $idpersonaid and C.IdModulo = '$medgeneral'
+                                            WHERE c.Activo = 0 AND c.IdPersona = $idpersonaid and C.IdModulo = '$medgeneral' AND c.Consultaimaurl is null
                                             ORDER BY c.FechaConsulta DESC";
        $resultadotablaconsulta = $mysqli->query($querytablaconsulta);
 
@@ -96,7 +97,7 @@
                                             INNER JOIN usuario u ON c.IdUsuario = u.IdUsuario
                                             INNER JOIN modulo m ON c.IdModulo = m.IdModulo
                                             INNER JOIN persona p ON c.IdPersona = p.IdPersona
-                                            WHERE c.Activo = 0 AND c.IdPersona = $idpersonaid and C.IdModulo = '$pediatria'
+                                            WHERE c.Activo = 0 AND c.IdPersona = $idpersonaid and C.IdModulo = '$pediatria' AND c.Consultaimaurl is null
                                             ORDER BY c.FechaConsulta DESC";
        $resultadotablaconsultapediatria = $mysqli->query($querytablaconsultapediatria);
 
@@ -108,7 +109,7 @@
                                             INNER JOIN usuario u ON c.IdUsuario = u.IdUsuario
                                             INNER JOIN modulo m ON c.IdModulo = m.IdModulo
                                             INNER JOIN persona p ON c.IdPersona = p.IdPersona
-                                            WHERE c.Activo = 0 AND c.IdPersona = $idpersonaid and C.IdModulo = '$ginecologia'
+                                            WHERE c.Activo = 0 AND c.IdPersona = $idpersonaid and C.IdModulo = '$ginecologia' AND c.Consultaimaurl is null
                                             ORDER BY c.FechaConsulta DESC";
        $resultadotablaconsultaginecologia = $mysqli->query($querytablaconsultaginecologia);
    
@@ -232,19 +233,41 @@
 <link rel="stylesheet" href="../template/parsley/parsley.css">
 <script src="../template/parsley/parsley.min.js"></script>
 <script src="../template/i18n/es.js"></script>
+
 <link href="../template/css/plugins/iCheck/custom.css" rel="stylesheet">
+
 <link href="../template/css/plugins/chosen/bootstrap-chosen.css" rel="stylesheet">
-<link href="../template/css/plugins/cropper/cropper.min.css" rel="stylesheet">
-<link href="../template/css/plugins/switchery/switchery.css" rel="stylesheet">
-<link href="../template/css/plugins/jasny/jasny-bootstrap.min.css" rel="stylesheet">
-<link href="../template/css/plugins/nouslider/jquery.nouislider.css" rel="stylesheet">
+
 <link href="../template/css/plugins/bootstrap-tagsinput/bootstrap-tagsinput.css" rel="stylesheet">
+
 <link href="../template/css/plugins/colorpicker/bootstrap-colorpicker.min.css" rel="stylesheet">
+
+<link href="../template/css/plugins/cropper/cropper.min.css" rel="stylesheet">
+
+<link href="../template/css/plugins/switchery/switchery.css" rel="stylesheet">
+
+<link href="../template/css/plugins/jasny/jasny-bootstrap.min.css" rel="stylesheet">
+
+<link href="../template/css/plugins/nouslider/jquery.nouislider.css" rel="stylesheet">
+
 <link href="../template/css/plugins/datapicker/datepicker3.css" rel="stylesheet">
+
+<link href="../template/css/plugins/ionRangeSlider/ion.rangeSlider.css" rel="stylesheet">
+<link href="../template/css/plugins/ionRangeSlider/ion.rangeSlider.skinFlat.css" rel="stylesheet">
+
+<link href="../template/css/plugins/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css" rel="stylesheet">
+
+<link href="../template/css/plugins/clockpicker/clockpicker.css" rel="stylesheet">
+
+<link href="../template/css/plugins/daterangepicker/daterangepicker-bs3.css" rel="stylesheet">
+
+<link href="../template/css/plugins/select2/select2.min.css" rel="stylesheet">
+
+<link href="../template/css/plugins/touchspin/jquery.bootstrap-touchspin.min.css" rel="stylesheet">
+
+<link href="../template/css/plugins/dualListbox/bootstrap-duallistbox.min.css" rel="stylesheet">
+
 <link href="../template/css/animate.css" rel="stylesheet">
-<link href="../template/css/plugins/dropzone/basic.css" rel="stylesheet">
-<link href="../template/css/plugins/dropzone/dropzone.css" rel="stylesheet">
-<link href="../template/css/plugins/codemirror/codemirror.css" rel="stylesheet">
 <link href="../template/css/style.css" rel="stylesheet">
 <div class="row">
    <div class="col-md-12">
@@ -267,8 +290,8 @@
                <ul class="nav nav-tabs">
                   <li class="active"><a data-toggle="tab" href="#tab-1">DATOS GENERALES</a></li>
                   <li class=""><a data-toggle="tab" href="#tab-2">CONSULTAS</a></li>
-                  <li class=""><a data-toggle="tab" href="#tab-3">EXAMENES</a></li>
-                  <li class=""><a data-toggle="tab" href="#tab-4">PROCEDIMIENTOS</a></li>
+                  <!-- <li class=""><a data-toggle="tab" href="#tab-3">EXAMENES</a></li>
+                  <li class=""><a data-toggle="tab" href="#tab-4">PROCEDIMIENTOS</a></li> -->
                   <li class=""><a data-toggle="tab" href="#tab-5">CARGAS PDF</a></li>
                </ul>
                <div class="tab-content">
@@ -332,6 +355,33 @@
                               ],
                               ]) ?>
                         </table>
+                        <div class="form-group" id="data_1">
+                                <label class="font-normal">Simple data input format</label>
+                                <div class="input-group date">
+                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" class="form-control" value="03/04/2014">
+                                </div>
+                            </div>
+
+                            <div class="form-group" id="data_2">
+                                <label class="font-normal">One Year view</label>
+                                <div class="input-group date">
+                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" class="form-control" value="08/09/2014">
+                                </div>
+                            </div>
+
+                            <div class="form-group" id="data_3">
+                                <label class="font-normal">Decade view</label>
+                                <div class="input-group date">
+                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" class="form-control" value="10/11/2013">
+                                </div>
+                            </div>
+
+                            <div class="form-group" id="data_4">
+                                <label class="font-normal">Month select</label>
+                                <div class="input-group date">
+                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" class="form-control" value="07/01/2014">
+                                </div>
+                            </div>
                         <p align="center">
                            <?= Html::a('Actualizar Informacion General', ['update', 'id' => $model->IdPersona], ['class' => 'btn btn-warning']) ?>
                         </p>
@@ -736,19 +786,68 @@
       </div>
    </div>
 </div>
-<?php include '../views/ingresoexpediente/modal.php'; ?>
-<script src="../template/js/plugins/metisMenu/jquery.metisMenu.js"></script>
-<script src="../template/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
-<!-- Custom and plugin javascript -->
-<script src="../template/js/inspinia.js"></script>
-<script src="../template/js/plugins/pace/pace.min.js"></script>
-<!-- Jasny -->
-<script src="../template/js/plugins/jasny/jasny-bootstrap.min.js"></script>
-<!-- DROPZONE -->
-<script src="../template/js/plugins/dropzone/dropzone.js"></script>
-<!-- CodeMirror -->
-<script src="../template/js/plugins/codemirror/codemirror.js"></script>
-<script src="../template/js/plugins/codemirror/mode/xml/xml.js"></script>
+
+
+    <!-- Custom and plugin javascript -->
+    <script src="../template/js/inspinia.js"></script>
+    <script src="../template/js/plugins/pace/pace.min.js"></script>
+    <script src="../template/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+
+    <!-- Chosen -->
+    <script src="../template/js/plugins/chosen/chosen.jquery.js"></script>
+
+   <!-- JSKnob -->
+   <script src="../template/js/plugins/jsKnob/jquery.knob.js"></script>
+
+   <!-- Input Mask-->
+    <script src="../template/js/plugins/jasny/jasny-bootstrap.min.js"></script>
+
+   <!-- Data picker -->
+   <script src="../template/js/plugins/datapicker/bootstrap-datepicker.js"></script>
+
+   <!-- NouSlider -->
+   <script src="../template/js/plugins/nouslider/jquery.nouislider.min.js"></script>
+
+   <!-- Switchery -->
+   <script src="../template/js/plugins/switchery/switchery.js"></script>
+
+
+    <!-- iCheck -->
+    <script src="../template/js/plugins/iCheck/icheck.min.js"></script>
+
+    <!-- MENU -->
+    <script src="../template/js/plugins/metisMenu/jquery.metisMenu.js"></script>
+
+    <!-- Color picker -->
+    <script src="../template/js/plugins/colorpicker/bootstrap-colorpicker.min.js"></script>
+
+    <!-- Clock picker -->
+    <script src="../template/js/plugins/clockpicker/clockpicker.js"></script>
+
+    <!-- Image cropper -->
+    <script src="../template/js/plugins/cropper/cropper.min.js"></script>
+
+    <!-- Date range use moment.js same as full calendar plugin -->
+    <script src="../template/js/plugins/fullcalendar/moment.min.js"></script>
+
+    <!-- Date range picker -->
+    <script src="../template/js/plugins/daterangepicker/daterangepicker.js"></script>
+
+    <!-- Select2 -->
+    <script src="../template/js/plugins/select2/select2.full.min.js"></script>
+
+    <!-- TouchSpin -->
+    <script src="../template/js/plugins/touchspin/jquery.bootstrap-touchspin.min.js"></script>
+
+    <!-- Tags Input -->
+    <script src="../template/js/plugins/bootstrap-tagsinput/bootstrap-tagsinput.js"></script>
+
+    <!-- Dual Listbox -->
+    <script src="../template/js/plugins/dualListbox/jquery.bootstrap-duallistbox.js"></script>
+
+
+    <?php include '../views/ingresoexpediente/modal.php'; ?>
+
 <script type="text/javascript">
    Dropzone.options.dropzoneForm = {
        paramName: "file", // The name that will be used to transfer the file
@@ -760,32 +859,45 @@
    $(document).ready(function () {
    
    
-   
-   $('#data_1 .input-group.date').datepicker({
-           todayBtn: "linked",
-           keyboardNavigation: false,
-           forceParse: false,
-           calendarWeeks: true,
-           autoclose: true
-       });
-   
-   $('#data_2 .input-group.date').datepicker({
-           startView: 1,
-           todayBtn: "linked",
-           keyboardNavigation: false,
-           forceParse: false,
-           autoclose: true,
-           format: "yyyy-mm-dd"
-       });
-   
-   $('#data_3 .input-group.date').datepicker({
-           startView: 2,
-           todayBtn: "linked",
-           keyboardNavigation: false,
-           forceParse: false,
-           autoclose: true,
-           format: "yyyy-mm-dd"
-       });
+            $('#data_1 .input-group.date').datepicker({
+                todayBtn: "linked",
+                keyboardNavigation: false,
+                forceParse: false,
+                calendarWeeks: true,
+                autoclose: true
+            });
+
+            $('#data_2 .input-group.date').datepicker({
+                startView: 1,
+                todayBtn: "linked",
+                keyboardNavigation: false,
+                forceParse: false,
+                autoclose: true,
+                format: "dd/mm/yyyy"
+            });
+
+            $('#data_3 .input-group.date').datepicker({
+                startView: 2,
+                todayBtn: "linked",
+                keyboardNavigation: false,
+                forceParse: false,
+                autoclose: true
+            });
+
+            $('#data_4 .input-group.date').datepicker({
+                minViewMode: 1,
+                keyboardNavigation: false,
+                forceParse: false,
+                forceParse: false,
+                autoclose: true,
+                todayHighlight: true
+            });
+
+            $('#data_5 .input-daterange').datepicker({
+                keyboardNavigation: false,
+                forceParse: false,
+                autoclose: true
+            });
    
    $(".btn-mdl").click(function () {
       var id = $(this).attr("id").replace("btn", "");
