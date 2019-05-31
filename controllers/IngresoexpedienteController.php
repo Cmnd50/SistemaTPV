@@ -121,6 +121,7 @@ class IngresoexpedienteController extends Controller
             } else {
               Yii::$app->session->setFlash('warning', "User created successfully.");
             }
+
             return $this->redirect(['view', 'id' => $model->IdPersona]);
         }
 
