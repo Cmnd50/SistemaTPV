@@ -116,10 +116,10 @@ $this->title = 'Sistema TPV';
         <div class="col-lg-6">
         <div class="row animated fadeInDown">
         <div class="col-lg-6">
-          <div class="widget style1 blue-bg">
+          <div class="widget style1 default-bg">
                   <div class="row">
                       <div class="col-xs-4 text-center">
-                          <i class="fa fa-hospital-o fa-5x"></i>
+                          <i class="fa fa-address-book-o fa-5x"></i>
                       </div>
                       <div class="col-xs-8 text-right">
                           <span id='widget25'></span>
