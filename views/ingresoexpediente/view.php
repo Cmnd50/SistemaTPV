@@ -355,33 +355,6 @@
                               ],
                               ]) ?>
                         </table>
-                        <div class="form-group" id="data_1">
-                                <label class="font-normal">Simple data input format</label>
-                                <div class="input-group date">
-                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" class="form-control" value="03/04/2014">
-                                </div>
-                            </div>
-
-                            <div class="form-group" id="data_2">
-                                <label class="font-normal">One Year view</label>
-                                <div class="input-group date">
-                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" class="form-control" value="08/09/2014">
-                                </div>
-                            </div>
-
-                            <div class="form-group" id="data_3">
-                                <label class="font-normal">Decade view</label>
-                                <div class="input-group date">
-                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" class="form-control" value="10/11/2013">
-                                </div>
-                            </div>
-
-                            <div class="form-group" id="data_4">
-                                <label class="font-normal">Month select</label>
-                                <div class="input-group date">
-                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" class="form-control" value="07/01/2014">
-                                </div>
-                            </div>
                         <p align="center">
                            <?= Html::a('Actualizar Informacion General', ['update', 'id' => $model->IdPersona], ['class' => 'btn btn-warning']) ?>
                         </p>

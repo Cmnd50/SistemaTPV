@@ -91,7 +91,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                       <div class="col-sm-5"  id="data_3">
                                         <div class="input-group date">
                                           <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
-                                          <input type="text" class="form-control" name="txtFechaNacimiento" id="txtFechaNacimiento" required="">
+                                          <input type="text" class="form-control" name="txtFechaNacimiento" id="txtFechaNacimiento" >
                                         </div>
                                       </div>
                                       <label for="txtGenero" class="col-sm-1 control-label">Genero</label>
@@ -126,7 +126,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                       <div class="col-sm-5">
                                         <div class="input-group">
                                           <div class="input-group-addon"><i class="fa fa-credit-card"></i></div>
-                                          <input type="text" class="form-control" data-mask="99999999-9-9" required="" name="txtDui" id="username"  >
+                                          <input type="text" class="form-control" data-mask="99999999-9"  name="txtDui" id="username"  >
                                           <center><div id="Info"></div></center>
                                         </div>
                                       </div>
@@ -137,7 +137,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                         <div class="col-sm-5">
                                           <div class="input-group">
                                             <div class="input-group-addon"><i class="fa fa-flag"></i></div>
-                                            <select class="form-control select2" style="width: 100%;" id="txtIdPais" name="txtIdPais" required="">
+                                            <select class="form-control select2" style="width: 100%;" id="txtIdPais" name="txtIdPais">
                                               <option value=""></option>
                                               <?php
                                                 while ($row = $resultPais->fetch_assoc()) {
@@ -185,7 +185,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                     <div class="col-sm-11">
                                       <div class="input-group">
                                         <div class="input-group-addon"><i class="fa fa-arrows"></i></div>
-                                        <input type="text" class="form-control" id="txtDireccion" name="txtDireccion" required="">
+                                        <input type="text" class="form-control" id="txtDireccion" name="txtDireccion" >
                                       </div>
                                     </div>
                                   </div>
