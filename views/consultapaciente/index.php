@@ -73,6 +73,7 @@ $this->params['breadcrumbs'][] = $this->title;
                              'options' => ['style' => 'width:100px;'],
                             
                          ],
+                         
                         [
                             'attribute' => 'Estado',
                             'format' => 'raw',

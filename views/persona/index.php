@@ -42,7 +42,7 @@ $this->params['breadcrumbs'][] = $this->title;
       <div class="ibox-title">
         <h3><?= Html::encode($this->title) ?></h3>
         <p align="right">
-           <?= Html::a('Ingresar Persona', ['crear'], ['class' => 'btn btn-primary']) ?>
+           <?= Html::a('Nuevo Paciente', ['crear'], ['class' => 'btn btn-primary']) ?>
         </p>
       </div>
           <div class="ibox-content">
@@ -55,8 +55,8 @@ $this->params['breadcrumbs'][] = $this->title;
                           // 'IdPersona',
                                 'Nombres',
                                 'Apellidos',
-                                'FechaNacimiento',
-                                'Direccion',
+                                //'FechaNacimiento',
+                                //'Direccion',
                                 // 'Correo',
                                 // 'IdGeografia',
                                  'Genero',
@@ -76,9 +76,10 @@ $this->params['breadcrumbs'][] = $this->title;
                                 // 'Parentesco',
                                 // 'DuiResponsable',
                                 // 'IdPais',
+                                'CodigoPaciente',
                               ['class' => 'yii\grid\ActionColumn',
                                'options' => ['style' => 'width:100px;'],
-                               'template' => " {view} {update} {delete} "
+                               'template' => " {view} {update} "
                               ],
                           ],
                       ]); ?>

@@ -21,6 +21,33 @@
       "hideMethod" => "fadeOut"
       ]
   ]);?>
+  
+$dui = 1;
+
+<?php if($dui == 1){ ?>
+<?php
+    $session = \Yii::$app->getSession();
+    $session->setFlash("error", "Se a eliminado con Exito!"); ?>
+    <?= \odaialali\yii2toastr\ToastrFlash::widget([
+  "options" => [
+      "closeButton"=> true,
+      "debug" =>  false,
+      "progressBar" => true,
+      "preventDuplicates" => true,
+      "positionClass" => "toast-top-right",
+      "onclick" => null,
+      "showDuration" => "100",
+      "hideDuration" => "1000",
+      "timeOut" => "2000",
+      "extendedTimeOut" => "100",
+      "showEasing" => "swing",
+      "hideEasing" => "linear",
+      "showMethod" => "fadeIn",
+      "hideMethod" => "fadeOut"
+      ]
+  ]);?>
+ <?php } ?>
+  
 <?php endif; ?> <?php
 
 
@@ -32,7 +59,7 @@ use yii\grid\GridView;
 /* @var $searchModel app\models\IngresoexpedienteSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Redigitacion de Expedientes';
+$this->title = 'Redigitacion de Expedientes ';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 </br>
@@ -61,6 +88,11 @@ $this->params['breadcrumbs'][] = $this->title;
                          'Dui',
                          [
                             'attribute' => 'Categoria',
+                             'options' => ['style' => 'width:100px;'],
+                            
+                         ],
+                         [
+                            'attribute' => 'CodigoPaciente',
                              'options' => ['style' => 'width:100px;'],
                             
                          ],

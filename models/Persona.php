@@ -25,6 +25,7 @@ use Yii;
  * @property string $Dui
  * @property string $TelefonoResponsable
  * @property int $IdEstado
+ * @property int $CodigoPaciente
  * @property string $Categoria
  * @property string $NombresResponsable Es el identificador del responsable (en caso de que sea menor de edad)
  * @property string $ApellidosResponsable
@@ -68,7 +69,7 @@ class Persona extends \yii\db\ActiveRecord
             [['IdEstadoCivil', 'IdEstado', 'IdPais'], 'integer'],
             [['Nombres', 'Apellidos', 'Correo', 'IdParentesco', 'NombresResponsable', 'ApellidosResponsable'], 'string', 'max' => 100],
             [['Direccion'], 'string', 'max' => 500],
-            [['IdGeografia'], 'string', 'max' => 20],
+            [['IdGeografia','CodigoPaciente'], 'string', 'max' => 20],
             [['Genero'], 'string', 'max' => 9],
             [['Dui'], 'default', 'value' => null],
             [['Telefono', 'Celular', 'Dui', 'TelefonoResponsable'], 'string', 'max' => 15],
@@ -109,6 +110,7 @@ class Persona extends \yii\db\ActiveRecord
             'NombresResponsable' => 'Nombres Responsable',
             'ApellidosResponsable' => 'Apellidos Responsable',
             'Parentesco' => 'Parentesco',
+            'CodigoPaciente' => 'BC',
             'DuiResponsable' => 'Dui Responsable',
             'IdPais' => 'Pais',
             'estado.NombreEstado' => 'Estado',
@@ -140,6 +142,7 @@ class Persona extends \yii\db\ActiveRecord
             'NombresResponsable' => 'Nombres Responsable',
             'ApellidosResponsable' => 'Apellidos Responsable',
             'Parentesco' => 'Parentesco',
+            'CodigoPaciente' => 'BC',
             'DuiResponsable' => 'Dui Responsable',
             'IdPais' => 'Pais',
             'estado.NombreEstado' => 'Estado',

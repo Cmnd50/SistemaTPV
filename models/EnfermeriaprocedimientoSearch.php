@@ -19,7 +19,7 @@ class EnfermeriaprocedimientoSearch extends Persona
     {
         return [
             [['IdPersona', 'IdEstadoCivil', 'IdEstado', 'IdPais'], 'integer'],
-            [['Nombres', 'Apellidos', 'FechaNacimiento', 'Direccion', 'Correo', 'IdGeografia', 'Genero', 'IdParentesco', 'Telefono', 'Celular', 'Alergias', 'Medicamentos', 'Enfermedad', 'Dui', 'TelefonoResponsable', 'Categoria', 'NombresResponsable', 'ApellidosResponsable', 'Parentesco', 'DuiResponsable'], 'safe'],
+            [['Nombres', 'Apellidos', 'FechaNacimiento', 'Direccion', 'Correo', 'IdGeografia', 'Genero', 'IdParentesco', 'Telefono', 'Celular', 'Alergias', 'Medicamentos', 'Enfermedad', 'Dui', 'CodigoPaciente','TelefonoResponsable', 'Categoria', 'NombresResponsable', 'ApellidosResponsable', 'Parentesco', 'DuiResponsable'], 'safe'],
         ];
     }
 
@@ -88,6 +88,7 @@ class EnfermeriaprocedimientoSearch extends Persona
             ->andFilterWhere(['like', 'NombresResponsable', $this->NombresResponsable])
             ->andFilterWhere(['like', 'ApellidosResponsable', $this->ApellidosResponsable])
             ->andFilterWhere(['like', 'Parentesco', $this->Parentesco])
+            ->andFilterWhere(['like', 'CodigoPaciente', $this->CodigoPaciente])
             ->andFilterWhere(['like', 'DuiResponsable', $this->DuiResponsable]);
 
         return $dataProvider;

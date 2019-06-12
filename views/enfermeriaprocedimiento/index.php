@@ -64,6 +64,11 @@ $this->params['breadcrumbs'][] = $this->title;
                              'options' => ['style' => 'width:100px;'],
                             
                          ],
+                         [
+                            'attribute' => 'CodigoPaciente',
+                             'options' => ['style' => 'width:100px;'],
+                            
+                         ],
                               ['class' => 'yii\grid\ActionColumn',
                                'options' => ['style' => 'width:50px;'],
                                'template' => "{medical}"

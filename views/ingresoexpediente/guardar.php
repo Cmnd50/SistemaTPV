@@ -44,6 +44,13 @@ session_start();
     $Parentesco = $_POST['txtParentesco'];
     $IdPais = $_POST['txtIdPais'];
 
+//OBTENER CODIGO BC
+$querycodigobc = "SELECT MAX(codigopaciente) + 1 as 'Codigo' FROM persona";
+
+$resultadocodigobc = $mysqli->query($querycodigobc);
+while ($test = $resultadocodigobc->fetch_assoc()) {
+           $bc = $test['Codigo'];
+       }
 
 
     $query = "select Dui from persona where Dui = '".$Dui."'";
@@ -51,6 +58,8 @@ session_start();
 
                 if($results->fetch_assoc() > 0) // not available
                 {  
+
+                    $_SESSION['dui'] = 1;
                     echo '<script>window.location="../../web/ingresoexpediente/index"</script>';
                     //echo "entra aqui porque ya existe ";
                     //echo $query;
@@ -58,6 +67,7 @@ session_start();
 
         else if($results->fetch_assoc() == 0){ 
             if ($Dui == ""){
+            $_SESSION['dui'] = "";
             $insertexpediente = "INSERT INTO persona
                         (
                              Nombres,Apellidos,FechaNacimiento,Direccion
@@ -65,7 +75,7 @@ session_start();
                             ,Telefono,Celular,Alergias
                             ,Medicamentos,Enfermedad,Dui,TelefonoResponsable
                             ,IdEstado,Categoria,NombresResponsable
-                            ,ApellidosResponsable,Parentesco,DuiResponsable,IdPais
+                            ,ApellidosResponsable,Parentesco,DuiResponsable,IdPais,CodigoPaciente
                         )
                         VALUES
                         (
@@ -74,7 +84,7 @@ session_start();
                             ,'$Telefono','$Celular','$Alergias'
                             ,'$Medicamentos','$Enfermedad',null,'$TelefonoResponsable'
                             ,'$IdEstado','$Categoria','$NombresResponsable'
-                            ,'$ApellidosResponsable','$Parentesco','$DuiResponsable',$IdPais
+                            ,'$ApellidosResponsable','$Parentesco','$DuiResponsable',$IdPais,$bc
                         )";
 
 
@@ -276,6 +286,7 @@ session_start();
                     header('Location: ../../web/ingresoexpediente/view?id='.$last_id);
             }
             else{
+                $_SESSION['dui'] = "";
                  $insertexpediente = "INSERT INTO persona
                         (
                              Nombres,Apellidos,FechaNacimiento,Direccion
@@ -283,7 +294,7 @@ session_start();
                             ,Telefono,Celular,Alergias
                             ,Medicamentos,Enfermedad,Dui,TelefonoResponsable
                             ,IdEstado,Categoria,NombresResponsable
-                            ,ApellidosResponsable,Parentesco,DuiResponsable,IdPais
+                            ,ApellidosResponsable,Parentesco,DuiResponsable,IdPais,codigopaciente
                         )
                         VALUES
                         (
@@ -292,7 +303,7 @@ session_start();
                             ,'$Telefono','$Celular','$Alergias'
                             ,'$Medicamentos','$Enfermedad','$Dui','$TelefonoResponsable'
                             ,'$IdEstado','$Categoria','$NombresResponsable'
-                            ,'$ApellidosResponsable','$Parentesco','$DuiResponsable',$IdPais
+                            ,'$ApellidosResponsable','$Parentesco','$DuiResponsable',$IdPais,$bc
                         )";
 
 

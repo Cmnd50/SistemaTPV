@@ -19,7 +19,7 @@ class IngresoexpedienteSearch extends persona
     {
         return [
             [['IdPersona', 'IdEstadoCivil', 'IdEstado', 'IdPais'], 'integer'],
-            [['Nombres', 'Apellidos', 'FechaNacimiento', 'Direccion', 'Correo', 'IdGeografia', 'Genero', 'IdParentesco', 'Telefono', 'Celular', 'Alergias', 'Medicamentos', 'Enfermedad', 'Dui', 'TelefonoResponsable', 'Categoria', 'NombresResponsable', 'ApellidosResponsable', 'Parentesco', 'DuiResponsable'], 'safe'],
+            [['Nombres', 'Apellidos', 'FechaNacimiento', 'Direccion', 'Correo', 'IdGeografia', 'Genero', 'IdParentesco', 'Telefono', 'Celular', 'Alergias', 'Medicamentos', 'Enfermedad', 'Dui','CodigoPaciente', 'TelefonoResponsable', 'Categoria', 'NombresResponsable', 'ApellidosResponsable', 'Parentesco', 'DuiResponsable'], 'safe'],
         ];
     }
 
@@ -86,7 +86,8 @@ class IngresoexpedienteSearch extends persona
             ->andFilterWhere(['like', 'NombresResponsable', $this->NombresResponsable])
             ->andFilterWhere(['like', 'ApellidosResponsable', $this->ApellidosResponsable])
             ->andFilterWhere(['like', 'Parentesco', $this->Parentesco])
-            ->andFilterWhere(['like', 'DuiResponsable', $this->DuiResponsable]);
+            ->andFilterWhere(['like', 'DuiResponsable', $this->DuiResponsable])
+             ->andFilterWhere(['like', 'CodigoPaciente', $this->CodigoPaciente]);
 
         return $dataProvider;
     }
