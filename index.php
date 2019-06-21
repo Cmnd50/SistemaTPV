@@ -66,29 +66,30 @@ if(mysqli_num_rows($resultado_usuario)==0){
         header("Location: web/site/index");
         }
         else{
+          header("Location: web/site/index");
                  ?>
-       <script>
-         $(function () {
-             // Display a error toast, with a title
-             toastr.options = {
-               "closeButton": true,
-               "debug": false,
-               "progressBar": true,
-               "preventDuplicates": true,
-               "positionClass": "toast-top-right",
-               "onclick": null,
-               "showDuration": "100",
-               "hideDuration": "1000",
-               "timeOut": "2000",
-               "extendedTimeOut": "100",
-               "showEasing": "swing",
-               "hideEasing": "linear",
-               "showMethod": "fadeIn",
-               "hideMethod": "fadeOut"
-             }
-             toastr.error('El usuario ha iniciado sesion en otro equipo!')
-         });
-     </script>
+          <!--                        <script>
+                         $(function () {
+                             // Display a error toast, with a title
+                             toastr.options = {
+                               "closeButton": true,
+                               "debug": false,
+                               "progressBar": true,
+                               "preventDuplicates": true,
+                               "positionClass": "toast-top-right",
+                               "onclick": null,
+                               "showDuration": "100",
+                               "hideDuration": "1000",
+                               "timeOut": "2000",
+                               "extendedTimeOut": "100",
+                               "showEasing": "swing",
+                               "hideEasing": "linear",
+                               "showMethod": "fadeIn",
+                               "hideMethod": "fadeOut"
+                             }
+                             toastr.error('El usuario ha iniciado sesion en otro equipo!')
+                         });
+                     </script> -->
                  <?php
         }
          
