@@ -10,7 +10,9 @@ $fechas = date('Y-m-d G:i:s');
         <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i> </a>
 
     </div>
+
       <ul class="nav navbar-top-links navbar-right">
+
           <li>
           <?php if($_SESSION['IdIdioma'] == 1) {?>
               <span class="m-r-sm text-muted welcome-message">Bienvenidos Sistema TPV</span>

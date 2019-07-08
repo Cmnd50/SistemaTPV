@@ -79,12 +79,10 @@ $this->params['breadcrumbs'][] = $this->title;
                                 'CodigoPaciente',
                               ['class' => 'yii\grid\ActionColumn',
                                'options' => ['style' => 'width:100px;'],
-                               'template' => " {view} {update} "
+                               'template' => "{view} {update}"
                               ],
                           ],
                       ]); ?>
-                                  </table>
+                 </table>
           </div>
-      </div>
-    </div>
-</div>
+    

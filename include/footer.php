@@ -7,5 +7,6 @@
           document.write(new Date().getFullYear())
       </script>
       <a href="">  </a>, UQSolutions
+       <right>Version 2.0.77</right>	
     </div>
 </div>

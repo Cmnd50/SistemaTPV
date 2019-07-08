@@ -56,6 +56,14 @@ class PersonaController extends Controller
             'model' => $this->findModel($id),
         ]);
     }
+    
+
+    public function actionReport($id)
+    {
+        return $this->render('report', [
+            'model' => $this->findModel($id),
+        ]);
+    }
 
     /**
      * Creates a new Persona model.

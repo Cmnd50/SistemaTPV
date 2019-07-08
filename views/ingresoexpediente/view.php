@@ -8,7 +8,7 @@
    /* @var $model app\models\persona */
    
          $id = $model->IdPersona;
-
+     $bc = $model->CodigoPaciente;
 
 
   $querydepartamentos = "SELECT IdPersona, TIMESTAMPDIFF(YEAR,FechaNacimiento,CURDATE()) AS EDAD, concat(Nombres,' ',Apellidos) as 'Nombre Completo',
@@ -411,9 +411,12 @@ NOTIFICACIONES:
                                   'estadoCivil.Nombre',
                                   'Telefono',
                                   'Celular',
+                                  'CodigoPaciente',
                               ],
                               ]) ?>
                         </table>
+                         <h3>   CODIGO DE BARRAS </h3>
+                          <center><div id="barcode"></div></center>
                         <h3>    DATOS MEDICOS </h3>
                         <table class="table table-hover">
                            <?= DetailView::widget([
@@ -439,6 +442,7 @@ NOTIFICACIONES:
                               ],
                               ]) ?>
                         </table>
+
                         <p align="center">
                            <?= Html::a('Actualizar Informacion General', ['update', 'id' => $model->IdPersona], ['class' => 'btn btn-warning']) ?>
                         </p>
@@ -902,10 +906,23 @@ NOTIFICACIONES:
     <!-- Dual Listbox -->
     <script src="../template/js/plugins/dualListbox/jquery.bootstrap-duallistbox.js"></script>
 
+    <script src="../template/barcode/jquery-barcode.min.js"></script>
+
 
     <?php include '../views/ingresoexpediente/modal.php'; ?>
 
+
 <script type="text/javascript">
+  $(function() {   
+   $("#barcode").barcode(
+    "<?php echo $bc ?>", // Valor del codigo de barras
+  "code128" // tipo (cadena)
+  );
+  });
+</script>
+
+<script type="text/javascript">
+
    Dropzone.options.dropzoneForm = {
        paramName: "file", // The name that will be used to transfer the file
        maxFilesize: 2, // MB
@@ -914,7 +931,6 @@ NOTIFICACIONES:
    
    
    $(document).ready(function () {
-   
    
             $('#data_1 .input-group.date').datepicker({
                 todayBtn: "linked",
