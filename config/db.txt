@@ -1,5 +1,4 @@
 localhost
 db_clinica
 root
-nest2015
-ClinicStaff123
+amilat2018
