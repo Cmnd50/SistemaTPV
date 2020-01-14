@@ -1,4 +1,5 @@
 <?php
+
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 
@@ -11,13 +12,13 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 </br>
 
-<?php if (Yii::$app->session->hasFlash("success")): ?>
-<?php
-    $session = \Yii::$app->getSession();
-    $session->setFlash("success", "Se a agregado con Exito!"); ?>
-    <?= \odaialali\yii2toastr\ToastrFlash::widget([
-  "options" => [
-      "closeButton"=> true,
+<?php if (Yii::$app->session->hasFlash("success")) : ?>
+  <?php
+  $session = \Yii::$app->getSession();
+  $session->setFlash("success", "Se a agregado con Exito!"); ?>
+  <?= \odaialali\yii2toastr\ToastrFlash::widget([
+    "options" => [
+      "closeButton" => true,
       "debug" =>  false,
       "progressBar" => true,
       "preventDuplicates" => true,
@@ -31,16 +32,16 @@ $this->params['breadcrumbs'][] = $this->title;
       "hideEasing" => "linear",
       "showMethod" => "fadeIn",
       "hideMethod" => "fadeOut"
-      ]
-  ]);?>
-<?php endif; ?> 
-<?php if (Yii::$app->session->hasFlash("warning")): ?>
-<?php
-    $session = \Yii::$app->getSession();
-    $session->setFlash("warning", "Se a actualizado con Exito!"); ?>
-    <?= \odaialali\yii2toastr\ToastrFlash::widget([
-  "options" => [
-      "closeButton"=> true,
+    ]
+  ]); ?>
+<?php endif; ?>
+<?php if (Yii::$app->session->hasFlash("warning")) : ?>
+  <?php
+  $session = \Yii::$app->getSession();
+  $session->setFlash("warning", "Se a actualizado con Exito!"); ?>
+  <?= \odaialali\yii2toastr\ToastrFlash::widget([
+    "options" => [
+      "closeButton" => true,
       "debug" =>  false,
       "progressBar" => true,
       "preventDuplicates" => true,
@@ -54,31 +55,31 @@ $this->params['breadcrumbs'][] = $this->title;
       "hideEasing" => "linear",
       "showMethod" => "fadeIn",
       "hideMethod" => "fadeOut"
-      ]
-  ]);?>
-<?php endif; ?> 
+    ]
+  ]); ?>
+<?php endif; ?>
 <div class="row">
-    <div class="col-md-12">
-      <div class="ibox float-e-margins">
+  <div class="col-md-12">
+    <div class="ibox float-e-margins">
       <div class="ibox-title">
         <h3><?= Html::encode($this->title) ?></h3>
         <p align="right">
-             <?= Html::a('Actualizar', ['update', 'id' => $model->IdLimpiarTabla], ['class' => 'btn btn-warning']) ?>
+          <?= Html::a('Actualizar', ['update', 'id' => $model->IdLimpiarTabla], ['class' => 'btn btn-warning']) ?>
         </p>
       </div>
-          <div class="ibox-content">
-              <table class="table table-hover">
-                <?= DetailView::widget([
-                    'model' => $model,
-                    'attributes' => [
-                        'IdLimpiarTabla',
-            'Query',
-            'Orden',
-            'Activo',
-                    ],
-                ]) ?>
-            </table>
-          </div>
+      <div class="ibox-content">
+        <table class="table table-hover">
+          <?= DetailView::widget([
+            'model' => $model,
+            'attributes' => [
+              'IdLimpiarTabla',
+              'Query',
+              'Orden',
+              'Activo',
+            ],
+          ]) ?>
+        </table>
       </div>
     </div>
+  </div>
 </div>

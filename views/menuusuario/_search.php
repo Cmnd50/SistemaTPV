@@ -25,7 +25,8 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'IdMenu') ?>
 
-    <?php // echo $form->field($model, 'TipoPermiso') ?>
+    <?php // echo $form->field($model, 'TipoPermiso') 
+    ?>
 
     <div class="form-group">
         <?= Html::submitButton('Buscar', ['class' => 'btn btn-info']) ?>

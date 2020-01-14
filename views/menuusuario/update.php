@@ -11,7 +11,7 @@ $this->params['breadcrumbs'][] = ['label' => $model->IdMenuUsuario, 'url' => ['v
 $this->params['breadcrumbs'][] = 'Actualizar';
 ?>
 </br>
-    <?= $this->render('_form', [
-        'model' => $model,
-    ]) ?>
+<?= $this->render('_form', [
+    'model' => $model,
+]) ?>
 </div>

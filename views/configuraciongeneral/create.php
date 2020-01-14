@@ -11,7 +11,7 @@ $this->params['breadcrumbs'][] = ['label' => 'Configuraciongenerals', 'url' => [
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 </br>
-    <?= $this->render('_form', [
-        'model' => $model,
-    ]) ?>
+<?= $this->render('_form', [
+    'model' => $model,
+]) ?>
 </div>

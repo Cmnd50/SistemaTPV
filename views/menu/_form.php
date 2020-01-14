@@ -8,25 +8,25 @@ use yii\widgets\ActiveForm;
 /* @var $form yii\widgets\ActiveForm */
 ?>
 <div class="ibox float-e-margins">
-    <div class="ibox-title">
-        <h5><?= Html::encode($this->title) ?></h5>
-      </div>
-<div class="ibox-content">
-  <?php $form = ActiveForm::begin(); ?>
-  <form class="form-horizontal">
-  <div class="form-group">
+  <div class="ibox-title">
+    <h5><?= Html::encode($this->title) ?></h5>
+  </div>
+  <div class="ibox-content">
+    <?php $form = ActiveForm::begin(); ?>
+    <form class="form-horizontal">
+      <div class="form-group">
         <?= $form->field($model, 'DescripcionMenu')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'Icono')->textInput(['maxlength' => true]) ?>
+        <?= $form->field($model, 'Icono')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'TipoMenu')->textInput(['maxlength' => true]) ?>
+        <?= $form->field($model, 'TipoMenu')->textInput(['maxlength' => true]) ?>
 
-   </div>
-    <div class="form-group" align="right">
+      </div>
+      <div class="form-group" align="right">
         <?= Html::submitButton($model->isNewRecord ? 'Ingresar' : 'Actualizar', ['class' => $model->isNewRecord ? 'btn btn-primary' : 'btn btn-warning']) ?>
-    </div>
+      </div>
 
-    <?php ActiveForm::end(); ?>
-  </form>
-</div>
+      <?php ActiveForm::end(); ?>
+    </form>
+  </div>
 </div>
