@@ -1,0 +1,53 @@
+SELECT   
+p.NoBasico as 'handleld', 
+'Product' as 'fieldType',
+p.Descripcion as 'name', 
+p.Observaciones as 'description', 
+pf.Archivo as 'productImageUrl',  
+g.Nombre as 'collection', 
+p.NoBasico as 'sku',
+'New' as 'riboon',
+p.Lista as 'price',
+0.00 as 'surchange',
+CASE WHEN e.existencia = 0 THEN 'FALSE' ELSE 'TRUE' END as 'visible',
+'AMOUNT' as 'discountMode',
+1 as 'discountValue',
+e.disponible as 'inventaory',
+5 as weight, 
+'' as productOptionName1,
+'' as productOptionType1,
+'' as productOptionName2,
+'' as productOptionType2,
+'' as productOptionName3,
+'' as productOptionType3,
+'' as productOptionName4,
+'' as productOptionType4,
+'' as productOptionName5,
+'' as productOptionType5,
+'' as productOptionName6,
+'' as productOptionType6,
+'' as additionalInfoTitle1,
+'' as additionalInfoDescription1,
+'' as additionalInfoTitle2,
+'' as additionalInfoDescription2,
+'' as additionalInfoTitle3,
+'' as additionalInfoDescription3,
+'' as additionalInfoTitle4,
+'' as additionalInfoDescription4,
+'' as additionalInfoTitle5,
+'' as additionalInfoDescription5,
+'' as additionalInfoTitle6,
+'' as additionalInfoDescription6,
+'' as customTextField1,
+'' as customTextCharLimit1,
+'' as customTextMandatory1
+            FROM prg.existencias e
+            	INNER JOIN prg.productos p on e.PLUProducto = p.PLUProducto
+            	INNER JOIN prg.divisiones d on e.PLUDivision = d.PLUDivision
+	LEFT OUTER JOIN prg.pGrupos g on p.PLUGrupo = g.GrupoId
+	LEFT OUTER JOIN prg.fabricantes f on p.PLUFabricante = f.PLUFabricante
+	LEFT OUTER JOIN prg.productosfotos pf on p.PLUproducto = pf.ProductoId 
+	LEFT OUTER JOIN prg.productosaplicaciones pa on p.PLUProducto = pa.ProductoId
+            	WHERE p.PLUEmpresa = 1 and e.PLUDivision in (1,2,3,11,16) 
+
+output to c:\csvweb\productosweb.csv

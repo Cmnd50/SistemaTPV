@@ -6,7 +6,6 @@
          var myData = {
             "id": id
          };
-         //alert(myData);
          $.ajax({
             url: "../../views/consultamedico/cargarconsultasignosvitales.php",
             type: "POST",
@@ -773,9 +772,6 @@
          $("#modalasignarexamen4").text('Indication');
          $("#modalasignarexamen5").text('Close');
          $("#modalasignarexamen6").text('Save Changes');
-
-
-
 
       <?php } ?>
 

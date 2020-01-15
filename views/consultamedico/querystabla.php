@@ -1,4 +1,13 @@
 <?php
+
+$label = '';
+if ($_SESSION['IdIdioma'] == 1) {
+   $label = 'Medico - Consulta';
+} else {
+   $label = 'Physician - Visits';
+}
+
+
    $queryfichaconsulta = "SELECT c.IdConsulta, p.IdPersona as 'id', u.IdUsuario as 'IdUsuario',
    CONCAT(u.Nombres,' ',u.Apellidos) as 'Medico', CONCAT(p.Nombres,' ',p.Apellidos) as 'Paciente', c.FechaConsulta as 'Fecha',
    m.NombreModulo as 'Especialidad', m.Descripcion as 'Descripcion', c.Activo, c.Diagnostico As 'Diagnostico', c.Comentarios As 'Comentarios', c.Otros As 'Otros',

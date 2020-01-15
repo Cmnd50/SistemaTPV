@@ -41,7 +41,7 @@
                     <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                         <span class="clear"> <span class="block m-t-xs"> <strong class="font-bold"><?php echo $nombreusuario; ?></strong>
                          </span> <span class="text-muted text-xs block"><?php echo $puesto; ?></span> 
-                         <span class="text-muted text-xs block"> Version 2.0.78</span></span> </a>
+                         <span class="text-muted text-xs block"> Version 2.0.81</span></span> </a>
                     <ul class="dropdown-menu animated fadeInRight m-t-xs">
                         <li class="divider"></li>
                         <li><a href="../../include/logout.php?logout">Logout</a></li>

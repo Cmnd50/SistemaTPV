@@ -3,51 +3,27 @@
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 
-
-include '../include/dbconnect.php';
-include '../include/dbconnectsybase.php';
-
-
-/* @var $this yii\web\View */
-/* @var $model app\models\Persona */
-
+/* OBTENEMOS EL ID DEL MODELO YII2 */
 $id = $model->IdConsulta;
-
+/* CONEXION A MYSQL PARA LAS CONSULTAS*/
+include '../include/dbconnect.php';
+/* CONEXION A SYBASE (MTCORPORATIVO) */
+include '../include/dbconnectsybase.php';
 /* AGREGA TODOS LOS QUERYS DE LAS TABLAS */
 include  'querystabla.php';
 
-
-$label = '';
-if ($_SESSION['IdIdioma'] == 1) {
-   $label = 'Medico - Consulta';
-} else {
-   $label = 'Physician - Visits';
-}
+/* @var $this yii\web\View */
+/* @var $model app\models\Persona */
 
 $this->title = $model->persona->fullName;
 $this->params['breadcrumbs'][] = ['label' => $label, 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 
+/* AGREGA EL STYLE DE LOS MODALES Y LOS VALIDACIONES */
+include  'styles.php';
 ?>
-<style>
-   .example-modal .modal {
-      position: relative;
-      top: auto;
-      bottom: auto;
-      right: auto;
-      left: auto;
-      display: block;
-      z-index: 1;
-   }
 
-   .example-modal .modal {
-      background: transparent !important;
-   }
-</style>
-<link rel="stylesheet" href="../template/parsley/parsley.css">
-<script src="../template/parsley/parsley.min.js"></script>
-<script src="../template/i18n/es.js"></script>
-<script src="../../views/consultamedico/main1.js"></script>
+
 <div class="wrapper wrapper-content animated fadeIn">
    <div class="row">
       <div class="col-lg-12">
@@ -935,7 +911,6 @@ $this->params['breadcrumbs'][] = $this->title;
       </div>
    </div>
 </div>
-
 
 <?php
 /* AGREGA TODOS LOS MODALES */
