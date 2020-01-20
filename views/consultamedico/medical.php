@@ -870,7 +870,6 @@ include  'styles.php';
                                     <div class="col-lg-10"><input type="search" class="form-control" id="buscargrupos">
                                     </div>
                                  </div>
-
                                  <div class="form-group"><label class="col-lg-2 control-label">DESCRIPCION</label>
                                     <div class="col-lg-10"><input type="search" class="form-control" id="buscardescripcion">
                                     </div>
