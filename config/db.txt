@@ -1,4 +1,9 @@
 localhost
 db_clinica
 root
+<<<<<<< Updated upstream
 amilat2018
+=======
+ClinicStaff123
+nest2015
+>>>>>>> Stashed changes

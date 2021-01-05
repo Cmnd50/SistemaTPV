@@ -92,6 +92,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                         <div class="input-group date">
                                           <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
                                           <input type="text" class="form-control" name="txtFechaNacimiento" id="txtFechaNacimiento" required="required">
+
                                         </div>
                                       </div>
                                       <label for="txtGenero" class="col-sm-1 control-label">Genero</label>
