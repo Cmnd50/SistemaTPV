@@ -1,1 +1,0 @@
-SELECT CONCAT(RPAD(cuenta,13,' '),'',RPAD(Fecha,20,' '),'',CONVERT((LPAD(SUM(monto),12,'0')),CHAR)) AS 'FORMATO'  FROM pago group by Cuenta;
